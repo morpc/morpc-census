@@ -1,5 +1,13 @@
 # morpc-census dev notes
 
+## 2026-05-16 — Phase 5 documentation: API reference page and docstring examples (branch chore/phase5-docs, closes #80)
+
+- **Docstring examples** added to four key callables: `CensusAPI` (class docstring), `DimensionTable.wide()`, `geoinfo_from_scope_sumlevel()`, and `fetch_geos_from_scope_sumlevel()`. All marked `# doctest: +SKIP` since they require network access. `fetch_geos_from_scope_sumlevel` also received a full Parameters/Returns section (was a one-liner).
+- **`doc/api-reference.md`** — MyST Markdown API reference page documenting all key classes and functions with short code examples. Linked from `doc/index.md` under a new "Reference" section.
+- **`CONTRIBUTING.md`** was already completed in Phase 4; checked off in README.
+- Note: full auto-generated docs (sphinx autodoc / mkdocstrings) would require adding a second doc toolchain alongside the existing MyST setup. The manual API reference page is a pragmatic alternative that works within the existing infrastructure.
+
+
 ## 2026-05-16 — Phase 4 versioning: setuptools-scm, v0.1.0 tag, CONTRIBUTING.md (branch chore/phase4-versioning, closes #78)
 
 - **Dynamic versioning:** Replaced hardcoded `__version__ = "0.1.0"` in `__init__.py` with `importlib.metadata.version("morpc-census")` (fallback `"0.1.0"` for non-installed editable environments). Removed `[tool.setuptools.dynamic]` `version = {attr = ...}` from `pyproject.toml`; added `[tool.setuptools_scm]` with `fallback_version = "0.1.0"`. `setuptools-scm` was already in `build-system.requires`.

@@ -122,9 +122,9 @@ See [demos](https://jinskeep-morpc.github.io/morpc-census/) for examples and doc
 
 ### Phase 5 — Documentation
 
-- [ ] Auto-generate API reference docs from docstrings
-- [ ] Add `CONTRIBUTING.md` with setup instructions and PR process
-- [ ] Add usage examples to docstrings for commonly called functions
+- [x] Auto-generate API reference docs from docstrings
+- [x] Add `CONTRIBUTING.md` with setup instructions and PR process
+- [x] Add usage examples to docstrings for commonly called functions
 
 ---
 

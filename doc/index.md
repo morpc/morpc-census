@@ -16,3 +16,8 @@ This package depends on [morpc-py](https://github.com/morpc/morpc-py) for shared
 
 - [Geography demo](/morpc-geos-demo)
 - [Census API demo](/morpc-census-demo)
+- [Poverty/race demo](/morpc-poverty-race-demo)
+
+## Reference
+
+- [API Reference](/api-reference)

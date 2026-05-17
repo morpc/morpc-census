@@ -361,6 +361,20 @@ class CensusAPI:
         When both are given, variables must be a subset of the group's variables.
     return_long : bool
         If ``True`` (default) compute ``self.long`` immediately after fetch.
+
+    Examples
+    --------
+    Fetch ACS 5-year age/sex data for counties in the 15-county MORPC region:
+
+    >>> from morpc_census import Endpoint, Group, CensusAPI, SCOPES, SumLevel  # doctest: +SKIP
+    >>> ep = Endpoint('acs/acs5', 2023)                                         # doctest: +SKIP
+    >>> grp = Group(ep, 'B01001')                                               # doctest: +SKIP
+    >>> api = CensusAPI(ep, SCOPES['region15'], group=grp, sumlevel=SumLevel('county'))  # doctest: +SKIP
+    >>> api.long.head()                                                         # doctest: +SKIP
+
+    Fetch specific variables without a group:
+
+    >>> api = CensusAPI(ep, 'franklin', variables=['B01001_001E', 'B01001_002E'])  # doctest: +SKIP
     """
 
     def __init__(
@@ -1109,8 +1123,17 @@ class DimensionTable:
         Returns
         -------
         pandas.DataFrame
-            Rows indexed by dimension labels; columns are a MultiIndex of
-            ``(value_type, geoidfq, …)``.
+            Rows indexed by dimension labels; columns are a MultiIndex with
+            canonical level order ``concept > universe > survey > geoidfq >
+            name > [race] > reference_period > value_type``.
+
+        Examples
+        --------
+        >>> table = DimensionTable(api.long)    # doctest: +SKIP
+        >>> wide = table.wide()                 # doctest: +SKIP
+        >>> wide.columns.names                  # doctest: +SKIP
+        ['concept', 'universe', 'survey', 'geoidfq', 'name', 'reference_period', 'value_type']
+        >>> pct = table.percent(_wide=wide)     # doctest: +SKIP
         """
         long = self.long.replace(dict.fromkeys(MISSING_VALUES, np.nan))
 

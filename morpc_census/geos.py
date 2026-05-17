@@ -559,6 +559,18 @@ def geoinfo_from_scope_sumlevel(
     ------
     ValueError
         When sumlevel and scope are an invalid combination.
+
+    Examples
+    --------
+    Get a list of GEOIDFQs for all counties in the 15-county MORPC region:
+
+    >>> from morpc_census import geoinfo_from_scope_sumlevel  # doctest: +SKIP
+    >>> geoinfo_from_scope_sumlevel('region15')               # doctest: +SKIP
+    ['0500000US39041', '0500000US39045', ...]
+
+    Get a DataFrame of tracts within Franklin County:
+
+    >>> geoinfo_from_scope_sumlevel('franklin', 'tract', output='table')  # doctest: +SKIP
     """
     sc = scope if isinstance(scope, Scope) else SCOPES[scope]
     scope_geoids = geoids_from_scope(sc)  # list[GeoIDFQ]
@@ -655,7 +667,38 @@ def fetch_geos_from_geoids(geoidfqs: list[GeoIDFQ], year: int | None = None, sur
     return gpd.GeoDataFrame(geometries, geometry='geometry')
 
 def fetch_geos_from_scope_sumlevel(scope: str | Scope, sumlevel: str | SumLevel | None = None, year: int | None = None, survey: Literal['current', 'ACS', 'DEC'] = 'current', chunk_size: int = 500) -> GeoDataFrame:
-    """Fetch a GeoDataFrame of geometries for all geographies at sumlevel within scope."""
+    """Fetch a GeoDataFrame of geometries for all geographies at sumlevel within scope.
+
+    Parameters
+    ----------
+    scope : str | Scope
+        A scope name (e.g. ``'region15'``, ``'franklin'``) or ``Scope`` instance.
+    sumlevel : str | SumLevel | None, optional
+        Summary level (e.g. ``'tract'``, ``'county'``). Defaults to the scope's native level.
+    year : int, optional
+        Vintage year for ACS or Decennial TIGERweb services. Not used for ``survey='current'``.
+    survey : {'current', 'ACS', 'DEC'}
+        TIGERweb service to query. Defaults to ``'current'`` (most recent geometries).
+    chunk_size : int
+        Max features per TIGERweb request. Defaults to 500.
+
+    Returns
+    -------
+    geopandas.GeoDataFrame
+        Boundary geometries with ``GEOID``, ``NAME``, and ``geometry`` columns.
+
+    Examples
+    --------
+    Get county boundaries for the 15-county MORPC region:
+
+    >>> from morpc_census import fetch_geos_from_scope_sumlevel  # doctest: +SKIP
+    >>> geos = fetch_geos_from_scope_sumlevel('region15')        # doctest: +SKIP
+    >>> geos.plot()                                              # doctest: +SKIP
+
+    Get tract boundaries within Franklin County:
+
+    >>> tracts = fetch_geos_from_scope_sumlevel('franklin', 'tract')  # doctest: +SKIP
+    """
     sc = scope if isinstance(scope, Scope) else SCOPES[scope]
     sl = sumlevel if isinstance(sumlevel, SumLevel) or sumlevel is None else SumLevel(sumlevel)
 
