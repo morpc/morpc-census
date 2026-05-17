@@ -1,5 +1,15 @@
 # morpc-census dev notes
 
+## 2026-05-16 — Phase 3 CI/CD: GitHub Actions for test, build, and publish (branch chore/phase3-cicd, closes #76)
+
+Added two GitHub Actions workflows:
+
+- **`.github/workflows/ci.yml`** — runs on every push and PR to `main`. Two jobs: `test` (matrix: Python 3.10, 3.11, 3.12; runs `pytest -m "not network"`) and `build` (`python -m build` + `twine check dist/*`). Both jobs clone and install `morpc-py` from GitHub before installing `morpc-census`.
+- **`.github/workflows/publish.yml`** — triggers on GitHub release publication. Builds the package, runs `twine check`, then publishes to PyPI using `pypa/gh-action-pypi-publish` with OIDC trusted publisher (no API token stored in secrets). Requires a `pypi` GitHub environment to be configured.
+
+Note: CI will fail until the `morpc-py` repo is accessible to GitHub Actions runners (currently private). May need a deploy key or PAT secret (`GH_PAT`) added to the repo secrets and the clone step updated to use it.
+
+
 ## 2026-05-16 — Phase 2 dependency audit: pin morpc, document install order (branch chore/phase2-dependency-audit, closes #74)
 
 **Assessment:** `morpc` (from `morpc-py`, currently v0.4.3) provides HTTP utilities (`morpc.req.get_json_safely/get_text_safely`), REST API helpers (`morpc.rest_api.resource/gdf_from_resource`), and MORPC-internal geography constants (`CONST_*`, `SUMLEVEL_*`, `CONST_REGIONS`). The geography constants are tightly coupled to internal MORPC data — publishing `morpc` to PyPI without significant restructuring is not practical. Recommendation: keep as private dependency.

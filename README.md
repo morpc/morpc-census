@@ -110,9 +110,9 @@ See [demos](https://jinskeep-morpc.github.io/morpc-census/) for examples and doc
 
 ### Phase 3 — CI/CD
 
-- [ ] Add GitHub Actions CI workflow (`pytest -m "not network"` on push/PR, Python 3.10–3.12)
-- [ ] Add build verification step (`python -m build` + `twine check`)
-- [ ] Add publish workflow triggered on release tags
+- [x] Add GitHub Actions CI workflow (`pytest -m "not network"` on push/PR, Python 3.10–3.12)
+- [x] Add build verification step (`python -m build` + `twine check`)
+- [x] Add publish workflow triggered on release tags
 
 ### Phase 4 — Versioning & release
 
