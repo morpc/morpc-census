@@ -15,14 +15,7 @@ This package depends on [morpc-py](https://github.com/morpc/morpc-py) for shared
 
 ## Installation
 
-`morpc-census` depends on [morpc-py](https://github.com/morpc/morpc-py), a private MORPC utility package that is not on PyPI. Install it manually before installing `morpc-census`:
-
 ```bash
-# 1. Install the private morpc dependency first
-git clone https://github.com/morpc/morpc-py.git
-pip install /path/to/morpc-py/
-
-# 2. Install morpc-census
 pip install morpc-census
 ```
 
@@ -31,11 +24,6 @@ pip install morpc-census
 To install an editable version for development:
 
 ```bash
-# 1. Install the private morpc dependency
-git clone https://github.com/morpc/morpc-py.git
-pip install /path/to/morpc-py/
-
-# 2. Clone and install morpc-census in editable mode
 git clone https://github.com/jinskeep-morpc/morpc-census.git
 pip install -e /path/to/morpc-census/
 ```

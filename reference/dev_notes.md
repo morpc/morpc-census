@@ -1,5 +1,10 @@
 # morpc-census dev notes
 
+## 2026-05-16 — Fix: morpc is on PyPI; remove manual install steps from README, CI, and CONTRIBUTING
+
+The Phase 2 assessment was wrong — `morpc` (the PyPI package name for `morpc-py`) is available on PyPI at version 0.4.3. Removed the `git clone morpc-py` workaround from README, both GitHub Actions workflows, and CONTRIBUTING.md. The `morpc>=0.4.3` pin in `pyproject.toml` is correct and resolves normally via PyPI.
+
+
 ## 2026-05-16 — Phase 5 documentation: API reference page and docstring examples (branch chore/phase5-docs, closes #80)
 
 - **Docstring examples** added to four key callables: `CensusAPI` (class docstring), `DimensionTable.wide()`, `geoinfo_from_scope_sumlevel()`, and `fetch_geos_from_scope_sumlevel()`. All marked `# doctest: +SKIP` since they require network access. `fetch_geos_from_scope_sumlevel` also received a full Parameters/Returns section (was a one-liner).

@@ -3,11 +3,6 @@
 ## Setup
 
 ```bash
-# 1. Install the private morpc dependency
-git clone https://github.com/morpc/morpc-py.git
-pip install /path/to/morpc-py/
-
-# 2. Clone and install morpc-census in editable mode
 git clone https://github.com/jinskeep-morpc/morpc-census.git
 pip install -e /path/to/morpc-census/[dev]
 ```
