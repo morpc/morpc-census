@@ -1,5 +1,22 @@
 # morpc-census dev notes
 
+## 2026-05-16 — Rewrite 01-morpc-geos-demo.ipynb around user workflow (branch doc/geos-demo-rewrite, closes #82)
+
+Rewrote the geos demo notebook from 45 cells to 25, restructured around four sections: Scopes, Scales, Fetching geometries, GEOIDFQs.
+
+**Removed:**
+- `Scope('region15')` direct construction, `.params`, `.sql` — internal API not intended for callers
+- `geoids_from_scope` subsection — lower-level detail that distracts from the main workflow
+- Section 5 (TIGERweb resources) — `resource_from_scope_sumlevel` and the disabled `resource_from_geometry_sumlevel` TODO cell; `fetch_geos_from_scope_sumlevel` is the right primary entry point
+- `Scope`, `geoids_from_scope`, `resource_from_scope_sumlevel` from imports
+
+**Added/kept:**
+- `geoinfo_from_scope_sumlevel` moved under Section 3 as a "Geographic IDs without geometry" subsection
+- ASCII diagram for GEOIDFQ structure preserved from original
+- Network-required note at the top of Section 3 (single note, not per-cell)
+- GEOIDFQ parse from fetch result (last cell) — shows end-to-end connection
+
+
 ## 2026-05-16 — Fix: morpc is on PyPI; remove manual install steps from README, CI, and CONTRIBUTING
 
 The Phase 2 assessment was wrong — `morpc` (the PyPI package name for `morpc-py`) is available on PyPI at version 0.4.3. Removed the `git clone morpc-py` workaround from README, both GitHub Actions workflows, and CONTRIBUTING.md. The `morpc>=0.4.3` pin in `pyproject.toml` is correct and resolves normally via PyPI.
