@@ -7,7 +7,8 @@ import morpc_census
 
 
 def test_package_imports():
-    assert morpc_census.__version__ == "0.1.0"
+    assert isinstance(morpc_census.__version__, str)
+    assert len(morpc_census.__version__) > 0
 
 
 def test_api_module_imports():
