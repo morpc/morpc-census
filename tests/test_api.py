@@ -18,6 +18,7 @@ from morpc_census.api import (
     Group,
     CensusAPI,
     IMPLEMENTED_ENDPOINTS,
+    get_concept_dims_from_long,
 )
 
 
@@ -1228,3 +1229,87 @@ class TestGroup:
             g = Group(ep, 'B01001')
             universe = g.universe
         assert universe == 'All people'
+
+
+# ---------------------------------------------------------------------------
+# TestDimensionTableConceptDims
+# ---------------------------------------------------------------------------
+
+def _make_long_by_concept():
+    """Long DataFrame with a 'Sex by Age' concept and two parsed dimensions."""
+    return pd.DataFrame({
+        'variable': ['B99_001', 'B99_002', 'B99_003', 'B99_004', 'B99_005', 'B99_006'],
+        'variable_label': [
+            'Total:',
+            'Total:!!Male',
+            'Total:!!Female',
+            'Total:!!Male!!Under 18',
+            'Total:!!Male!!18 and over',
+            'Total:!!Female!!Under 18',
+        ],
+        'geoidfq': ['0500000US39049'] * 6,
+        'name': ['Franklin County, Ohio'] * 6,
+        'concept': ['Sex by Age'] * 6,
+        'universe': ['Population'] * 6,
+        'survey': ['acs/acs5'] * 6,
+        'reference_period': [2023] * 6,
+        'estimate': [100, 50, 50, 25, 25, 25],
+        'moe': [5, 3, 3, 2, 2, 2],
+    })
+
+
+class TestDimensionTableConceptDims:
+    def test_concept_dims_is_dict(self):
+        dt = DimensionTable(_make_long())
+        assert isinstance(dt.concept_dims, dict)
+
+    def test_concept_dims_empty_for_simple_concept(self):
+        # "Test concept" has no " by " → conservative fallback → empty dict → dim_0, dim_1
+        dt = DimensionTable(_make_long())
+        assert dt.concept_dims == {}
+
+    def test_columns_are_dim_n_for_simple_concept(self):
+        dt = DimensionTable(_make_long())
+        assert dt.dims.columns[0] == 'dim_0'
+        assert dt.dims.columns[1] == 'dim_1'
+
+    def test_auto_infers_names_from_by_concept(self):
+        # "Sex by Age" has " by " → inference runs → columns should be named
+        dt = DimensionTable(_make_long_by_concept())
+        cols = list(dt.dims.columns)
+        assert 'dim_0' not in cols or 'dim_1' not in cols  # at least some names resolved
+
+    def test_concept_dims_matches_get_concept_dims_from_long(self):
+        long = _make_long_by_concept()
+        dt = DimensionTable(long)
+        assert dt.concept_dims == get_concept_dims_from_long(long)
+
+    def test_concept_dims_matches_for_simple_concept_too(self):
+        long = _make_long()
+        dt = DimensionTable(long)
+        assert dt.concept_dims == get_concept_dims_from_long(long)
+
+    def test_explicit_list_override_wins(self):
+        dt = DimensionTable(_make_long_by_concept(), dim_names=['MyTotal', 'MySex', 'MyAge'])
+        assert list(dt.dims.columns) == ['MyTotal', 'MySex', 'MyAge']
+
+    def test_explicit_dict_override_wins(self):
+        dt = DimensionTable(_make_long(), dim_names={'dim_0': 'Pop', 'dim_1': 'Group'})
+        assert list(dt.dims.columns) == ['Pop', 'Group']
+
+    def test_concept_dims_survives_drop(self):
+        dt = DimensionTable(_make_long())
+        result = dt.drop('dim_1')
+        assert hasattr(result, 'concept_dims')
+        assert isinstance(result.concept_dims, dict)
+
+    def test_concept_dims_unchanged_after_remap(self):
+        long = _make_long_by_concept()
+        dt = DimensionTable(long)
+        original = dict(dt.concept_dims)
+        dt.remap({'Male': 'Men'})
+        assert dt.concept_dims == original
+
+    def test_get_concept_dims_from_long_empty_df(self):
+        empty = _make_long().iloc[:0]
+        assert get_concept_dims_from_long(empty) == {}
