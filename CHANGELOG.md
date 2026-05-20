@@ -9,6 +9,16 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0] — 2026-05-20
+
+### Added
+
+- **`Group.concept_dims`** (cached property) — maps dim-column names to human-readable labels. Looks up curated overrides in `dim_names.json` and falls back to auto-inference from the group's concept string and variable label structure. No Census data API call required; uses only the groups metadata endpoint.
+- **`get_dim_variables(group)`** — returns an ordered dict of unique values for each named dimension in a group (uses `Group.concept_dims` for names).
+- **`get_concept_dims_from_long(long_df)`** — same dim-name lookup/inference operating on an existing long DataFrame, so downstream apps can resolve names without constructing a `Group` object.
+- **`describe_scope_sumlevel(scope, sumlevel)`** — returns a natural-language description of the geography defined by a scope and summary level (e.g. `"tracts in 15-County Region"`, `"Franklin County"`).
+- `dim_names.json` — curated dim-name overrides for complex group codes whose label structure defeats the auto-naming heuristic (e.g. B26101, B28006).
+
 ## [0.1.0] — 2026-05-16
 
 Initial beta release.

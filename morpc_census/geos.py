@@ -401,6 +401,65 @@ PSEUDOS = {'010': [
  }
 
 
+_SCOPE_DISPLAY_NAMES: dict[str, str] = {
+    "us": "the United States",
+    "columbuscbsa": "Columbus CBSA",
+    "region15": "15-County Region",
+    "region10": "10-County Region",
+    "region7": "7-County Region",
+    "regioncorpo": "CORPO Region",
+    "regionceds": "CEDS Region",
+    "regioncbsa": "CBSA",
+    "regionmobility": "Mobility Region",
+    "regionmpo": "MPO Region",
+}
+
+
+def _scope_display_name(scope: Scope) -> str:
+    if scope.name in _SCOPE_DISPLAY_NAMES:
+        return _SCOPE_DISPLAY_NAMES[scope.name]
+    if scope.for_param:
+        geo_type, ids_str = scope.for_param.split(':', 1)
+        if geo_type == "county" and ',' not in ids_str:
+            return scope.name.title() + " County"
+        if geo_type == "state":
+            return scope.name.title()
+    return scope.name.title()
+
+
+def describe_scope_sumlevel(scope: "str | Scope", sumlevel: "str | SumLevel | None" = None) -> str:
+    """Return a natural language description of the geography defined by scope and sumlevel.
+
+    When scope is already at sumlevel and represents a single geography, returns the scope
+    description alone. Otherwise returns "{plural sumlevel} in {scope description}".
+
+    Examples
+    --------
+    >>> describe_scope_sumlevel("region15", "tract")
+    'tracts in 15-County Region'
+    >>> describe_scope_sumlevel("franklin", "county")
+    'Franklin County'
+    >>> describe_scope_sumlevel("franklin", "tract")
+    'tracts in Franklin County'
+    >>> describe_scope_sumlevel("ohio", "county")
+    'counties in Ohio'
+    """
+    sc = scope if isinstance(scope, Scope) else SCOPES[scope]
+    display = _scope_display_name(sc)
+
+    if sumlevel is None:
+        return display
+
+    sl = sumlevel if isinstance(sumlevel, SumLevel) else SumLevel(sumlevel)
+
+    if sc.for_param:
+        scope_geo_type, ids_str = sc.for_param.split(':', 1)
+        if scope_geo_type == sl.name and ',' not in ids_str:
+            return display
+
+    return f"{sl.plural} in {display}"
+
+
 @functools.cache
 def _get_api_key() -> str | None:
     from dotenv import load_dotenv, find_dotenv

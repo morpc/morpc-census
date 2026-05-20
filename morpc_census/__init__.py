@@ -55,6 +55,7 @@ from .geos import (
     morpc_geoid_to_census,
     geoidfq_to_columns,
     columns_to_geoidfq,
+    describe_scope_sumlevel,
 )
 
 # TIGERweb REST API utilities
