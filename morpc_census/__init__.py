@@ -13,6 +13,8 @@ from .api import (
     DimensionTable,
     RaceDimensionTable,
     get_all_avail_endpoints,
+    get_dim_variables,
+    get_concept_dims_from_long,
     CENSUS_DATA_BASE_URL,
     IMPLEMENTED_ENDPOINTS,
     MISSING_VALUES,

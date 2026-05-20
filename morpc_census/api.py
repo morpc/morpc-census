@@ -8,6 +8,7 @@ Census API root: https://api.census.gov/data/
 from __future__ import annotations
 
 import functools
+import json
 import logging
 import os
 import re
@@ -283,7 +284,174 @@ class Group:
             if k not in ('GEO_ID', 'NAME')
         }
 
+    @cached_property
+    def concept_dims(self) -> dict[str, str]:
+        """Human-readable names for each ``dim_N`` column produced by :class:`DimensionTable`.
 
+        Checks ``dim_names.json`` for a curated override first; falls back to
+        auto-inference from the concept string when no override exists.
+
+        Returns
+        -------
+        dict[str, str]
+            E.g. ``{"dim_0": "Total", "dim_1": "Sex", "dim_2": "Age"}``.
+        """
+        overrides = _load_dim_names_json()
+        if self.code in overrides:
+            return overrides[self.code]
+        return _infer_dim_names(self)
+
+
+# ---------------------------------------------------------------------------
+# Dim-naming helpers
+# ---------------------------------------------------------------------------
+
+@functools.lru_cache(maxsize=1)
+def _load_dim_names_json() -> dict:
+    path = Path(__file__).parent / "dim_names.json"
+    try:
+        return json.loads(path.read_text())
+    except FileNotFoundError:
+        return {}
+
+
+def _build_group_label_df(group: Group) -> pd.DataFrame:
+    """Build a minimal ``variable``/``variable_label`` DataFrame from group metadata.
+
+    Uses only :attr:`Group.variables` (the groups JSON endpoint) — no census
+    data fetch needed.  Only E (estimate) codes are included since DimensionTable
+    only needs one label per variable code.
+    """
+    rows = []
+    for code, meta in group.variables.items():
+        if not code.endswith("E"):
+            continue
+        label = meta.get("label", "")
+        if not label.startswith("Estimate!!"):
+            continue
+        rows.append({"variable": code[:-1], "variable_label": label[len("Estimate!!"):]})
+    if not rows:
+        return pd.DataFrame(columns=["variable", "variable_label"])
+    return pd.DataFrame(rows).drop_duplicates(subset="variable")
+
+
+def _infer_dim_names_from_dims(dims: "pd.DataFrame", concept: str) -> dict[str, str]:
+    """Core inference: map dim columns to human names given the dims DataFrame and concept string."""
+    n_dims = len(dims.columns)
+
+    concept_clean = re.sub(r"\s*\([^)]*\)", "", concept).strip()
+    def _cap(s: str) -> str:
+        s = s.strip()
+        return s[:1].upper() + s[1:] if s else s
+
+    parts = [_cap(p) for p in concept_clean.split(" by ")]
+
+    if len(parts) == n_dims:
+        return {f"dim_{i}": part for i, part in enumerate(parts)}
+
+    root_map: dict[str, str] = {}
+    non_roots: list[str] = []
+    for col in dims.columns:
+        unique_vals = [
+            str(v).rstrip(":").strip()
+            for v in dims[col].cat.categories
+            if str(v).strip(":").strip()
+        ]
+        if len(unique_vals) == 1:
+            root_map[col] = unique_vals[0]
+        else:
+            non_roots.append(col)
+
+    if len(parts) == len(non_roots):
+        result = {**root_map}
+        for col, part in zip(non_roots, parts):
+            result[col] = part
+        return result
+
+    result = {**root_map}
+    for i, col in enumerate(non_roots):
+        result[col] = f"Dim {i + 1}"
+    return result
+
+
+def _infer_dim_names(group: Group) -> dict[str, str]:
+    label_df = _build_group_label_df(group)
+    if label_df.empty:
+        return {}
+    dt = DimensionTable(label_df)
+    return _infer_dim_names_from_dims(dt.dims, group.description)
+
+
+def get_concept_dims_from_long(long_df: "pd.DataFrame") -> dict[str, str]:
+    """Derive dim names directly from a long DataFrame (no ``Group`` object needed).
+
+    Extracts the group code and concept from the DataFrame's ``variable`` and
+    ``concept`` columns, checks the curated ``dim_names.json`` override, and
+    falls back to the same auto-inference algorithm used by
+    :attr:`Group.concept_dims`.
+
+    Parameters
+    ----------
+    long_df : pd.DataFrame
+        Output of ``CensusAPI.long`` (must contain ``variable`` and ``concept``
+        columns).
+
+    Returns
+    -------
+    dict[str, str]
+        E.g. ``{"dim_0": "Total", "dim_1": "Sex", "dim_2": "Age"}``.
+    """
+    if long_df.empty:
+        return {}
+
+    group_code = ""
+    if "variable" in long_df.columns:
+        m = re.match(r"^([A-Z][A-Z0-9]+)_", str(long_df["variable"].iloc[0]))
+        if m:
+            group_code = m.group(1)
+
+    overrides = _load_dim_names_json()
+    if group_code in overrides:
+        return overrides[group_code]
+
+    concept = str(long_df["concept"].iloc[0]) if "concept" in long_df.columns else ""
+    dt = DimensionTable(long_df)
+    return _infer_dim_names_from_dims(dt.dims, concept)
+
+
+def get_dim_variables(group: Group) -> dict[str, list[str]]:
+    """Return ordered unique values for each named dimension in *group*.
+
+    Keys are the human-readable dim names from :attr:`Group.concept_dims`;
+    values are the unique non-empty category values for that dim column
+    (colon-stripped, in Census-defined order).
+
+    Parameters
+    ----------
+    group : Group
+
+    Returns
+    -------
+    dict[str, list[str]]
+        E.g. ``{"Total": ["Total"], "Sex": ["Male", "Female"], "Age": [...]}``.
+    """
+    label_df = _build_group_label_df(group)
+    if label_df.empty:
+        return {}
+
+    dt = DimensionTable(label_df)
+    names = group.concept_dims
+
+    result: dict[str, list[str]] = {}
+    for col in dt.dims.columns:
+        dim_name = names.get(col, col)
+        cats = [
+            str(v).rstrip(":").strip()
+            for v in dt.dims[col].cat.categories
+            if str(v).strip(":").strip()
+        ]
+        result[dim_name] = cats
+    return result
 
 
 # ---------------------------------------------------------------------------
