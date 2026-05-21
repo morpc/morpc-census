@@ -1376,15 +1376,6 @@ class DimensionTable:
 
         # Strip ':' from dim values for display
         display_dims = self.dims.apply(lambda col: col.str.rstrip(':').str.strip())
-        # DataFrame.apply with str accessors returns object dtype, losing the ordered
-        # Categorical dtype that _parse_dims built.  Rebuild each column explicitly so
-        # that the row-level sort later uses category order (Census order) rather than
-        # falling back to lexicographic ordering.
-        for col in display_dims.columns:
-            orig_cats = [c.rstrip(':').strip() for c in self.dims[col].cat.categories]
-            display_dims[col] = pd.Categorical(
-                display_dims[col], categories=orig_cats, ordered=True
-            )
 
         col_level_names = [n if n is not None else 'value_type' for n in wide.columns.names]
         wide.columns = wide.columns.to_list()
@@ -1418,13 +1409,7 @@ class DimensionTable:
                     level=i,
                 )
 
-        wide = wide.sort_index(level='geoidfq', axis=1)
-        # Deduplicate by index only (not by data values), so rows whose estimates
-        # happen to be equal are not silently dropped.
-        wide = wide[~wide.index.duplicated(keep='first')]
-        # Sort rows by the categorical MultiIndex (Census-defined order, not alphabetical).
-        wide = wide.sort_index(axis=0, sort_remaining=True)
-        return wide
+        return wide.sort_index(level='geoidfq', axis=1).drop_duplicates()
 
     def percent(self, decimals=2, _wide=None):
         """Compute column percentages relative to the grand total row.
