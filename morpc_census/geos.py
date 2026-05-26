@@ -675,7 +675,7 @@ def geoinfo_from_scope_sumlevel(
 
 def _fetch_layer(sumlevel: SumLevel, geoids: list[str], year: int | None, survey: str, chunk_size: int) -> "GeoDataFrame":
     """Fetch geometries for a single sumlevel from TIGERweb, chunking the geoid list as needed."""
-    import morpc
+    from morpc.rest_api import ArcGISResource
     from morpc_census.tigerweb import get_layer_url
     import pandas as pd
 
@@ -692,8 +692,8 @@ def _fetch_layer(sumlevel: SumLevel, geoids: list[str], year: int | None, survey
         if len(chunks) > 1:
             logger.info(f"  chunk {i + 1}/{len(chunks)} ({len(chunk)} records)")
         where = "GEOID in ({})".format(', '.join(f"'{g}'" for g in chunk))
-        resource = morpc.rest_api.resource(name='temp', url=url, where=where, outfields='GEOID', max_record_count=chunk_size)
-        results.append(morpc.rest_api.gdf_from_resource(resource))
+        r = ArcGISResource.from_url(name='temp', url=url, where=where, outfields='GEOID', max_record_count=chunk_size)
+        results.append(r.to_geodataframe())
 
     return pd.concat(results)
 
