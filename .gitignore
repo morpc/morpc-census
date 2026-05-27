@@ -4,6 +4,15 @@ __pycache__/
 dist/
 build/
 morpc.egg-info/
+morpc_census.egg-info/
+.venv/
+*.log
+
+# regenerable catalog build artifacts (see scripts/build_dimensions.py)
+scripts/proposed_dimensions.json
+scripts/proposed_group_dimensions.json
+scripts/signatures.json
+scripts/needs_review.json
 demo/
 *-checkpoint.*
 
