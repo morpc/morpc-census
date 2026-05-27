@@ -1060,76 +1060,77 @@ class DimensionTable:
     def _parse_dims(self, dim_names=None):
         """Parse ``variable_label`` into a structured dimension DataFrame.
 
-        Each ``!!``-delimited label is split into subtotal segments (ending
-        with ``:``) and leaf segments (no trailing ``:``).  Subtotals are
-        left-aligned into the first *S* columns; leaves are left-aligned into
-        the next *L* columns, where *S* and *L* are the maximum depths across
-        all variables.  This keeps the same concept in the same column even
-        when paths have different depths (e.g. B05004 Sex by Nativity).
-
-        The ``':'`` suffix is preserved in the stored values so ``drop()`` can
-        distinguish aggregate rows from leaf rows.  It is stripped for display
-        in ``wide()``.
+        Each ``!!``-delimited label is split into segments (``':'`` subtotal
+        markers are stripped), then shifted rightward so that any value that
+        appears at multiple depths across the group always lands in the same
+        column.  Empty cells are stored as ``''`` so that ``drop()`` can
+        identify rows that are already aggregated over a dimension.
 
         Returns
         -------
         pandas.DataFrame
             Index = ``variable``, columns = dimension names.
         """
-        # One label per variable code — different vintages may use the same code
-        # with slightly different label text (e.g. trailing ':' present or absent).
+        # One label per variable code — different vintages may use the same
+        # code with slightly different label text (e.g. trailing ':' present
+        # or absent); keep only the first occurrence.
         unique = (self.long[['variable', 'variable_label']]
                   .drop_duplicates(subset='variable')
                   .set_index('variable')
                   .copy())
 
-        # Normalize: older Census vintages omit the trailing ':' from subtotal
-        # segments.  Rebuild each label so that any segment which is a strict
-        # prefix of another label (i.e. has children in the label tree) gets a
-        # ':' suffix.  Existing ':' suffixes are also preserved, so labels that
-        # are already in the standard convention pass through unchanged.
-        clean_labels = set(
-            '!!'.join(p.rstrip(':') for p in lbl.split('!!'))
-            for lbl in unique['variable_label']
-        )
+        def segments(label):
+            return [s.rstrip(':').strip() for s in label.split('!!') if s.rstrip(':').strip()]
 
-        def normalize_label(label):
-            parts = label.split('!!')
-            stripped = [p.rstrip(':') for p in parts]
-            result = []
-            for i, (orig, part) in enumerate(zip(parts, stripped)):
-                prefix = '!!'.join(stripped[:i + 1])
-                has_children = any(
-                    other.startswith(prefix + '!!') for other in clean_labels
-                )
-                result.append(part + ':' if (orig.endswith(':') or has_children) else part)
-            return '!!'.join(result)
+        seg_series = unique['variable_label'].map(segments)
+        width = seg_series.map(len).max() if len(seg_series) else 0
+        ncols = width + 2  # buffer so the shift loop has room to expand
 
-        unique['variable_label'] = unique['variable_label'].map(normalize_label)
+        rows = [segs + [None] * (ncols - len(segs)) for segs in seg_series]
 
-        def split_path(label):
-            parts = label.split('!!')
-            return (
-                [p for p in parts if p.endswith(':')],
-                [p for p in parts if not p.endswith(':')],
-            )
+        # Shift each value rightward until it no longer appears in any column
+        # to its right, aligning values that vary in depth across the tree.
+        if rows:
+            max_cols = ncols * 2
+            changed = True
+            while changed:
+                changed = False
+                right_of = [set() for _ in range(ncols)]
+                acc: set = set()
+                for j in range(ncols - 1, -1, -1):
+                    right_of[j] = set(acc)
+                    for row in rows:
+                        if row[j] is not None:
+                            acc.add(row[j])
+                for i in range(ncols - 1):
+                    rv = right_of[i]
+                    for row in rows:
+                        v = row[i]
+                        if v is None or v not in rv:
+                            continue
+                        if v in row[i + 1:]:
+                            continue
+                        if row[-1] is not None:
+                            if ncols >= max_cols:
+                                continue
+                            for other in rows:
+                                other.append(None)
+                            ncols += 1
+                            right_of.append(set())
+                        row.insert(i, None)
+                        row.pop()
+                        changed = True
 
-        paths = unique['variable_label'].map(split_path)
-        S = paths.map(lambda x: len(x[0])).max()
-        L = paths.map(lambda x: len(x[1])).max()
+        dims = pd.DataFrame(rows, index=unique.index)
+        dims = dims.loc[:, dims.notna().any(axis=0)]
+        dims = dims.where(dims.notna(), '')
 
-        def align(subtotals, leaves):
-            return (subtotals + [''] * (S - len(subtotals)) +
-                    leaves    + [''] * (L - len(leaves)))
-
-        rows = paths.map(lambda x: align(*x))
-        n = S + L
-        dims = pd.DataFrame(rows.tolist(), index=unique.index)
         named = list(dim_names or [])
+        n = len(dims.columns)
         dims.columns = named[:n] + [f'dim_{i}' for i in range(len(named), n)]
 
-        # Convert each column to an ordered categorical using first-appearance order
-        # (Census variables are returned in their defined hierarchical order).
+        # Convert each column to an ordered categorical using first-appearance
+        # order (Census variables are returned in their defined order).
         for col in dims.columns:
             seen = list(dict.fromkeys(dims[col]))
             dims[col] = pd.Categorical(dims[col], categories=seen, ordered=True)
@@ -1373,7 +1374,12 @@ class DimensionTable:
                     level=i,
                 )
 
-        return wide.sort_index(level='geoidfq', axis=1).drop_duplicates()
+        wide = wide.sort_index(level='geoidfq', axis=1)
+        # Include dim index values in the duplicate check so that rows sharing
+        # identical all-NaN data (e.g. a geography with no coverage) are not
+        # collapsed into one row.  Filter via a boolean mask on the original
+        # DataFrame to preserve categorical dtypes on column levels.
+        return wide[~wide.reset_index().duplicated().values]
 
     def percent(self, decimals=2, _wide=None):
         """Compute column percentages relative to the grand total row.

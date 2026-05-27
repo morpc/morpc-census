@@ -207,10 +207,10 @@ def resource_from_scope_sumlevel(
 
     Returns
     -------
-    morpc.rest_api.resource
+    ArcGISResource
         Configured resource ready for fetching.
     """
-    from morpc.rest_api import resource
+    from morpc.rest_api import ArcGISResource
     from morpc_census.geos import Scope, SumLevel
 
     sc = scope if isinstance(scope, Scope) else Scope(scope)
@@ -220,7 +220,7 @@ def resource_from_scope_sumlevel(
     where = sc.sql
     outfields = ",".join(['GEOID', 'NAME'] + [f.upper() for f in sl.parts])
 
-    tigerweb_resource = resource(
+    tigerweb_resource = ArcGISResource.from_url(
         name=f"censustigerweb-{sc.name}-{sl.hierarchy_string.lower()}",
         url=url,
         where=where,
@@ -234,12 +234,12 @@ def resource_from_scope_sumlevel(
     return tigerweb_resource
 
 
-# TODO: resource_from_geometry_sumlevel is blocked on gdf_from_resource support for
+# TODO: resource_from_geometry_sumlevel is blocked on ArcGISResource support for
 # Issue URL: https://github.com/jinskeep-morpc/morpc-census/issues/50
-# spatial (geometry envelope) queries. morpc.rest_api.gdf_from_resource paginates using
-# totalRecordCount which does not accept spatial params, so fetching from this resource
-# silently returns wrong results. Re-enable and debug once gdf_from_resource is updated
-# to handle geometry-based queries.
+# spatial (geometry envelope) queries. ArcGISResource.to_geodataframe() paginates using
+# totalRecords which does not accept spatial params, so fetching from this resource
+# silently returns wrong results. Re-enable once ArcGISResource.from_url() supports
+# geometry-based where clauses or a separate spatial fetch path is added.
 #
 # def resource_from_geometry_sumlevel(
 #     geo,
@@ -248,49 +248,30 @@ def resource_from_scope_sumlevel(
 #     archive: PathLike | None = None,
 #     max_record_count: int = 20,
 # ):
-#     """Build a frictionless Resource for all geographies at *sumlevel* intersecting *geo*.
+#     """Build an ArcGISResource for all geographies at *sumlevel* intersecting *geo*.
 #
 #     geo : GeoDataFrame | GeoSeries -- bounding box used as spatial filter
 #     scopename : str -- label for the resource name (e.g. 'franklin')
 #     sumlevel : str | SumLevel -- e.g. 'tract'
 #     """
-#     import frictionless, re
-#     from morpc.rest_api import totalRecordCount, schema as rest_schema, maxRecordCount
+#     from morpc.rest_api import ArcGISResource, ArcGISControl
 #     from morpc_census.geos import SumLevel
 #     sl = sumlevel if isinstance(sumlevel, SumLevel) else SumLevel(sumlevel)
 #     url = get_layer_url(sl.tigerweb_name)
 #     outfields = ",".join(['GEOID', 'NAME'] + [f.upper() for f in sl.parts])
-#     query = {
-#         'geometry': ",".join(str(x) for x in geo.total_bounds),
-#         'geometryType': 'esriGeometryEnvelope',
-#         'inSR': str(geo.crs.to_epsg()),
-#         'spatialRel': 'esriSpatialRelContains',
-#         'outFields': outfields,
-#         'returnGeometry': 'true',
-#         'f': 'geojson',
-#     }
-#     try:
-#         total_records = totalRecordCount(url, where='1=1', outfields=outfields)
-#     except Exception:
-#         total_records = max_record_count
-#     try:
-#         srv_max = maxRecordCount(url)
-#     except (ValueError, KeyError):
-#         srv_max = max_record_count
-#     resource_dict = {
-#         "name": re.sub('[:/_ ]', '-', f"censustigerweb-{scopename}-{sl.hierarchy_string.lower()}").lower(),
-#         "format": "json",
-#         "path": url,
-#         "schema": rest_schema(url, outfields=outfields),
-#         "mediatype": "application/geo+json",
-#         "_metadata": {
-#             "type": "arcgis_service",
-#             "params": query,
-#             "total_records": total_records,
-#             "max_record_count": min(max_record_count, srv_max),
-#         },
-#     }
-#     tigerweb_resource = frictionless.Resource(resource_dict)
+#     # NOTE: ArcGISResource.from_url() does not yet support geometry envelope queries.
+#     # When re-enabling, pass geometry params via **kwargs and update to_geodataframe()
+#     # to use a spatial record count rather than the service totalRecordCount.
+#     tigerweb_resource = ArcGISResource.from_url(
+#         name=f"censustigerweb-{scopename}-{sl.hierarchy_string.lower()}",
+#         url=url,
+#         outfields=outfields,
+#         max_record_count=max_record_count,
+#         geometry=",".join(str(x) for x in geo.total_bounds),
+#         geometryType='esriGeometryEnvelope',
+#         inSR=str(geo.crs.to_epsg()),
+#         spatialRel='esriSpatialRelContains',
+#     )
 #     if archive is not None:
 #         tigerweb_resource.to_yaml(archive)
 #     return tigerweb_resource
