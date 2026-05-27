@@ -1,16 +1,1 @@
-{
-  "B26101": {
-    "dim_0": "Total",
-    "dim_1": "GQ Type",
-    "dim_2": "GQ Subtype",
-    "dim_3": "GQ Facility",
-    "dim_4": "Sex",
-    "dim_5": "Age"
-  },
-  "B28006": {
-    "dim_0": "Total",
-    "dim_1": "Educational Attainment",
-    "dim_2": "Computer Access",
-    "dim_3": "Internet Subscription"
-  }
-}
+

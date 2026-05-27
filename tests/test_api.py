@@ -266,20 +266,20 @@ class TestDimensionTableParseDims:
         dims = DimensionTable(long).dims
         assert len(dims) == long['variable'].nunique()
 
-    def test_dims_column_count_equals_max_subtotal_plus_max_leaf_depth(self):
-        # _make_long: all subtotals (Male:, Female: end with ':'), 0 leaves → 2 cols
+    def test_dims_column_count(self):
+        # _make_long: labels have depth 1 (Total) and 2 (Total!!Male/Female) → 2 cols
         dims = DimensionTable(_make_long()).dims
         assert dims.shape[1] == 2
 
     def test_dims_total_in_first_column(self):
         dims = DimensionTable(_make_long()).dims
-        assert dims.iloc[:, 0].eq('Total:').all()
+        assert dims.iloc[:, 0].eq('Total').all()
 
-    def test_dims_subtotals_left_aligned(self):
-        # Male: and Female: are subtotals → should be in second column, not third
+    def test_dims_sex_in_second_column(self):
+        # Male and Female appear only at depth 1 → second column, not shifted further
         dims = DimensionTable(_make_long()).dims
-        assert dims.loc['B01_002', dims.columns[1]] == 'Male:'
-        assert dims.loc['B01_003', dims.columns[1]] == 'Female:'
+        assert dims.loc['B01_002', dims.columns[1]] == 'Male'
+        assert dims.loc['B01_003', dims.columns[1]] == 'Female'
 
     def test_dims_leaf_aligned_to_last_column(self):
         # Cross-dim fixture: Male/Female are leaves → always in the last column
@@ -289,11 +289,12 @@ class TestDimensionTableParseDims:
                     'B05_008', 'B05_009', 'B05_011', 'B05_012']
         assert all(dims.loc[v, last_col] in ('Male', 'Female') for v in sex_rows)
 
-    def test_dims_subtotals_not_in_leaf_column(self):
-        # Nativity subtotals (Native:, Foreign-born:, Naturalized:) should NOT be in last col
+    def test_dims_nativity_not_in_last_column(self):
+        # Nativity values (Native, Foreign-born, Naturalized) appear at fixed depths
+        # and should NOT be shifted into the last (sex) column.
         dims = DimensionTable(_make_long_cross()).dims
         last_col = dims.columns[-1]
-        assert not dims.loc[:, last_col].str.endswith(':').any()
+        assert not dims.loc[:, last_col].isin(['Native', 'Foreign-born', 'Naturalized']).any()
 
     def test_dim_names_parameter_renames_columns(self):
         dims = DimensionTable(_make_long(), dim_names=['total', 'sex']).dims
@@ -314,21 +315,20 @@ class TestDimensionTableParseDims:
             assert dims[col].cat.ordered, f"column {col!r} is not ordered"
 
     def test_dims_categorical_order_matches_variable_order(self):
-        # _make_long returns B01_001 (Total:), B01_002 (Male:), B01_003 (Female:)
-        # The second column categories should appear in that order: Total:, Male:, Female:
+        # _make_long returns B01_001 (Total), B01_002 (Male), B01_003 (Female)
+        # The second column categories should follow that order.
         dims = DimensionTable(_make_long()).dims
         second_col = dims.iloc[:, 1]
         cats = list(second_col.cat.categories)
-        # Male: comes before Female: in the fixture variable order
-        assert cats.index('Male:') < cats.index('Female:')
+        assert cats.index('Male') < cats.index('Female')
 
     def test_dims_categorical_order_preserved_across_cross_vintage(self):
-        # Cross-vintage fixture: 2018 labels lack ':', but after normalization
-        # Male: and Female: should still appear in variable order
+        # Cross-vintage fixture: 2018 labels lack ':' but produce the same segments.
+        # Male and Female should still appear in variable order.
         dims = DimensionTable(_make_long_timeseries()).dims
         second_col = dims.iloc[:, 1]
         cats = [c for c in second_col.cat.categories if c != '']
-        assert cats.index('Male:') < cats.index('Female:')
+        assert cats.index('Male') < cats.index('Female')
 
 
 # ---------------------------------------------------------------------------
@@ -337,7 +337,8 @@ class TestDimensionTableParseDims:
 
 class TestDimensionTableCrossVintage:
     """_parse_dims must handle cross-vintage concatenations where older vintages
-    omit the trailing ':' from subtotal segments."""
+    omit the trailing ':' from subtotal segments.  Colons are stripped in all
+    cases, so both vintages produce the same clean segment values."""
 
     def test_same_column_count_as_single_vintage(self):
         # Both single-vintage (2023 only) and combined should give the same n
@@ -359,19 +360,19 @@ class TestDimensionTableCrossVintage:
         dims = DimensionTable(long_ts).dims
         assert len(dims) == long_ts['variable'].nunique()
 
-    def test_subtotals_normalized_with_colon(self):
-        # 'Total' (no ':') and 'Male' / 'Female' (no ':') should become
-        # 'Total:' and 'Male:' / 'Female:' after tree-structure normalization
+    def test_cross_vintage_labels_produce_consistent_dims(self):
+        # 2018 labels ('Total', 'Total!!Male') and 2023 labels ('Total:', 'Total:!!Male:')
+        # both reduce to the same clean segments ('Total', 'Male', 'Female').
         dims = DimensionTable(_make_long_timeseries()).dims
-        assert dims.iloc[:, 0].eq('Total:').all()
-        assert dims.loc['B01_002', dims.columns[1]] == 'Male:'
-        assert dims.loc['B01_004', dims.columns[1]] == 'Female:'
+        assert dims.iloc[:, 0].eq('Total').all()
+        assert dims.loc['B01_002', dims.columns[1]] == 'Male'
+        assert dims.loc['B01_004', dims.columns[1]] == 'Female'
 
-    def test_leaf_column_has_no_colon(self):
+    def test_no_colons_in_dim_values(self):
+        # Shift-right strips ':' from all segments; no dim value should contain one.
         dims = DimensionTable(_make_long_timeseries()).dims
-        last_col = dims.columns[-1]
-        non_empty = dims[last_col].loc[dims[last_col] != '']
-        assert not non_empty.str.endswith(':').any()
+        for col in dims.columns:
+            assert not dims[col].str.endswith(':').any()
 
 
 # ---------------------------------------------------------------------------
@@ -420,8 +421,7 @@ class TestDimensionTableDrop:
         dt = DimensionTable(_make_long_cross())
         last_col = dt.dims.columns[-1]
         result = dt.drop(last_col, method='aggregate')
-        # Find the Native: row
-        native_var = result.dims.loc[result.dims['dim_1'] == 'Native:'].index[0]
+        native_var = result.dims.loc[result.dims['dim_1'] == 'Native'].index[0]
         native_est = result.long.loc[result.long['variable'] == native_var, 'estimate'].iloc[0]
         assert native_est == 200  # 100 + 100
 
@@ -430,7 +430,7 @@ class TestDimensionTableDrop:
         dt = DimensionTable(_make_long_cross())
         last_col = dt.dims.columns[-1]
         result = dt.drop(last_col, method='aggregate')
-        native_var = result.dims.loc[result.dims['dim_1'] == 'Native:'].index[0]
+        native_var = result.dims.loc[result.dims['dim_1'] == 'Native'].index[0]
         native_moe = result.long.loc[result.long['variable'] == native_var, 'moe'].iloc[0]
         expected_moe = np.sqrt(5**2 + 5**2)
         assert abs(native_moe - expected_moe) < 1e-9
