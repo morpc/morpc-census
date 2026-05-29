@@ -1,0 +1,6954 @@
+{
+  "dim_000": {
+    "name": "Total",
+    "variables": [
+      "Total"
+    ]
+  },
+  "dim_001": {
+    "name": "Sex",
+    "variables": [
+      "Male",
+      "Female"
+    ]
+  },
+  "dim_002": {
+    "name": "Allocated",
+    "variables": [
+      "Allocated",
+      "Not allocated"
+    ]
+  },
+  "dim_003": {
+    "name": "Tenure",
+    "variables": [
+      "Owner occupied",
+      "Renter occupied"
+    ]
+  },
+  "dim_004": {
+    "name": "Institutionalized Group Quarters",
+    "variables": [
+      "Institutionalized group quarters population",
+      "Noninstitutionalized group quarters population"
+    ]
+  },
+  "dim_005": {
+    "name": "Group Quarters Population",
+    "variables": [
+      "Group quarters population",
+      "Household population"
+    ]
+  },
+  "dim_006": {
+    "name": "Sex of Householder",
+    "variables": [
+      "Male householder, no spouse present",
+      "Female householder, no spouse present"
+    ]
+  },
+  "dim_007": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Car, truck, or van - drove alone",
+      "Car, truck, or van - carpooled",
+      "Public transportation (excluding taxicab)",
+      "Walked",
+      "Taxicab, motorcycle, bicycle, or other means",
+      "Worked from home"
+    ]
+  },
+  "dim_008": {
+    "name": "Poverty Status",
+    "variables": [
+      "Income in the past 12 months below poverty level",
+      "Income in the past 12 months at or above poverty level"
+    ]
+  },
+  "dim_009": {
+    "name": "Group Quarters Type (5 Types)",
+    "variables": [
+      "Adult correctional facilities",
+      "Nursing facilities/skilled nursing facilities",
+      "Juvenile facilities",
+      "College/university student housing",
+      "Military quarters/military ships"
+    ]
+  },
+  "dim_010": {
+    "name": "Group Quarters Type (3 Types)",
+    "variables": [
+      "Adult correctional facilities",
+      "Nursing facilities/skilled nursing facilities",
+      "College/university student housing"
+    ]
+  },
+  "dim_011": {
+    "name": "Employment Status",
+    "variables": [
+      "In labor force",
+      "Not in labor force"
+    ]
+  },
+  "dim_012": {
+    "name": "Family Type",
+    "variables": [
+      "Married-couple family",
+      "Other family"
+    ]
+  },
+  "dim_013": {
+    "name": "Employment Status",
+    "variables": [
+      "Employed",
+      "Unemployed"
+    ]
+  },
+  "dim_014": {
+    "name": "Citizenship Status",
+    "variables": [
+      "Naturalized U.S. citizen",
+      "Not a U.S. citizen"
+    ]
+  },
+  "dim_015": {
+    "name": "Disability Status",
+    "variables": [
+      "With a disability",
+      "No disability"
+    ]
+  },
+  "dim_016": {
+    "name": "Moved From",
+    "variables": [
+      "Same house 1 year ago",
+      "Moved within same county",
+      "Moved from different county within same state",
+      "Moved from different state",
+      "Moved from abroad"
+    ]
+  },
+  "dim_017": {
+    "name": "Total Living in the Area",
+    "variables": [
+      "Total living in area 1 year ago"
+    ]
+  },
+  "dim_018": {
+    "name": "Moved To",
+    "variables": [
+      "Same house",
+      "Moved within same county",
+      "Moved to different county within same state",
+      "Moved to different state"
+    ]
+  },
+  "dim_019": {
+    "name": "Responsibility",
+    "variables": [
+      "Grandparent responsible for own grandchildren under 18 years",
+      "Grandparent not responsible for own grandchildren under 18 years"
+    ]
+  },
+  "dim_020": {
+    "name": "Age",
+    "variables": [
+      "Under 19 years",
+      "19 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_021": {
+    "name": "Health Insurance Coverage Status",
+    "variables": [
+      "With health insurance coverage",
+      "No health insurance coverage"
+    ]
+  },
+  "dim_022": {
+    "name": "Occupation",
+    "variables": [
+      "Management, business, science, and arts occupations",
+      "Service occupations",
+      "Sales and office occupations",
+      "Natural resources, construction, and maintenance occupations",
+      "Production, transportation, and material moving occupations"
+    ]
+  },
+  "dim_023": {
+    "name": "Nativity",
+    "variables": [
+      "Native",
+      "Foreign-born"
+    ]
+  },
+  "dim_024": {
+    "name": "Ability to Speak English",
+    "variables": [
+      "Speak English \"very well\"",
+      "Speak English less than \"very well\""
+    ]
+  },
+  "dim_025": {
+    "name": "Nativity",
+    "variables": [
+      "Native",
+      "Foreign born"
+    ]
+  },
+  "dim_026": {
+    "name": "Household Type",
+    "variables": [
+      "Family households",
+      "Nonfamily households"
+    ]
+  },
+  "dim_027": {
+    "name": "Presence of Own Children Under 18 Years",
+    "variables": [
+      "With own children of the householder under 18 years",
+      "No own children of the householder under 18 years"
+    ]
+  },
+  "dim_028": {
+    "name": "Detailed Occupation",
+    "variables": [
+      "Chief executives",
+      "General and operations managers",
+      "Legislators",
+      "Advertising and promotions managers",
+      "Marketing managers",
+      "Sales managers",
+      "Public relations and fundraising managers",
+      "Administrative services managers",
+      "Facilities managers",
+      "Computer and information systems managers",
+      "Financial managers",
+      "Compensation and benefits managers",
+      "Human resources managers",
+      "Training and development managers",
+      "Industrial production managers",
+      "Purchasing managers",
+      "Transportation, storage, and distribution managers",
+      "Farmers, ranchers, and other agricultural managers",
+      "Construction managers",
+      "Education and childcare administrators",
+      "Architectural and engineering managers",
+      "Food service managers",
+      "Funeral home managers",
+      "Entertainment and recreation managers",
+      "Lodging managers",
+      "Medical and health services managers",
+      "Natural sciences managers",
+      "Postmasters and mail superintendents",
+      "Property, real estate, and community association managers",
+      "Social and community service managers",
+      "Emergency management directors",
+      "Personal service managers, all other",
+      "Managers, all other",
+      "Agents and business managers of artists, performers, and athletes",
+      "Buyers and purchasing agents, farm products",
+      "Wholesale and retail buyers, except farm products",
+      "Purchasing agents, except wholesale, retail, and farm products",
+      "Claims adjusters, appraisers, examiners, and investigators",
+      "Compliance officers",
+      "Cost estimators",
+      "Human resources workers",
+      "Compensation, benefits, and job analysis specialists",
+      "Training and development specialists",
+      "Logisticians",
+      "Project management specialists",
+      "Management analysts",
+      "Meeting, convention, and event planners",
+      "Fundraisers",
+      "Market research analysts and marketing specialists",
+      "Business operations specialists, all other",
+      "Accountants and auditors",
+      "Property appraisers and assessors",
+      "Budget analysts",
+      "Credit analysts",
+      "Financial and investment analysts",
+      "Personal financial advisors",
+      "Insurance underwriters",
+      "Financial examiners",
+      "Credit counselors and loan officers",
+      "Tax examiners and collectors, and revenue agents",
+      "Tax preparers",
+      "Other financial specialists",
+      "Computer and information research scientists",
+      "Computer systems analysts",
+      "Information security analysts",
+      "Computer programmers",
+      "Software developers",
+      "Software quality assurance analysts and testers",
+      "Web developers",
+      "Web and digital interface designers",
+      "Computer support specialists",
+      "Database administrators and architects",
+      "Network and computer systems administrators",
+      "Computer network architects",
+      "Computer occupations, all other",
+      "Actuaries",
+      "Mathematicians",
+      "Operations research analysts",
+      "Statisticians",
+      "Other mathematical science occupations",
+      "Architects, except landscape and naval",
+      "Landscape architects",
+      "Surveyors, cartographers, and photogrammetrists",
+      "Aerospace engineers",
+      "Agricultural engineers",
+      "Bioengineers and biomedical engineers",
+      "Chemical engineers",
+      "Civil engineers",
+      "Computer hardware engineers",
+      "Electrical and electronics engineers",
+      "Environmental engineers",
+      "Industrial engineers, including health and safety",
+      "Marine engineers and naval architects",
+      "Materials engineers",
+      "Mechanical engineers",
+      "Mining and geological engineers, including mining safety engineers",
+      "Nuclear engineers",
+      "Petroleum engineers",
+      "Engineers, all other",
+      "Architectural and civil drafters",
+      "Other drafters",
+      "Electrical and electronic engineering technologists and technicians",
+      "Other engineering technologists and technicians, except drafters",
+      "Surveying and mapping technicians",
+      "Agricultural and food scientists",
+      "Biological scientists",
+      "Conservation scientists and foresters",
+      "Medical scientists",
+      "Life scientists, all other",
+      "Astronomers and physicists",
+      "Atmospheric and space scientists",
+      "Chemists and materials scientists",
+      "Environmental scientists and specialists, including health",
+      "Geoscientists and hydrologists, except geographers",
+      "Physical scientists, all other",
+      "Economists",
+      "Survey researchers",
+      "Clinical and counseling psychologists",
+      "School psychologists",
+      "Other psychologists",
+      "Sociologists",
+      "Urban and regional planners",
+      "Miscellaneous social scientists and related workers",
+      "Agricultural and food science technicians",
+      "Biological technicians",
+      "Chemical technicians",
+      "Environmental science and geoscience technicians",
+      "Nuclear technicians",
+      "Social science research assistants",
+      "Other life, physical, and social science technicians",
+      "Occupational health and safety specialists and technicians",
+      "Substance abuse and behavioral disorder counselors",
+      "Educational, guidance, and career counselors and advisors",
+      "Marriage and family therapists",
+      "Mental health counselors",
+      "Rehabilitation counselors",
+      "Counselors, all other",
+      "Child, family, and school social workers",
+      "Healthcare social workers",
+      "Mental health and substance abuse social workers",
+      "Social workers, all other",
+      "Probation officers and correctional treatment specialists",
+      "Social and human service assistants",
+      "Other community and social service specialists",
+      "Clergy",
+      "Directors, religious activities and education",
+      "Religious workers, all other",
+      "Lawyers",
+      "Judicial law clerks",
+      "Judges, magistrates, and other judicial workers",
+      "Paralegals and legal assistants",
+      "Title examiners, abstractors, and searchers",
+      "Legal support workers, all other",
+      "Postsecondary teachers",
+      "Preschool and kindergarten teachers",
+      "Elementary and middle school teachers",
+      "Secondary school teachers",
+      "Special education teachers",
+      "Tutors",
+      "Other teachers and instructors",
+      "Archivists, curators, and museum technicians",
+      "Librarians and media collections specialists",
+      "Library technicians",
+      "Teaching assistants",
+      "Other educational instruction and library workers",
+      "Artists and related workers",
+      "Commercial and industrial designers",
+      "Fashion designers",
+      "Floral designers",
+      "Graphic designers",
+      "Interior designers",
+      "Merchandise displayers and window trimmers",
+      "Other designers",
+      "Actors",
+      "Producers and directors",
+      "Athletes and sports competitors",
+      "Coaches and scouts",
+      "Umpires, referees, and other sports officials",
+      "Dancers and choreographers",
+      "Music directors and composers",
+      "Musicians and singers",
+      "Disc jockeys, except radio",
+      "Entertainers and performers, sports and related workers, all other",
+      "Broadcast announcers and radio disc jockeys",
+      "News analysts, reporters, and journalists",
+      "Public relations specialists",
+      "Editors",
+      "Technical writers",
+      "Writers and authors",
+      "Interpreters and translators",
+      "Court reporters and simultaneous captioners",
+      "Media and communication workers, all other",
+      "Broadcast, sound, and lighting technicians",
+      "Photographers",
+      "Television, video, and film camera operators and editors",
+      "Media and communication equipment workers, all other",
+      "Chiropractors",
+      "Dentists",
+      "Dietitians and nutritionists",
+      "Optometrists",
+      "Pharmacists",
+      "Emergency medicine physicians",
+      "Radiologists",
+      "Other physicians",
+      "Surgeons",
+      "Physician assistants",
+      "Podiatrists",
+      "Audiologists",
+      "Occupational therapists",
+      "Physical therapists",
+      "Radiation therapists",
+      "Recreational therapists",
+      "Respiratory therapists",
+      "Speech-language pathologists",
+      "Exercise physiologists",
+      "Therapists, all other",
+      "Veterinarians",
+      "Registered nurses",
+      "Nurse anesthetists",
+      "Nurse midwives",
+      "Nurse practitioners",
+      "Acupuncturists",
+      "Healthcare diagnosing or treating practitioners, all other",
+      "Clinical laboratory technologists and technicians",
+      "Dental hygienists",
+      "Cardiovascular technologists and technicians",
+      "Diagnostic medical sonographers",
+      "Radiologic technologists and technicians",
+      "Magnetic resonance imaging technologists",
+      "Nuclear medicine technologists and medical dosimetrists",
+      "Emergency medical technicians",
+      "Paramedics",
+      "Pharmacy technicians",
+      "Psychiatric technicians",
+      "Surgical technologists",
+      "Veterinary technologists and technicians",
+      "Dietetic technicians and ophthalmic medical technicians",
+      "Licensed practical and licensed vocational nurses",
+      "Medical records specialists",
+      "Opticians, dispensing",
+      "Miscellaneous health technologists and technicians",
+      "Other healthcare practitioners and technical occupations",
+      "Home health aides",
+      "Personal care aides",
+      "Nursing assistants",
+      "Orderlies and psychiatric aides",
+      "Occupational therapy assistants and aides",
+      "Physical therapist assistants and aides",
+      "Massage therapists",
+      "Dental assistants",
+      "Medical assistants",
+      "Medical transcriptionists",
+      "Pharmacy aides",
+      "Veterinary assistants and laboratory animal caretakers",
+      "Phlebotomists",
+      "Other healthcare support workers",
+      "First-line supervisors of correctional officers",
+      "First-line supervisors of police and detectives",
+      "First-line supervisors of firefighting and prevention workers",
+      "First-line supervisors of security workers",
+      "First-line supervisors of protective service workers, all other",
+      "Firefighters",
+      "Fire inspectors",
+      "Bailiffs",
+      "Correctional officers and jailers",
+      "Detectives and criminal investigators",
+      "Fish and game wardens",
+      "Parking enforcement workers",
+      "Police officers",
+      "Animal control workers",
+      "Private detectives and investigators",
+      "Security guards and gambling surveillance officers",
+      "Crossing guards and flaggers",
+      "Transportation security screeners",
+      "School bus monitors",
+      "Other protective service workers",
+      "Chefs and head cooks",
+      "First-line supervisors of food preparation and serving workers",
+      "Cooks",
+      "Food preparation workers",
+      "Bartenders",
+      "Fast food and counter workers",
+      "Waiters and waitresses",
+      "Food servers, nonrestaurant",
+      "Dining room and cafeteria attendants and bartender helpers",
+      "Dishwashers",
+      "Hosts and hostesses, restaurant, lounge, and coffee shop",
+      "Food preparation and serving related workers, all other",
+      "First-line supervisors of housekeeping and janitorial workers",
+      "First-line supervisors of landscaping, lawn service, and groundskeeping workers",
+      "Janitors and building cleaners",
+      "Maids and housekeeping cleaners",
+      "Pest control workers",
+      "Landscaping and groundskeeping workers",
+      "Tree trimmers and pruners",
+      "Other grounds maintenance workers",
+      "Supervisors of personal care and service workers",
+      "Animal trainers",
+      "Animal caretakers",
+      "Gambling services workers",
+      "Ushers, lobby attendants, and ticket takers",
+      "Other entertainment attendants and related workers",
+      "Embalmers, crematory operators and funeral attendants",
+      "Morticians, undertakers, and funeral arrangers",
+      "Barbers",
+      "Hairdressers, hairstylists, and cosmetologists",
+      "Manicurists and pedicurists",
+      "Skincare specialists",
+      "Other personal appearance workers",
+      "Baggage porters, bellhops, and concierges",
+      "Tour and travel guides",
+      "Childcare workers",
+      "Exercise trainers and group fitness instructors",
+      "Recreation workers",
+      "Residential advisors",
+      "Personal care and service workers, all other",
+      "First-line supervisors of retail sales workers",
+      "First-line supervisors of non-retail sales workers",
+      "Cashiers",
+      "Counter and rental clerks",
+      "Parts salespersons",
+      "Retail salespersons",
+      "Advertising sales agents",
+      "Insurance sales agents",
+      "Securities, commodities, and financial services sales agents",
+      "Travel agents",
+      "Sales representatives of services, except advertising, insurance, financial services, and travel",
+      "Sales representatives, wholesale and manufacturing",
+      "Models, demonstrators, and product promoters",
+      "Real estate brokers and sales agents",
+      "Sales engineers",
+      "Telemarketers",
+      "Door-to-door sales workers, news and street vendors, and related workers",
+      "Sales and related workers, all other",
+      "First-line supervisors of office and administrative support workers",
+      "Switchboard operators, including answering service",
+      "Telephone operators",
+      "Communications equipment operators, all other",
+      "Bill and account collectors",
+      "Billing and posting clerks",
+      "Bookkeeping, accounting, and auditing clerks",
+      "Gambling cage workers",
+      "Payroll and timekeeping clerks",
+      "Procurement clerks",
+      "Tellers",
+      "Financial clerks, all other",
+      "Brokerage clerks",
+      "Correspondence clerks",
+      "Court, municipal, and license clerks",
+      "Credit authorizers, checkers, and clerks",
+      "Customer service representatives",
+      "Eligibility interviewers, government programs",
+      "File clerks",
+      "Hotel, motel, and resort desk clerks",
+      "Interviewers, except eligibility and loan",
+      "Library assistants, clerical",
+      "Loan interviewers and clerks",
+      "New accounts clerks",
+      "Order clerks",
+      "Human resources assistants, except payroll and timekeeping",
+      "Receptionists and information clerks",
+      "Reservation and transportation ticket agents and travel clerks",
+      "Information and record clerks, all other",
+      "Cargo and freight agents",
+      "Couriers and messengers",
+      "Public safety telecommunicators",
+      "Dispatchers, except police, fire, and ambulance",
+      "Meter readers, utilities",
+      "Postal service clerks",
+      "Postal service mail carriers",
+      "Postal service mail sorters, processors, and processing machine operators",
+      "Production, planning, and expediting clerks",
+      "Shipping, receiving, and inventory clerks",
+      "Weighers, measurers, checkers, and samplers, recordkeeping",
+      "Executive secretaries and executive administrative assistants",
+      "Legal secretaries and administrative assistants",
+      "Medical secretaries and administrative assistants",
+      "Secretaries and administrative assistants, except legal, medical, and executive",
+      "Data entry keyers",
+      "Word processors and typists",
+      "Desktop publishers",
+      "Insurance claims and policy processing clerks",
+      "Mail clerks and mail machine operators, except postal service",
+      "Office clerks, general",
+      "Office machine operators, except computer",
+      "Proofreaders and copy markers",
+      "Statistical assistants",
+      "Office and administrative support workers, all other",
+      "First-line supervisors of farming, fishing, and forestry workers",
+      "Agricultural inspectors",
+      "Animal breeders",
+      "Graders and sorters, agricultural products",
+      "Miscellaneous agricultural workers",
+      "Fishing and hunting workers",
+      "Forest and conservation workers",
+      "Logging workers",
+      "First-line supervisors of construction trades and extraction workers",
+      "Boilermakers",
+      "Brickmasons, blockmasons, and stonemasons",
+      "Carpenters",
+      "Carpet, floor, and tile installers and finishers",
+      "Cement masons, concrete finishers, and terrazzo workers",
+      "Construction laborers",
+      "Construction equipment operators",
+      "Drywall installers, ceiling tile installers, and tapers",
+      "Electricians",
+      "Glaziers",
+      "Insulation workers",
+      "Painters and paperhangers",
+      "Pipelayers",
+      "Plumbers, pipefitters, and steamfitters",
+      "Plasterers and stucco masons",
+      "Reinforcing iron and rebar workers",
+      "Roofers",
+      "Sheet metal workers",
+      "Structural iron and steel workers",
+      "Solar photovoltaic installers",
+      "Helpers, construction trades",
+      "Construction and building inspectors",
+      "Elevator and escalator installers and repairers",
+      "Fence erectors",
+      "Hazardous materials removal workers",
+      "Highway maintenance workers",
+      "Rail-track laying and maintenance equipment operators",
+      "Septic tank servicers and sewer pipe cleaners",
+      "Miscellaneous construction and related workers",
+      "Derrick, rotary drill, and service unit operators, oil and gas",
+      "Excavating and loading machine and dragline operators, surface mining",
+      "Earth drillers, except oil and gas",
+      "Explosives workers, ordnance handling experts, and blasters",
+      "Underground mining machine operators",
+      "Roustabouts, oil and gas",
+      "Other extraction workers",
+      "First-line supervisors of mechanics, installers, and repairers",
+      "Computer, automated teller, and office machine repairers",
+      "Radio and telecommunications equipment installers and repairers",
+      "Avionics technicians",
+      "Electric motor, power tool, and related repairers",
+      "Electrical and electronics installers and repairers, transportation equipment",
+      "Electrical and electronics repairers, industrial and utility",
+      "Electronic equipment installers and repairers, motor vehicles",
+      "Audiovisual equipment installers and repairers",
+      "Security and fire alarm systems installers",
+      "Aircraft mechanics and service technicians",
+      "Automotive body and related repairers",
+      "Automotive glass installers and repairers",
+      "Automotive service technicians and mechanics",
+      "Bus and truck mechanics and diesel engine specialists",
+      "Heavy vehicle and mobile equipment service technicians and mechanics",
+      "Small engine mechanics",
+      "Miscellaneous vehicle and mobile equipment mechanics, installers, and repairers",
+      "Control and valve installers and repairers",
+      "Heating, air conditioning, and refrigeration mechanics and installers",
+      "Home appliance repairers",
+      "Industrial and refractory machinery mechanics",
+      "Maintenance and repair workers, general",
+      "Maintenance workers, machinery",
+      "Millwrights",
+      "Electrical power-line installers and repairers",
+      "Telecommunications line installers and repairers",
+      "Precision instrument and equipment repairers",
+      "Wind turbine service technicians",
+      "Coin, vending, and amusement machine servicers and repairers",
+      "Commercial divers",
+      "Locksmiths and safe repairers",
+      "Manufactured building and mobile home installers",
+      "Riggers",
+      "Helpers--installation, maintenance, and repair workers",
+      "Other installation, maintenance, and repair workers",
+      "First-line supervisors of production and operating workers",
+      "Aircraft structure, surfaces, rigging, and systems assemblers",
+      "Electrical, electronics, and electromechanical assemblers",
+      "Engine and other machine assemblers",
+      "Structural metal fabricators and fitters",
+      "Other assemblers and fabricators",
+      "Bakers",
+      "Butchers and other meat, poultry, and fish processing workers",
+      "Food and tobacco roasting, baking, and drying machine operators and tenders",
+      "Food batchmakers",
+      "Food cooking machine operators and tenders",
+      "Food processing workers, all other",
+      "Computer numerically controlled tool operators and programmers",
+      "Forming machine setters, operators, and tenders, metal and plastic",
+      "Cutting, punching, and press machine setters, operators, and tenders, metal and plastic",
+      "Grinding, lapping, polishing, and buffing machine tool setters, operators, and tenders, metal and plastic",
+      "Other machine tool setters, operators, and tenders, metal and plastic",
+      "Machinists",
+      "Metal furnace operators, tenders, pourers, and casters",
+      "Model makers and patternmakers, metal and plastic",
+      "Molders and molding machine setters, operators, and tenders, metal and plastic",
+      "Tool and die makers",
+      "Welding, soldering, and brazing workers",
+      "Other metal workers and plastic workers",
+      "Prepress technicians and workers",
+      "Printing press operators",
+      "Print binding and finishing workers",
+      "Laundry and dry-cleaning workers",
+      "Pressers, textile, garment, and related materials",
+      "Sewing machine operators",
+      "Shoe and leather workers",
+      "Tailors, dressmakers, and sewers",
+      "Textile machine setters, operators, and tenders",
+      "Upholsterers",
+      "Other textile, apparel, and furnishings workers",
+      "Cabinetmakers and bench carpenters",
+      "Furniture finishers",
+      "Sawing machine setters, operators, and tenders, wood",
+      "Woodworking machine setters, operators, and tenders, except sawing",
+      "Other woodworkers",
+      "Power plant operators, distributors, and dispatchers",
+      "Stationary engineers and boiler operators",
+      "Water and wastewater treatment plant and system operators",
+      "Miscellaneous plant and system operators",
+      "Chemical processing machine setters, operators, and tenders",
+      "Crushing, grinding, polishing, mixing, and blending workers",
+      "Cutting workers",
+      "Extruding, forming, pressing, and compacting machine setters, operators, and tenders",
+      "Furnace, kiln, oven, drier, and kettle operators and tenders",
+      "Inspectors, testers, sorters, samplers, and weighers",
+      "Jewelers and precious stone and metal workers",
+      "Dental and ophthalmic laboratory technicians and medical appliance technicians",
+      "Packaging and filling machine operators and tenders",
+      "Painting workers",
+      "Photographic process workers and processing machine operators",
+      "Adhesive bonding machine operators and tenders",
+      "Etchers and engravers",
+      "Molders, shapers, and casters, except metal and plastic",
+      "Paper goods machine setters, operators, and tenders",
+      "Tire builders",
+      "Helpers--production workers",
+      "Other production equipment operators and tenders",
+      "Other production workers",
+      "Supervisors of transportation and material moving workers",
+      "Aircraft pilots and flight engineers",
+      "Air traffic controllers and airfield operations specialists",
+      "Flight attendants",
+      "Ambulance drivers and attendants, except emergency medical technicians",
+      "Bus drivers, school",
+      "Bus drivers, transit and intercity",
+      "Driver/sales workers and truck drivers",
+      "Shuttle drivers and chauffeurs",
+      "Taxi drivers",
+      "Motor vehicle operators, all other",
+      "Locomotive engineers and operators",
+      "Railroad conductors and yardmasters",
+      "Other rail transportation workers",
+      "Sailors and marine oilers",
+      "Ship and boat captains and operators",
+      "Ship engineers",
+      "Parking attendants",
+      "Transportation service attendants",
+      "Transportation inspectors",
+      "Passenger attendants",
+      "Other transportation workers",
+      "Crane and tower operators",
+      "Conveyor, dredge, and hoist and winch operators",
+      "Industrial truck and tractor operators",
+      "Cleaners of vehicles and equipment",
+      "Laborers and freight, stock, and material movers, hand",
+      "Machine feeders and offbearers",
+      "Packers and packagers, hand",
+      "Stockers and order fillers",
+      "Pumping station operators",
+      "Refuse and recyclable material collectors",
+      "Other material moving workers"
+    ]
+  },
+  "dim_029": {
+    "name": "Median Age",
+    "variables": [
+      "Median age --"
+    ]
+  },
+  "dim_030": {
+    "name": "Class of Worker",
+    "variables": [
+      "Employee of private company workers",
+      "Self-employed in own incorporated business workers"
+    ]
+  },
+  "dim_031": {
+    "name": "Age of Grandparent",
+    "variables": [
+      "30 to 59 years",
+      "60 years and over"
+    ]
+  },
+  "dim_032": {
+    "name": "Women Who Had a Birth",
+    "variables": [
+      "Women who had a birth in the past 12 months",
+      "Women who did not have a birth in the past 12 months"
+    ]
+  },
+  "dim_033": {
+    "name": "Industry",
+    "variables": [
+      "Agriculture, forestry, fishing and hunting, and mining",
+      "Construction",
+      "Manufacturing",
+      "Wholesale trade",
+      "Retail trade",
+      "Transportation and warehousing, and utilities",
+      "Information",
+      "Finance and insurance, and real estate, and rental and leasing",
+      "Professional, scientific, and management, and administrative, and waste management services",
+      "Educational services, and health care and social assistance",
+      "Arts, entertainment, and recreation, and accommodation and food services",
+      "Other services, except public administration",
+      "Public administration"
+    ]
+  },
+  "dim_034": {
+    "name": "Place of Birth",
+    "variables": [
+      "Born in state of residence",
+      "Born in other state in the United States",
+      "Native; born outside the United States",
+      "Foreign born"
+    ]
+  },
+  "dim_035": {
+    "name": "School Enrollment",
+    "variables": [
+      "Enrolled in school",
+      "Not enrolled in school"
+    ]
+  },
+  "dim_036": {
+    "name": "Veteran Status",
+    "variables": [
+      "Veteran",
+      "Nonveteran"
+    ]
+  },
+  "dim_037": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 34 years",
+      "Householder 35 to 64 years",
+      "Householder 65 years and over"
+    ]
+  },
+  "dim_038": {
+    "name": "Year Householder Moved Into Unit",
+    "variables": [
+      "Moved in 2021 or later",
+      "Moved in 2018 to 2020",
+      "Moved in 2010 to 2017",
+      "Moved in 2000 to 2009",
+      "Moved in 1990 to 1999",
+      "Moved in 1989 or earlier"
+    ]
+  },
+  "dim_039": {
+    "name": "Year Structure Built",
+    "variables": [
+      "Built 2020 or later",
+      "Built 2010 to 2019",
+      "Built 2000 to 2009",
+      "Built 1990 to 1999",
+      "Built 1980 to 1989",
+      "Built 1970 to 1979",
+      "Built 1960 to 1969",
+      "Built 1950 to 1959",
+      "Built 1940 to 1949",
+      "Built 1939 or earlier"
+    ]
+  },
+  "dim_040": {
+    "name": "Time of Departure to Go to Work",
+    "variables": [
+      "12:00 a.m. to 4:59 a.m.",
+      "5:00 a.m. to 5:29 a.m.",
+      "5:30 a.m. to 5:59 a.m.",
+      "6:00 a.m. to 6:29 a.m.",
+      "6:30 a.m. to 6:59 a.m.",
+      "7:00 a.m. to 7:29 a.m.",
+      "7:30 a.m. to 7:59 a.m.",
+      "8:00 a.m. to 8:29 a.m.",
+      "8:30 a.m. to 8:59 a.m.",
+      "9:00 a.m. to 9:59 a.m.",
+      "10:00 a.m. to 10:59 a.m.",
+      "11:00 a.m. to 11:59 a.m.",
+      "12:00 p.m. to 3:59 p.m.",
+      "4:00 p.m. to 11:59 p.m."
+    ]
+  },
+  "dim_041": {
+    "name": "Aggregate Travel Time to Work",
+    "variables": [
+      "Aggregate travel time to work (in minutes)"
+    ]
+  },
+  "dim_042": {
+    "name": "Language Spoken at Home",
+    "variables": [
+      "Speak only English",
+      "Speak Spanish",
+      "Speak other Indo-European languages",
+      "Speak Asian and Pacific Island languages",
+      "Speak other languages"
+    ]
+  },
+  "dim_043": {
+    "name": "Household Type",
+    "variables": [
+      "Married-couple family",
+      "Other families"
+    ]
+  },
+  "dim_044": {
+    "name": "Receipt of Food Stamps/SNAP",
+    "variables": [
+      "Household received Food Stamps/SNAP in the past 12 months",
+      "Household did not receive Food Stamps/SNAP in the past 12 months"
+    ]
+  },
+  "dim_045": {
+    "name": "Occupation",
+    "variables": [
+      "Management, business, and financial occupations",
+      "Computer, engineering, and science occupations",
+      "Education, legal, community service, arts, and media occupations",
+      "Healthcare practitioners and technical occupations",
+      "Healthcare support occupations",
+      "Protective service occupations",
+      "Food preparation and serving related occupations",
+      "Building and grounds cleaning and maintenance occupations",
+      "Personal care and service occupations",
+      "Sales and related occupations",
+      "Office and administrative support occupations",
+      "Farming, fishing, and forestry occupations",
+      "Construction and extraction occupations",
+      "Installation, maintenance, and repair occupations",
+      "Production occupations",
+      "Transportation occupations",
+      "Material moving occupations"
+    ]
+  },
+  "dim_046": {
+    "name": "Occupation",
+    "variables": [
+      "Management occupations",
+      "Business and financial operations occupations",
+      "Computer and mathematical occupations",
+      "Architecture and engineering occupations",
+      "Life, physical, and social science occupations",
+      "Community and social service occupations",
+      "Legal occupations",
+      "Educational instruction, and library occupations",
+      "Arts, design, entertainment, sports, and media occupations",
+      "Health diagnosing and treating practitioners and other technical occupations",
+      "Health technologists and technicians",
+      "Firefighting and prevention, and other protective service workers including supervisors",
+      "Law enforcement workers including supervisors"
+    ]
+  },
+  "dim_047": {
+    "name": "Industry",
+    "variables": [
+      "Agriculture, forestry, fishing and hunting",
+      "Mining, quarrying, and oil and gas extraction",
+      "Transportation and warehousing",
+      "Utilities",
+      "Finance and insurance",
+      "Real estate and rental and leasing",
+      "Professional, scientific, and technical services",
+      "Management of companies and enterprises",
+      "Administrative and support and waste management services",
+      "Educational services",
+      "Health care and social assistance",
+      "Arts, entertainment, and recreation",
+      "Accommodation and food services"
+    ]
+  },
+  "dim_048": {
+    "name": "Mortgage Status",
+    "variables": [
+      "With a mortgage",
+      "Not mortgaged"
+    ]
+  },
+  "dim_049": {
+    "name": "Educational Attainment",
+    "variables": [
+      "Less than high school graduate",
+      "High school graduate (includes equivalency)",
+      "Some college or associate's degree",
+      "Bachelor's degree",
+      "Graduate or professional degree"
+    ]
+  },
+  "dim_050": {
+    "name": "Individual Income",
+    "variables": [
+      "$1 to $9,999 or loss",
+      "$10,000 to $14,999",
+      "$15,000 to $24,999",
+      "$25,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $64,999",
+      "$65,000 to $74,999",
+      "$75,000 or more"
+    ]
+  },
+  "dim_051": {
+    "name": "Poverty Status",
+    "variables": [
+      "Below 100 percent of the poverty level",
+      "100 to 149 percent of the poverty level",
+      "At or above 150 percent of the poverty level"
+    ]
+  },
+  "dim_052": {
+    "name": "Marital Status",
+    "variables": [
+      "Now married (including separated and spouse absent)",
+      "Unmarried (never married, widowed and divorced)"
+    ]
+  },
+  "dim_053": {
+    "name": "Field of Bachelor's Degree",
+    "variables": [
+      "Science and Engineering",
+      "Science and Engineering Related Fields",
+      "Business",
+      "Education",
+      "Arts, Humanities, and Other"
+    ]
+  },
+  "dim_054": {
+    "name": "Household Income",
+    "variables": [
+      "Less than $10,000",
+      "$10,000 to $14,999",
+      "$15,000 to $19,999",
+      "$20,000 to $24,999",
+      "$25,000 to $29,999",
+      "$30,000 to $34,999",
+      "$35,000 to $39,999",
+      "$40,000 to $44,999",
+      "$45,000 to $49,999",
+      "$50,000 to $59,999",
+      "$60,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 to $124,999",
+      "$125,000 to $149,999",
+      "$150,000 to $199,999",
+      "$200,000 or more"
+    ]
+  },
+  "dim_055": {
+    "name": "Work Status",
+    "variables": [
+      "Worked in the past 12 months",
+      "Did not work in the past 12 months"
+    ]
+  },
+  "dim_056": {
+    "name": "Mortgage Status",
+    "variables": [
+      "Housing units with a mortgage",
+      "Housing units without a mortgage"
+    ]
+  },
+  "dim_057": {
+    "name": "Aggregate Value",
+    "variables": [
+      "Aggregate value (dollars)"
+    ]
+  },
+  "dim_058": {
+    "name": "Types of Internet Subscription in Household",
+    "variables": [
+      "With dial-up Internet subscription alone",
+      "With a broadband Internet subscription",
+      "Without an Internet subscription"
+    ]
+  },
+  "dim_059": {
+    "name": "Hispanic or Latino Origin",
+    "variables": [
+      "Not Hispanic or Latino",
+      "Hispanic or Latino"
+    ]
+  },
+  "dim_060": {
+    "name": "Language Spoken at Home",
+    "variables": [
+      "Speak only English",
+      "Speak Spanish",
+      "Speak other languages"
+    ]
+  },
+  "dim_061": {
+    "name": "Individual Income",
+    "variables": [
+      "No income",
+      "With income"
+    ]
+  },
+  "dim_062": {
+    "name": "Tenure",
+    "variables": [
+      "Householder lived in owner-occupied housing units",
+      "Householder lived in renter-occupied housing units"
+    ]
+  },
+  "dim_063": {
+    "name": "Lived in Same House",
+    "variables": [
+      "Same house 1 year ago",
+      "Different house in United States 1 year ago",
+      "Abroad 1 year ago"
+    ]
+  },
+  "dim_064": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Drove alone",
+      "Carpooled",
+      "Bus",
+      "Subway or elevated rail",
+      "Long-distance train or commuter rail",
+      "Light rail, streetcar or trolley (carro p\u00fablico in Puerto Rico)",
+      "Ferryboat"
+    ]
+  },
+  "dim_065": {
+    "name": "Travel Time to Work",
+    "variables": [
+      "Less than 5 minutes",
+      "5 to 9 minutes",
+      "10 to 14 minutes",
+      "15 to 19 minutes",
+      "20 to 24 minutes",
+      "25 to 29 minutes",
+      "30 to 34 minutes",
+      "35 to 39 minutes",
+      "40 to 44 minutes",
+      "45 to 59 minutes",
+      "60 to 89 minutes",
+      "90 or more minutes"
+    ]
+  },
+  "dim_066": {
+    "name": "Median Earnings",
+    "variables": [
+      "Median earnings in the past 12 months --"
+    ]
+  },
+  "dim_067": {
+    "name": "Class of Worker",
+    "variables": [
+      "Private for-profit wage and salary workers",
+      "Private not-for-profit wage and salary workers",
+      "Local government workers",
+      "State government workers",
+      "Federal government workers",
+      "Self-employed in own not incorporated business workers",
+      "Unpaid family workers"
+    ]
+  },
+  "dim_068": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Car, truck, or van",
+      "Public transportation (excluding taxicab)",
+      "Walked",
+      "Taxicab, motorcycle, bicycle, or other means"
+    ]
+  },
+  "dim_069": {
+    "name": "Size of Carpool",
+    "variables": [
+      "In 2-person carpool",
+      "In 3-or-more-person carpool"
+    ]
+  },
+  "dim_070": {
+    "name": "Number of Workers in Family",
+    "variables": [
+      "No workers",
+      "1 worker",
+      "2 workers",
+      "3 or more workers"
+    ]
+  },
+  "dim_071": {
+    "name": "Age of Own Children Under 18 Years",
+    "variables": [
+      "Under 6 years only",
+      "Under 6 years and 6 to 17 years",
+      "6 to 17 years only"
+    ]
+  },
+  "dim_072": {
+    "name": "Ever Married",
+    "variables": [
+      "Never married",
+      "Ever married"
+    ]
+  },
+  "dim_073": {
+    "name": "Educational Attainment",
+    "variables": [
+      "Less than high school graduate",
+      "High school graduate (includes equivalency)",
+      "Some college or associate's degree",
+      "Bachelor's degree or higher"
+    ]
+  },
+  "dim_074": {
+    "name": "Work Experience of Unrelated Individuals",
+    "variables": [
+      "Worked full-time, year-round",
+      "Worked less than full-time, year-round",
+      "Did not work"
+    ]
+  },
+  "dim_075": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder under 25 years",
+      "Householder 25 to 44 years",
+      "Householder 45 to 64 years",
+      "Householder 65 years and over"
+    ]
+  },
+  "dim_076": {
+    "name": "Aggregate Family Income",
+    "variables": [
+      "Aggregate family income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_077": {
+    "name": "Employment Status",
+    "variables": [
+      "In Armed Forces",
+      "Civilian"
+    ]
+  },
+  "dim_078": {
+    "name": "Class of Worker",
+    "variables": [
+      "Private for-profit wage and salary workers",
+      "Private not-for-profit wage and salary workers",
+      "Local government workers",
+      "State government workers",
+      "Federal government workers",
+      "Self-employed in own not incorporated business workers and unpaid family workers"
+    ]
+  },
+  "dim_079": {
+    "name": "Tenure",
+    "variables": [
+      "Owner-occupied housing units",
+      "Renter-occupied housing units"
+    ]
+  },
+  "dim_080": {
+    "name": "Plumbing Facilities",
+    "variables": [
+      "Complete plumbing facilities",
+      "Lacking complete plumbing facilities"
+    ]
+  },
+  "dim_081": {
+    "name": "Kitchen Facilities",
+    "variables": [
+      "Complete kitchen facilities",
+      "Lacking complete kitchen facilities"
+    ]
+  },
+  "dim_082": {
+    "name": "Cash Rent",
+    "variables": [
+      "With cash rent",
+      "No cash rent"
+    ]
+  },
+  "dim_083": {
+    "name": "Aggregate Gross Rent",
+    "variables": [
+      "Aggregate gross rent"
+    ]
+  },
+  "dim_084": {
+    "name": "Units in Structure",
+    "variables": [
+      "1, detached or attached",
+      "2 to 4",
+      "5 to 19",
+      "20 to 49",
+      "50 or more",
+      "Mobile home, boat, RV, van, etc."
+    ]
+  },
+  "dim_085": {
+    "name": "Health Insurance Coverage Type",
+    "variables": [
+      "With private health insurance",
+      "With public coverage"
+    ]
+  },
+  "dim_086": {
+    "name": "Presence of a Computer",
+    "variables": [
+      "Has a computer",
+      "No computer"
+    ]
+  },
+  "dim_087": {
+    "name": "Work from Home Status",
+    "variables": [
+      "Did not work from home",
+      "Worked from home"
+    ]
+  },
+  "dim_088": {
+    "name": "Allocated",
+    "variables": [
+      "Allocated",
+      "Not Allocated"
+    ]
+  },
+  "dim_089": {
+    "name": "Percent of Income Allocated",
+    "variables": [
+      "Total",
+      "Percent of income allocated --"
+    ]
+  },
+  "dim_090": {
+    "name": "Groups Tallied",
+    "variables": [
+      "Total Groups Tallied"
+    ]
+  },
+  "dim_091": {
+    "name": "Ancestry",
+    "variables": [
+      "Arab",
+      "Cape Verdean",
+      "Ethiopian",
+      "Ghanaian",
+      "Kenyan",
+      "Liberian",
+      "Nigerian",
+      "Senegalese",
+      "Sierra Leonean",
+      "Somali",
+      "South African",
+      "Sudanese",
+      "Ugandan",
+      "Zimbabwean",
+      "African",
+      "Other Subsaharan African",
+      "Bahamian",
+      "Barbadian",
+      "Belizean",
+      "Bermudan",
+      "British West Indian",
+      "Dutch West Indian",
+      "Haitian",
+      "Jamaican",
+      "Trinidadian and Tobagonian",
+      "U.S. Virgin Islander",
+      "West Indian",
+      "Other West Indian"
+    ]
+  },
+  "dim_092": {
+    "name": "Arab Ancestry Type",
+    "variables": [
+      "Egyptian",
+      "Iraqi",
+      "Jordanian",
+      "Lebanese",
+      "Moroccan",
+      "Palestinian",
+      "Syrian",
+      "Other Arab"
+    ]
+  },
+  "dim_093": {
+    "name": "Number of Parent Living With",
+    "variables": [
+      "Living with two parents",
+      "Living with one parent"
+    ]
+  },
+  "dim_094": {
+    "name": "Marital Status",
+    "variables": [
+      "Never married",
+      "Now married, except separated",
+      "Divorced",
+      "Separated",
+      "Widowed"
+    ]
+  },
+  "dim_095": {
+    "name": "Median Income",
+    "variables": [
+      "Median income in the past 12 months --"
+    ]
+  },
+  "dim_096": {
+    "name": "Moved States",
+    "variables": [
+      "Same state",
+      "Different state"
+    ]
+  },
+  "dim_097": {
+    "name": "Worked in County of Residence",
+    "variables": [
+      "Worked in county of residence",
+      "Worked outside county of residence"
+    ]
+  },
+  "dim_098": {
+    "name": "Worked in a Principal City",
+    "variables": [
+      "Worked in a principal city",
+      "Worked outside any principal city"
+    ]
+  },
+  "dim_099": {
+    "name": "Travel Time to Work",
+    "variables": [
+      "Less than 10 minutes",
+      "10 to 14 minutes",
+      "15 to 19 minutes",
+      "20 to 24 minutes",
+      "25 to 29 minutes",
+      "30 to 34 minutes",
+      "35 to 44 minutes",
+      "45 to 59 minutes",
+      "60 or more minutes"
+    ]
+  },
+  "dim_100": {
+    "name": "Household Type in Group Quarters",
+    "variables": [
+      "In households",
+      "In group quarters"
+    ]
+  },
+  "dim_101": {
+    "name": "Household Type",
+    "variables": [
+      "In family households",
+      "In nonfamily households"
+    ]
+  },
+  "dim_102": {
+    "name": "Living Alone",
+    "variables": [
+      "Living alone",
+      "Not living alone"
+    ]
+  },
+  "dim_103": {
+    "name": "Presence of Related Children Under 18 Years",
+    "variables": [
+      "With related children of the householder under 18 years",
+      "No related children of the householder under 18 years"
+    ]
+  },
+  "dim_104": {
+    "name": "Marital Status",
+    "variables": [
+      "Never married",
+      "Now married (except separated)",
+      "Separated",
+      "Widowed",
+      "Divorced"
+    ]
+  },
+  "dim_105": {
+    "name": "Field of Bachelor's Degree",
+    "variables": [
+      "Computers, Mathematics, and Statistics",
+      "Biological, Agricultural, and Environmental Sciences",
+      "Physical and Related Sciences",
+      "Psychology",
+      "Social Sciences",
+      "Engineering",
+      "Multidisciplinary Studies",
+      "Literature and Languages",
+      "Liberal Arts and History",
+      "Visual and Performing Arts",
+      "Communications",
+      "Other"
+    ]
+  },
+  "dim_106": {
+    "name": "Age",
+    "variables": [
+      "5 to 17 years",
+      "18 years and over"
+    ]
+  },
+  "dim_107": {
+    "name": "Ability to Speak English",
+    "variables": [
+      "Speak English \"very well\"",
+      "Speak English \"well\"",
+      "Speak English \"not well\"",
+      "Speak English \"not at all\""
+    ]
+  },
+  "dim_108": {
+    "name": "Age",
+    "variables": [
+      "Under 5 years",
+      "5 to 17 years",
+      "18 to 34 years",
+      "35 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_109": {
+    "name": "Age",
+    "variables": [
+      "5 to 17 years",
+      "18 to 34 years",
+      "35 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_110": {
+    "name": "Aggregate Household Income",
+    "variables": [
+      "Aggregate household income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_111": {
+    "name": "Total Income",
+    "variables": [
+      "Total (dollars)"
+    ]
+  },
+  "dim_112": {
+    "name": "Work Experience",
+    "variables": [
+      "Worked full-time, year-round in the past 12 months",
+      "Other"
+    ]
+  },
+  "dim_113": {
+    "name": "Earnings",
+    "variables": [
+      "$1 to $2,499 or loss",
+      "$2,500 to $4,999",
+      "$5,000 to $7,499",
+      "$7,500 to $9,999",
+      "$10,000 to $12,499",
+      "$12,500 to $14,999",
+      "$15,000 to $17,499",
+      "$17,500 to $19,999",
+      "$20,000 to $22,499",
+      "$22,500 to $24,999",
+      "$25,000 to $29,999",
+      "$30,000 to $34,999",
+      "$35,000 to $39,999",
+      "$40,000 to $44,999",
+      "$45,000 to $49,999",
+      "$50,000 to $54,999",
+      "$55,000 to $64,999",
+      "$65,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 or more"
+    ]
+  },
+  "dim_114": {
+    "name": "Employment Status",
+    "variables": [
+      "Civilian labor force",
+      "Armed Forces"
+    ]
+  },
+  "dim_115": {
+    "name": "Detailed Industry",
+    "variables": [
+      "Crop production",
+      "Animal production and aquaculture",
+      "Forestry except logging",
+      "Logging",
+      "Fishing, hunting and trapping",
+      "Support activities for agriculture and forestry",
+      "Oil and gas extraction",
+      "Coal mining",
+      "Metal ore mining",
+      "Nonmetallic mineral mining and quarrying",
+      "Support activities for mining",
+      "Electric power generation, transmission and distribution",
+      "Natural gas distribution",
+      "Electric and gas, and other combinations",
+      "Water supply and irrigation systems, and steam and air-conditioning supply",
+      "Sewage treatment facilities",
+      "Not specified utilities",
+      "Construction (the cleaning of buildings and dwellings is incidental during construction and immediately after construction)",
+      "Animal food, grain and oilseed milling",
+      "Sugar and confectionery products",
+      "Fruit and vegetable preserving and specialty food manufacturing",
+      "Dairy product manufacturing",
+      "Animal slaughtering and processing",
+      "Retail bakeries",
+      "Bakeries and tortilla manufacturing, except retail bakeries",
+      "Seafood and other miscellaneous foods, n.e.c.",
+      "Not specified food industries",
+      "Beverage manufacturing",
+      "Tobacco manufacturing",
+      "Fiber, yarn, and thread mills",
+      "Fabric mills, except knit fabric mills",
+      "Textile and fabric finishing and fabric coating mills",
+      "Carpet and rug mills",
+      "Textile product mills, except carpet and rug",
+      "Knit fabric mills, and apparel knitting mills",
+      "Cut and sew, and apparel accessories and other apparel manufacturing",
+      "Footwear manufacturing",
+      "Leather and hide tanning and finishing, and other leather and allied product manufacturing",
+      "Pulp, paper, and paperboard mills",
+      "Paperboard container manufacturing",
+      "Miscellaneous paper and pulp products manufacturing",
+      "Printing and related support activities",
+      "Petroleum refineries",
+      "Petroleum and coal products manufacturing, except petroleum refineries",
+      "Resin, synthetic rubber, and artificial and synthetic fibers and filaments manufacturing",
+      "Pesticide, fertilizer, and other agricultural chemical manufacturing",
+      "Pharmaceutical and medicine manufacturing",
+      "Paint, coating, and adhesive manufacturing",
+      "Soap, cleaning compound, and toilet preparation manufacturing",
+      "Basic chemical manufacturing, and other chemical product and preparation manufacturing",
+      "Plastics product manufacturing",
+      "Tire manufacturing",
+      "Rubber products, except tires, manufacturing",
+      "Pottery, ceramics, and plumbing fixture manufacturing",
+      "Clay building material and refractories manufacturing",
+      "Glass and glass product manufacturing",
+      "Cement, concrete, lime, and gypsum product manufacturing",
+      "Other nonmetallic mineral product manufacturing",
+      "Iron and steel mills and steel product manufacturing",
+      "Alumina and aluminum production and processing",
+      "Nonferrous metal (except aluminum) production and processing",
+      "Foundries",
+      "Forging and stamping",
+      "Cutlery and handtool manufacturing",
+      "Architectural and structural metals, and boiler, tank, and shipping container manufacturing",
+      "Machine shops; turned product; screw, nut, and bolt manufacturing",
+      "Coating, engraving, heat treating, and allied activities",
+      "Ordnance",
+      "Miscellaneous fabricated metal product manufacturing",
+      "Not specified metal industries",
+      "Agricultural implement manufacturing",
+      "Construction, and mining and oil and gas field machinery manufacturing",
+      "Commercial and service industry machinery manufacturing",
+      "Metalworking machinery manufacturing",
+      "Engine, turbine, and power transmission equipment manufacturing",
+      "Machinery manufacturing, n.e.c. or not specified",
+      "Computer and peripheral equipment manufacturing",
+      "Communications, audio, and video equipment manufacturing",
+      "Navigational, measuring, electromedical, and control instruments manufacturing",
+      "Semiconductor, magnetic and optical media, and other electronic component manufacturing",
+      "Household appliance manufacturing",
+      "Electric lighting and electrical equipment manufacturing, and other electrical component manufacturing, n.e.c.",
+      "Motor vehicles and motor vehicle equipment manufacturing",
+      "Aircraft, aircraft engine, and aircraft parts manufacturing",
+      "Guided missile and space vehicle and parts manufacturing",
+      "Railroad rolling stock manufacturing",
+      "Ship and boat building",
+      "Other transportation equipment manufacturing",
+      "Sawmills and wood preservation",
+      "Veneer, plywood, and engineered wood product manufacturing",
+      "Manufactured home (mobile home) and prefabricated wood building manufacturing",
+      "Miscellaneous wood product manufacturing",
+      "Furniture and related product manufacturing",
+      "Medical equipment and supplies manufacturing",
+      "Sporting and athletic goods, and doll, toy and game manufacturing",
+      "Miscellaneous manufacturing, n.e.c.",
+      "Not specified manufacturing industries",
+      "Motor vehicle and motor vehicle parts and supplies merchant wholesalers",
+      "Furniture and home furnishing merchant wholesalers",
+      "Lumber and other construction materials merchant wholesalers",
+      "Professional and commercial equipment and supplies merchant wholesalers",
+      "Metal and mineral, except petroleum, merchant wholesalers",
+      "Household appliances and electrical and electronic goods merchant wholesalers",
+      "Hardware, and plumbing and heating equipment, and supplies merchant wholesalers",
+      "Machinery, equipment, and supplies merchant wholesalers",
+      "Recyclable material merchant wholesalers",
+      "Miscellaneous durable goods, except recyclable material, merchant wholesalers",
+      "Paper and paper product merchant wholesalers",
+      "Drugs, druggists' sundries, and chemical and allied products merchant wholesalers",
+      "Apparel, piece goods, and notions merchant wholesalers",
+      "Grocery and related product merchant wholesalers",
+      "Farm product raw material merchant wholesalers",
+      "Petroleum and petroleum products merchant wholesalers",
+      "Beer, wine, and distilled alcoholic beverage merchant wholesalers",
+      "Farm supplies merchant wholesalers",
+      "Miscellaneous nondurable goods merchant, except farm supplies, wholesalers",
+      "Wholesale trade agents and brokers",
+      "Not specified wholesale trade",
+      "Automobile dealers",
+      "Other motor vehicle dealers",
+      "Automotive parts, accessories, and tire stores",
+      "Furniture and home furnishings stores",
+      "Electronics and appliance retailers",
+      "Building material and supplies dealers, except hardware retailers",
+      "Hardware retailers",
+      "Lawn and garden equipment and supplies retailers",
+      "Supermarkets and other grocery (except convenience) retailers",
+      "Convenience retailers and vending machine operators",
+      "Specialty food retailers",
+      "Beer, wine, and liquor retailers",
+      "Pharmacies and drug retailers",
+      "Health and personal care, except pharmacies and drug, retailers",
+      "Gasoline stations",
+      "Clothing and clothing accessories retailers",
+      "Shoe retailers",
+      "Jewelry, luggage, and leather goods retailers",
+      "Sporting goods, and hobby, toy, and game retailers",
+      "Sewing, needlework, and piece goods retailers",
+      "Musical instrument and supplies retailers",
+      "Book retailers and news dealers",
+      "Department stores",
+      "Warehouse clubs, supercenters, and other general merchandise retailers",
+      "Florists",
+      "Office supplies and stationery retailers",
+      "Used merchandise retailers",
+      "Gift, novelty, and souvenir retailers",
+      "Other miscellaneous retailers",
+      "Fuel dealers",
+      "Not specified retail trade",
+      "Air transportation",
+      "Rail transportation",
+      "Water transportation",
+      "Truck transportation",
+      "Transit and ground passenger transportation, except taxi and limousine service",
+      "Taxi and limousine service",
+      "Pipeline transportation",
+      "Scenic and sightseeing transportation",
+      "Support activities for transportation",
+      "Postal Service",
+      "Couriers and messengers",
+      "Warehousing and storage",
+      "Newspaper publishers",
+      "Periodical, book, and directory and mailing list, and other publishers",
+      "Software publishers",
+      "Motion pictures and video industries",
+      "Sound recording industries",
+      "Broadcasting and content providers",
+      "Wired telecommunications carriers",
+      "Telecommunications, except wired telecommunications carriers",
+      "Computing infrastructure providers, data processing, web hosting, and related services",
+      "Libraries and archives",
+      "Web search portals and all other information services",
+      "Monetary authorities-central bank, and commercial banking",
+      "Credit unions, and savings institutions and other depository credit intermediation",
+      "Nondepository credit intermediation and related activities",
+      "Securities, commodities, funds, trusts, and other financial investments",
+      "Insurance carriers",
+      "Agencies, brokerages, and other insurance related activities",
+      "Lessors of real estate, and offices of real estate agents and brokers",
+      "Activities related to real estate",
+      "Automotive equipment rental and leasing",
+      "Consumer goods rental, and general rental centers",
+      "Commercial and industrial machinery and equipment, and nonfinancial intangible assets rental and leasing",
+      "Legal services",
+      "Accounting, tax preparation, bookkeeping, and payroll services",
+      "Architectural, engineering, and related services",
+      "Specialized design services",
+      "Computer systems design and related services",
+      "Management, scientific, and technical consulting services",
+      "Scientific research and development services",
+      "Advertising, public relations, and related services",
+      "Veterinary services",
+      "Other professional, scientific, and technical, except veterinary, services",
+      "Management of companies and enterprises",
+      "Employment services",
+      "Business support services",
+      "Travel arrangements and reservation services",
+      "Investigation and security services",
+      "Services to buildings and dwellings, except landscaping services",
+      "Landscaping services",
+      "Other administrative and other support services",
+      "Waste management and remediation services",
+      "Elementary and secondary schools",
+      "Junior colleges, colleges, universities, and professional schools",
+      "Business, trade and technical schools, and computer and management training",
+      "Other schools and instruction, and educational support services",
+      "Offices of physicians",
+      "Offices of dentists",
+      "Offices of chiropractors",
+      "Offices of optometrists",
+      "Offices of other health practitioners",
+      "Outpatient care centers",
+      "Home health care services",
+      "Other health care services",
+      "General medical and surgical hospitals, and specialty (except psychiatric and substance abuse) hospitals",
+      "Psychiatric and substance abuse hospitals",
+      "Nursing care facilities (skilled nursing facilities)",
+      "Residential care facilities, except skilled nursing facilities",
+      "Individual and family services",
+      "Community food and housing, and emergency and other relief services",
+      "Vocational rehabilitation services",
+      "Child care services",
+      "Performing arts companies",
+      "Spectator sports",
+      "Promoters of performing arts, sports, and similar events, agents and managers for artists, athletes, entertainers, and other public figures",
+      "Independent artists, writers, and performers",
+      "Museums, historical sites, and similar institutions",
+      "Bowling centers",
+      "Other amusement, gambling, and recreation industries",
+      "Traveler accommodation",
+      "Recreational vehicle parks and camps, and rooming and boarding houses, dormitories, and workers' camps",
+      "Food services and drinking places, except alcoholic beverages",
+      "Drinking places (alcoholic beverages)",
+      "Automotive repair and maintenance, except car washes",
+      "Car washes",
+      "Electronic and precision equipment repair and maintenance",
+      "Commercial and industrial machinery and equipment repair and maintenance",
+      "Personal and household goods repair and maintenance",
+      "Barber shops",
+      "Beauty salons",
+      "Nail salons and other personal care services",
+      "Drycleaning and laundry services",
+      "Death care services",
+      "Other personal services",
+      "Religious organizations",
+      "Civic, social, advocacy organizations, and grantmaking and giving services",
+      "Labor unions and similar labor organizations",
+      "Business, professional, political, and similar organizations",
+      "Private households",
+      "Executive offices and legislative bodies",
+      "Public finance activities",
+      "Other general government and support",
+      "Justice, public order, and safety activities",
+      "Administration of human resource programs",
+      "Administration of environmental quality, and housing programs, urban planning and community development",
+      "Administration of economic programs and space research and technology",
+      "National security and international affairs"
+    ]
+  },
+  "dim_116": {
+    "name": "Median Gross Rent",
+    "variables": [
+      "Median gross rent --"
+    ]
+  },
+  "dim_117": {
+    "name": "Bedrooms",
+    "variables": [
+      "No bedroom",
+      "1 bedroom",
+      "2 bedrooms",
+      "3 bedrooms",
+      "4 bedrooms",
+      "5 or more bedrooms"
+    ]
+  },
+  "dim_118": {
+    "name": "Meals Included in Rent",
+    "variables": [
+      "Meals included in rent",
+      "No meals included in rent"
+    ]
+  },
+  "dim_119": {
+    "name": "Rent",
+    "variables": [
+      "Less than $100",
+      "$100 to $149",
+      "$150 to $199",
+      "$200 to $249",
+      "$250 to $299",
+      "$300 to $349",
+      "$350 to $399",
+      "$400 to $449",
+      "$450 to $499",
+      "$500 to $549",
+      "$550 to $599",
+      "$600 to $649",
+      "$650 to $699",
+      "$700 to $749",
+      "$750 to $799",
+      "$800 to $899",
+      "$900 to $999",
+      "$1,000 to $1,249",
+      "$1,250 to $1,499",
+      "$1,500 to $1,999",
+      "$2,000 to $2,499",
+      "$2,500 to $2,999",
+      "$3,000 to $3,499",
+      "$3,500 or more"
+    ]
+  },
+  "dim_120": {
+    "name": "Household Income",
+    "variables": [
+      "Less than $10,000",
+      "$10,000 to $19,999",
+      "$20,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 or more"
+    ]
+  },
+  "dim_121": {
+    "name": "Median Value",
+    "variables": [
+      "Median value --"
+    ]
+  },
+  "dim_122": {
+    "name": "Age",
+    "variables": [
+      "Under 6 years",
+      "6 to 18 years",
+      "19 to 25 years",
+      "26 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_123": {
+    "name": "Private Health Insurance Coverage",
+    "variables": [
+      "With private health insurance",
+      "No private health insurance"
+    ]
+  },
+  "dim_124": {
+    "name": "Public Health Insurance Coverage",
+    "variables": [
+      "With public coverage",
+      "No public coverage"
+    ]
+  },
+  "dim_125": {
+    "name": "Age",
+    "variables": [
+      "Under 18 years",
+      "18 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_126": {
+    "name": "Ratio of Income to Poverty Level",
+    "variables": [
+      "Under 1.00 of poverty threshold",
+      "1.00 to 1.37 of poverty threshold",
+      "1.38 to 1.99 of poverty threshold",
+      "2.00 to 3.99 of poverty threshold",
+      "4.00 of poverty threshold and over"
+    ]
+  },
+  "dim_127": {
+    "name": "Sex",
+    "variables": [
+      "Total",
+      "Male",
+      "Female"
+    ]
+  },
+  "dim_128": {
+    "name": "Selected Groups (Asian)",
+    "variables": [
+      "Chinese, except Taiwanese",
+      "Hmong",
+      "Japanese",
+      "Korean",
+      "Mongolian",
+      "Okinawan",
+      "Taiwanese",
+      "Other East Asian",
+      "Burmese",
+      "Cambodian",
+      "Filipino",
+      "Indonesian",
+      "Laotian",
+      "Malaysian",
+      "Mien",
+      "Singaporean",
+      "Thai",
+      "Vietnamese",
+      "Other Southeast Asian",
+      "Asian Indian",
+      "Bangladeshi",
+      "Bhutanese",
+      "Nepalese",
+      "Pakistani",
+      "Sikh",
+      "Sri Lankan",
+      "Other South Asian",
+      "Kazakh",
+      "Uzbek",
+      "Other Central Asian"
+    ]
+  },
+  "dim_129": {
+    "name": "Selected Groups (NHOPI)",
+    "variables": [
+      "Native Hawaiian",
+      "Samoan",
+      "Tongan",
+      "Other Polynesian",
+      "Chamorro",
+      "Chuukese",
+      "Guamanian",
+      "Marshallese",
+      "Other Micronesian",
+      "Fijian",
+      "Other Melanesian"
+    ]
+  },
+  "dim_130": {
+    "name": "Selected Tribes (American Indian and Alaska Native)",
+    "variables": [
+      "Blackfeet Tribe of the Blackfeet Indian Reservation of Montana",
+      "Cherokee Nation",
+      "Cheyenne River Sioux Tribe of the Cheyenne River Reservation, South Dakota",
+      "Comanche Nation, Oklahoma",
+      "Crow Tribe of Montana",
+      "Gila River Indian Community of the Gila River Indian Reservation",
+      "Hopi Tribe of Arizona",
+      "Lumbee Tribe of North Carolina",
+      "Navajo Nation",
+      "Oglala Sioux Tribe",
+      "Pascua Yaqui Tribe of Arizona",
+      "Rosebud Sioux Tribe of the Rosebud Indian Reservation, South Dakota",
+      "The Chickasaw Nation",
+      "The Choctaw Nation of Oklahoma",
+      "The Muscogee (Creek) Nation",
+      "Tohono O'odham Nation of Arizona",
+      "Turtle Mountain Band of Chippewa Indians of North Dakota",
+      "White Mountain Apache Tribe of the Fort Apache Reservation, Arizona",
+      "All other American Indian tribes (with only one tribe reported)",
+      "Aztec",
+      "Inca",
+      "Maya",
+      "Mixtec",
+      "Taino",
+      "Tarasco (Purepecha)",
+      "All other Latin American Indian (with only one group reported)",
+      "Central Council of the Tlingit and Haida Indian Tribes",
+      "Metlakatla Indian Community, Annette Island Reserve",
+      "Native Village of Barrow Inupiat Traditional Government",
+      "Native Village of Hooper Bay (Naparyarmiut)",
+      "Native Village of Kotzebue",
+      "Nome Eskimo Community",
+      "All other Alaska Native tribes and villages (with only one tribe or village reported)"
+    ]
+  },
+  "dim_131": {
+    "name": "Ancestry",
+    "variables": [
+      "Afghan",
+      "Albanian",
+      "Alsatian",
+      "American",
+      "Arab",
+      "Armenian",
+      "Assyrian/Chaldean/Syriac",
+      "Australian",
+      "Austrian",
+      "Basque",
+      "Belgian",
+      "Brazilian",
+      "British",
+      "Bulgarian",
+      "Cajun",
+      "Canadian",
+      "Carpatho Rusyn",
+      "Celtic",
+      "Croatian",
+      "Cypriot",
+      "Czech",
+      "Czechoslovakian",
+      "Danish",
+      "Dutch",
+      "Eastern European",
+      "English",
+      "Estonian",
+      "European",
+      "Finnish",
+      "French (except Basque)",
+      "French Canadian",
+      "German",
+      "German Russian",
+      "Greek",
+      "Guyanese",
+      "Hungarian",
+      "Icelander",
+      "Iranian",
+      "Irish",
+      "Israeli",
+      "Italian",
+      "Latvian",
+      "Lithuanian",
+      "Luxembourger",
+      "Macedonian",
+      "Maltese",
+      "New Zealander",
+      "Northern European",
+      "Norwegian",
+      "Pennsylvania German",
+      "Polish",
+      "Portuguese",
+      "Romanian",
+      "Russian",
+      "Scandinavian",
+      "Scotch-Irish",
+      "Scottish",
+      "Serbian",
+      "Slavic",
+      "Slovak",
+      "Slovene",
+      "Soviet Union",
+      "Subsaharan African",
+      "Swedish",
+      "Swiss",
+      "Turkish",
+      "Ukrainian",
+      "Welsh",
+      "West Indian (except Hispanic groups)",
+      "Yugoslavian",
+      "Other groups"
+    ]
+  },
+  "dim_132": {
+    "name": "Period of Entry",
+    "variables": [
+      "Entered 2010 or later",
+      "Entered 2000 to 2009",
+      "Entered 1990 to 1999",
+      "Entered before 1990"
+    ]
+  },
+  "dim_133": {
+    "name": "Continent of Birth",
+    "variables": [
+      "Europe",
+      "Asia",
+      "Latin America",
+      "Other areas"
+    ]
+  },
+  "dim_134": {
+    "name": "Place of Birth Central America",
+    "variables": [
+      "Caribbean",
+      "Central America",
+      "South America"
+    ]
+  },
+  "dim_135": {
+    "name": "Place of Birth Central America",
+    "variables": [
+      "Mexico",
+      "Other Central America"
+    ]
+  },
+  "dim_136": {
+    "name": "Year of Entry",
+    "variables": [
+      "Entered 2010 or later",
+      "Entered 2000 to 2009",
+      "Entered before 2000"
+    ]
+  },
+  "dim_137": {
+    "name": "Age",
+    "variables": [
+      "Under 6 years",
+      "6 to 17 years"
+    ]
+  },
+  "dim_138": {
+    "name": "Nativity of Parents",
+    "variables": [
+      "Both parents native",
+      "Both parents foreign-born",
+      "One native and one foreign-born parent",
+      "Native parent",
+      "Foreign-born parent"
+    ]
+  },
+  "dim_139": {
+    "name": "Born in State of Residence",
+    "variables": [
+      "Born in state of residence",
+      "Born in other state of the United States",
+      "Native; born outside the United States",
+      "Foreign born"
+    ]
+  },
+  "dim_140": {
+    "name": "Age",
+    "variables": [
+      "1 to 4 years",
+      "5 to 17 years",
+      "18 and 19 years",
+      "20 to 24 years",
+      "25 to 29 years",
+      "30 to 34 years",
+      "35 to 39 years",
+      "40 to 44 years",
+      "45 to 49 years",
+      "50 to 54 years",
+      "55 to 59 years",
+      "60 to 64 years",
+      "65 to 69 years",
+      "70 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_141": {
+    "name": "Region",
+    "variables": [
+      "Northeast",
+      "Midwest",
+      "South",
+      "West"
+    ]
+  },
+  "dim_142": {
+    "name": "Moved from",
+    "variables": [
+      "Moved from principal city",
+      "Moved from remainder of Metropolitan Statistical Area",
+      "Moved from remainder of Micropolitan Statistical Area"
+    ]
+  },
+  "dim_143": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Car, truck, or van",
+      "Public transportation (excluding taxicab)",
+      "Bicycle",
+      "Walked",
+      "Taxicab, motorcycle, or other means",
+      "Worked from home"
+    ]
+  },
+  "dim_144": {
+    "name": "Size of Carpool",
+    "variables": [
+      "In 2-person carpool",
+      "In 3-person carpool",
+      "In 4-or-more-person carpool"
+    ]
+  },
+  "dim_145": {
+    "name": "Worked in State of Residence",
+    "variables": [
+      "Worked in state of residence",
+      "Worked outside state of residence"
+    ]
+  },
+  "dim_146": {
+    "name": "Vehicles Available",
+    "variables": [
+      "No vehicle available",
+      "1 vehicle available",
+      "2 vehicles available",
+      "3 vehicles available",
+      "4 vehicles available",
+      "5 or more vehicles available"
+    ]
+  },
+  "dim_147": {
+    "name": "Lived in Principal City",
+    "variables": [
+      "Living in a principal city",
+      "Living outside any principal city"
+    ]
+  },
+  "dim_148": {
+    "name": "Age",
+    "variables": [
+      "16 to 19 years",
+      "20 to 24 years",
+      "25 to 44 years",
+      "45 to 54 years",
+      "55 to 59 years",
+      "60 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_149": {
+    "name": "Occupation",
+    "variables": [
+      "Management, business, science, and arts occupations",
+      "Service occupations",
+      "Sales and office occupations",
+      "Natural resources, construction, and maintenance occupations",
+      "Production, transportation, and material moving occupations",
+      "Military specific occupations"
+    ]
+  },
+  "dim_150": {
+    "name": "Industry",
+    "variables": [
+      "Agriculture, forestry, fishing and hunting, and mining",
+      "Construction",
+      "Manufacturing",
+      "Wholesale trade",
+      "Retail trade",
+      "Transportation and warehousing, and utilities",
+      "Information",
+      "Finance and insurance, and real estate and rental and leasing",
+      "Professional, scientific, and management, and administrative and waste management services",
+      "Educational services, and health care and social assistance",
+      "Arts, entertainment, and recreation, and accommodation and food services",
+      "Other services (except public administration)",
+      "Public administration",
+      "Armed forces"
+    ]
+  },
+  "dim_151": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Car, truck, or van - drove alone",
+      "Car, truck, or van - carpooled",
+      "Public transportation (excluding taxicab)",
+      "Walked",
+      "Taxicab, motorcycle, bicycle, or other means"
+    ]
+  },
+  "dim_152": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Drove alone",
+      "Carpooled",
+      "Bus",
+      "Subway or elevated rail, Light rail, streetcar, or trolley (carro p\u00fablico in Puerto Rico)",
+      "Long-distance train or commuter rail or Ferryboat"
+    ]
+  },
+  "dim_153": {
+    "name": "Vehicles Available",
+    "variables": [
+      "No vehicle available",
+      "1 vehicle available",
+      "2 vehicles available",
+      "3 or more vehicles available"
+    ]
+  },
+  "dim_154": {
+    "name": "Household Size",
+    "variables": [
+      "1-person household",
+      "2-person household",
+      "3-person household",
+      "4-or-more-person household"
+    ]
+  },
+  "dim_155": {
+    "name": "Vehicles Available",
+    "variables": [
+      "No vehicle available",
+      "1 vehicle available",
+      "2 vehicles available",
+      "3 vehicles available",
+      "4 or more vehicles available"
+    ]
+  },
+  "dim_156": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Car, truck, or van",
+      "Public transportation (excluding taxicab)",
+      "Taxicab",
+      "Motorcycle",
+      "Bicycle",
+      "Walked",
+      "Other means",
+      "Worked from home"
+    ]
+  },
+  "dim_157": {
+    "name": "Size of Carpool",
+    "variables": [
+      "In 2-person carpool",
+      "In 3-person carpool",
+      "In 4-person carpool",
+      "In 5- or 6-person carpool",
+      "In 7-or-more-person carpool"
+    ]
+  },
+  "dim_158": {
+    "name": "Means of Transportation to Work",
+    "variables": [
+      "Drove alone",
+      "Carpooled",
+      "Bus",
+      "Subway or elevated rail or Light rail, streetcar or trolley (carro p\u00fablico in Puerto Rico)",
+      "Long-distance train or commuter rail or Ferryboat"
+    ]
+  },
+  "dim_159": {
+    "name": "Household Type",
+    "variables": [
+      "In married-couple family",
+      "In male householder, no spouse present, family",
+      "In female householder, no spouse present, family"
+    ]
+  },
+  "dim_160": {
+    "name": "Grandparents Living With Own Grandchildren Under 18 Years",
+    "variables": [
+      "Living with own grandchildren under 18 years",
+      "Not living with own grandchildren under 18 years"
+    ]
+  },
+  "dim_161": {
+    "name": "Presence of Parent of Grandchildren",
+    "variables": [
+      "Householder or spouse with no parent of grandchildren present",
+      "Other grandparents"
+    ]
+  },
+  "dim_162": {
+    "name": "Marital Status",
+    "variables": [
+      "Now married (including separated and spouse absent)",
+      "Unmarried (never married, widowed, and divorced)"
+    ]
+  },
+  "dim_163": {
+    "name": "Household Type",
+    "variables": [
+      "Married-couple family",
+      "Other family",
+      "Householder living alone",
+      "Householder not living alone"
+    ]
+  },
+  "dim_164": {
+    "name": "Household Type",
+    "variables": [
+      "Married-couple family",
+      "Other family",
+      "Male householder",
+      "Female householder"
+    ]
+  },
+  "dim_165": {
+    "name": "Marital Status",
+    "variables": [
+      "Never married",
+      "Now married",
+      "Widowed",
+      "Divorced"
+    ]
+  },
+  "dim_166": {
+    "name": "Spouse Present",
+    "variables": [
+      "Married, spouse present",
+      "Married, spouse absent"
+    ]
+  },
+  "dim_167": {
+    "name": "Separated",
+    "variables": [
+      "Separated",
+      "Other"
+    ]
+  },
+  "dim_168": {
+    "name": "Labor Force Participation",
+    "variables": [
+      "Employed or in Armed Forces",
+      "Unemployed"
+    ]
+  },
+  "dim_169": {
+    "name": "Level of School",
+    "variables": [
+      "Enrolled in nursery school, preschool",
+      "Enrolled in kindergarten",
+      "Enrolled in grade 1 to grade 4",
+      "Enrolled in grade 5 to grade 8",
+      "Enrolled in grade 9 to grade 12",
+      "Enrolled in college undergraduate years",
+      "Enrolled in graduate or professional school"
+    ]
+  },
+  "dim_170": {
+    "name": "Poverty Status",
+    "variables": [
+      "Income in the past 12 months below the poverty level",
+      "Income in the past 12 months at or above the poverty level"
+    ]
+  },
+  "dim_171": {
+    "name": "Educational Attainment",
+    "variables": [
+      "Less than 9th grade",
+      "9th to 12th grade, no diploma",
+      "High school graduate (includes equivalency)",
+      "Some college, no degree",
+      "Associate's degree",
+      "Bachelor's degree",
+      "Graduate or professional degree"
+    ]
+  },
+  "dim_172": {
+    "name": "Household Limited English Speaking Status",
+    "variables": [
+      "Limited English speaking household",
+      "Not a limited English speaking household"
+    ]
+  },
+  "dim_173": {
+    "name": "Age",
+    "variables": [
+      "5 to 17 years",
+      "18 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_174": {
+    "name": "Educational Attainment",
+    "variables": [
+      "Less than high school graduate",
+      "High school graduate (includes equivalency)",
+      "Some college, associate's degree",
+      "Bachelor's degree or higher"
+    ]
+  },
+  "dim_175": {
+    "name": "Age of Related Children",
+    "variables": [
+      "Under 5 years only",
+      "Under 5 years and 5 to 17 years",
+      "5 to 17 years only"
+    ]
+  },
+  "dim_176": {
+    "name": "Ratio of Income to Poverty Level",
+    "variables": [
+      "Under .50",
+      ".50 to .74",
+      ".75 to .99",
+      "1.00 to 1.24",
+      "1.25 to 1.49",
+      "1.50 to 1.74",
+      "1.75 to 1.84",
+      "1.85 to 1.99",
+      "2.00 to 2.99",
+      "3.00 to 3.99",
+      "4.00 to 4.99",
+      "5.00 and over"
+    ]
+  },
+  "dim_177": {
+    "name": "Median Household Income",
+    "variables": [
+      "Median household income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_178": {
+    "name": "Median Household Income",
+    "variables": [
+      "Median household income in the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_179": {
+    "name": "Aggregate Earnings",
+    "variables": [
+      "Aggregate earnings in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_180": {
+    "name": "Mean Household Income of Quintiles",
+    "variables": [
+      "Lowest Quintile",
+      "Second Quintile",
+      "Third Quintile",
+      "Fourth Quintile",
+      "Highest Quintile"
+    ]
+  },
+  "dim_181": {
+    "name": "Family Size",
+    "variables": [
+      "2-person families",
+      "3-person families",
+      "4-person families",
+      "5-person families",
+      "6-person families",
+      "7-or-more-person families"
+    ]
+  },
+  "dim_182": {
+    "name": "Aggregate Nonfamily Household Income",
+    "variables": [
+      "Aggregate nonfamily household income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_183": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 64 years (dollars)",
+      "Householder 65 years and over (dollars)"
+    ]
+  },
+  "dim_184": {
+    "name": "Sex (Median)",
+    "variables": [
+      "Male --",
+      "Female --"
+    ]
+  },
+  "dim_185": {
+    "name": "Worked Full-time in Past Year",
+    "variables": [
+      "Worked full-time, year-round in the past 12 months (dollars)",
+      "Other (dollars)"
+    ]
+  },
+  "dim_186": {
+    "name": "Median Earnings",
+    "variables": [
+      "Median earnings in the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_187": {
+    "name": "Number of Workers in Family",
+    "variables": [
+      "Both spouses worked",
+      "Other"
+    ]
+  },
+  "dim_188": {
+    "name": "Usual Hours Worked per Week",
+    "variables": [
+      "Usually worked 35 or more hours per week",
+      "Usually worked 15 to 34 hours per week",
+      "Usually worked 1 to 14 hours per week"
+    ]
+  },
+  "dim_189": {
+    "name": "Weeks Worked",
+    "variables": [
+      "50 to 52 weeks",
+      "48 and 49 weeks",
+      "40 to 47 weeks",
+      "27 to 39 weeks",
+      "14 to 26 weeks",
+      "1 to 13 weeks"
+    ]
+  },
+  "dim_190": {
+    "name": "Occupants per Room",
+    "variables": [
+      "1.00 or less occupants per room",
+      "1.01 to 1.50 occupants per room",
+      "1.51 or more occupants per room"
+    ]
+  },
+  "dim_191": {
+    "name": "Rooms",
+    "variables": [
+      "1 room",
+      "2 rooms",
+      "3 rooms",
+      "4 rooms",
+      "5 rooms",
+      "6 rooms",
+      "7 rooms",
+      "8 rooms",
+      "9 or more rooms"
+    ]
+  },
+  "dim_192": {
+    "name": "Aggregate Number of Rooms",
+    "variables": [
+      "Aggregate number of rooms"
+    ]
+  },
+  "dim_193": {
+    "name": "Units in Structure",
+    "variables": [
+      "1, detached",
+      "1, attached",
+      "2",
+      "3 or 4",
+      "5 to 9",
+      "10 to 19",
+      "20 to 49",
+      "50 or more",
+      "Mobile home",
+      "Boat, RV, van, etc."
+    ]
+  },
+  "dim_194": {
+    "name": "House Heating Fuel",
+    "variables": [
+      "Utility gas",
+      "Bottled, tank, or LP gas",
+      "Electricity",
+      "Fuel oil, kerosene, etc.",
+      "Coal or coke",
+      "Wood",
+      "Solar energy",
+      "Other fuel",
+      "No fuel used"
+    ]
+  },
+  "dim_195": {
+    "name": "Age of Householder (4 Types)",
+    "variables": [
+      "Householder 15 to 54 years",
+      "Householder 55 to 64 years",
+      "Householder 65 to 74 years",
+      "Householder 75 years and over"
+    ]
+  },
+  "dim_196": {
+    "name": "Percentage of Household Income",
+    "variables": [
+      "Less than 10.0 percent",
+      "10.0 to 14.9 percent",
+      "15.0 to 19.9 percent",
+      "20.0 to 24.9 percent",
+      "25.0 to 29.9 percent",
+      "30.0 to 34.9 percent",
+      "35.0 to 39.9 percent",
+      "40.0 to 49.9 percent",
+      "50.0 percent or more",
+      "Not computed"
+    ]
+  },
+  "dim_197": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 24 years",
+      "Householder 25 to 34 years",
+      "Householder 35 to 64 years",
+      "Householder 65 years and over"
+    ]
+  },
+  "dim_198": {
+    "name": "Percentage of Household Income",
+    "variables": [
+      "Less than 20.0 percent",
+      "20.0 to 24.9 percent",
+      "25.0 to 29.9 percent",
+      "30.0 to 34.9 percent",
+      "35.0 percent or more",
+      "Not computed"
+    ]
+  },
+  "dim_199": {
+    "name": "Housing Cost as a Percentage of Household Income",
+    "variables": [
+      "Less than 20.0 percent",
+      "20.0 to 24.9 percent",
+      "25.0 to 29.9 percent",
+      "30.0 to 34.9 percent",
+      "35.0 to 39.9 percent",
+      "40.0 to 49.9 percent",
+      "50.0 percent or more",
+      "Not computed"
+    ]
+  },
+  "dim_200": {
+    "name": "Value",
+    "variables": [
+      "Less than $10,000",
+      "$10,000 to $14,999",
+      "$15,000 to $19,999",
+      "$20,000 to $24,999",
+      "$25,000 to $29,999",
+      "$30,000 to $34,999",
+      "$35,000 to $39,999",
+      "$40,000 to $49,999",
+      "$50,000 to $59,999",
+      "$60,000 to $69,999",
+      "$70,000 to $79,999",
+      "$80,000 to $89,999",
+      "$90,000 to $99,999",
+      "$100,000 to $124,999",
+      "$125,000 to $149,999",
+      "$150,000 to $174,999",
+      "$175,000 to $199,999",
+      "$200,000 to $249,999",
+      "$250,000 to $299,999",
+      "$300,000 to $399,999",
+      "$400,000 to $499,999",
+      "$500,000 to $749,999",
+      "$750,000 to $999,999",
+      "$1,000,000 to $1,499,999",
+      "$1,500,000 to $1,999,999",
+      "$2,000,000 or more"
+    ]
+  },
+  "dim_201": {
+    "name": "Median Value",
+    "variables": [
+      "Median value (dollars)"
+    ]
+  },
+  "dim_202": {
+    "name": "Mortgage Status",
+    "variables": [
+      "Housing units with a mortgage (dollars)",
+      "Housing units without a mortgage (dollars)"
+    ]
+  },
+  "dim_203": {
+    "name": "Monthly Housing Costs as a Percentage of Household Income",
+    "variables": [
+      "Less than 20 percent",
+      "20 to 29 percent",
+      "30 percent or more"
+    ]
+  },
+  "dim_204": {
+    "name": "Total Housing Units",
+    "variables": [
+      "Total Housing Units"
+    ]
+  },
+  "dim_205": {
+    "name": "Occupancy Status",
+    "variables": [
+      "Occupied Units",
+      "Vacant Units"
+    ]
+  },
+  "dim_206": {
+    "name": "Age (10 Types)",
+    "variables": [
+      "Under 15 years",
+      "15 to 17 years",
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 64 years",
+      "65 to 74 years",
+      "75 to 84 years",
+      "85 years and over"
+    ]
+  },
+  "dim_207": {
+    "name": "School Enrolllment (2 Types)",
+    "variables": [
+      "Nursery school through 12th grade",
+      "College or graduate school"
+    ]
+  },
+  "dim_208": {
+    "name": "Educational Attainment (4 Types)",
+    "variables": [
+      "Less than high school diploma",
+      "High school graduate (includes equivalency)",
+      "Some college or associate's degree",
+      "Bachelor's degree or higher"
+    ]
+  },
+  "dim_209": {
+    "name": "Same Address in Past Year",
+    "variables": [
+      "Same address",
+      "Different address in the United States",
+      "Abroad"
+    ]
+  },
+  "dim_210": {
+    "name": "Same County in Past Year",
+    "variables": [
+      "Same county",
+      "Different county"
+    ]
+  },
+  "dim_211": {
+    "name": "Language Spoken at Home (English)",
+    "variables": [
+      "Speak only English",
+      "Speak Language other than English"
+    ]
+  },
+  "dim_212": {
+    "name": "Noninstitutional Group Quarters Population",
+    "variables": [
+      "Noninstitutionalized group quarters population",
+      "Household population"
+    ]
+  },
+  "dim_213": {
+    "name": "Group Quarters Population",
+    "variables": [
+      "Group quarters population"
+    ]
+  },
+  "dim_214": {
+    "name": "Receipt of Food Stamps/SNAP",
+    "variables": [
+      "Received Food Stamps/SNAP in the past 12 months",
+      "Did not receive Food Stamps/SNAP in the past 12 months"
+    ]
+  },
+  "dim_215": {
+    "name": "Computers in Household",
+    "variables": [
+      "Has one or more types of computing devices",
+      "No Computer"
+    ]
+  },
+  "dim_216": {
+    "name": "Types of Computers in Household",
+    "variables": [
+      "Desktop or laptop",
+      "Smartphone",
+      "Tablet or other portable wireless computer",
+      "Other computer"
+    ]
+  },
+  "dim_217": {
+    "name": "Presence of Internet Subscriptions in Household",
+    "variables": [
+      "With an Internet subscription",
+      "Internet access without a subscription",
+      "No Internet access"
+    ]
+  },
+  "dim_218": {
+    "name": "Response Rate",
+    "variables": [
+      "Response Rate",
+      "Nonresponse Rate"
+    ]
+  },
+  "dim_219": {
+    "name": "Allocation of Geographic Parts",
+    "variables": [
+      "One or more but not all geographic parts allocated",
+      "All geographic parts allocated"
+    ]
+  },
+  "dim_220": {
+    "name": "Allocation of Travel Time to Work",
+    "variables": [
+      "Travel time to work --"
+    ]
+  },
+  "dim_221": {
+    "name": "Language Spoken at Home",
+    "variables": [
+      "Speak only English",
+      "Speak other languages"
+    ]
+  },
+  "dim_222": {
+    "name": "Allocation of income",
+    "variables": [
+      "No income allocated",
+      "Dollar value of zero allocated",
+      "More than 0 to less than 10 percent of total income for individual allocated",
+      "10 to less than 25 percent of total income for individual allocated",
+      "25 to less than 50 percent of total income for individual allocated",
+      "50 to less than 100 percent of total income for individual allocated",
+      "100 percent of total income for individual allocated"
+    ]
+  },
+  "dim_223": {
+    "name": "Allocation of income",
+    "variables": [
+      "No income allocated",
+      "Dollar value of zero allocated",
+      "More than 0 to less than 10 percent of total income for family allocated",
+      "10 to less than 25 percent of total income for family allocated",
+      "25 to less than 50 percent of total income for family allocated",
+      "50 to less than 100 percent of total income for family allocated",
+      "100 percent of total income for family allocated"
+    ]
+  },
+  "dim_224": {
+    "name": "Allocation of Income",
+    "variables": [
+      "No income allocated",
+      "Dollar value of zero allocated",
+      "More than 0 to less than 10 percent of total income for household allocated",
+      "10 to less than 25 percent of total income for household allocated",
+      "25 to less than 50 percent of total income for household allocated",
+      "50 to less than 100 percent of total income for household allocated",
+      "100 percent of total income for household allocated"
+    ]
+  },
+  "dim_225": {
+    "name": "Occupation (5 Types)",
+    "variables": [
+      "Employee of private company workers",
+      "Self-employed in own incorporated business workers",
+      "Private not-for-profit wage and salary workers",
+      "Local, state, and federal government workers",
+      "Self-employed in own not incorporated business workers and unpaid family workers"
+    ]
+  },
+  "dim_226": {
+    "name": "Age (23 Types)",
+    "variables": [
+      "Under 5 years",
+      "5 to 9 years",
+      "10 to 14 years",
+      "15 to 17 years",
+      "18 and 19 years",
+      "20 years",
+      "21 years",
+      "22 to 24 years",
+      "25 to 29 years",
+      "30 to 34 years",
+      "35 to 39 years",
+      "40 to 44 years",
+      "45 to 49 years",
+      "50 to 54 years",
+      "55 to 59 years",
+      "60 and 61 years",
+      "62 to 64 years",
+      "65 and 66 years",
+      "67 to 69 years",
+      "70 to 74 years",
+      "75 to 79 years",
+      "80 to 84 years",
+      "85 years and over"
+    ]
+  },
+  "dim_227": {
+    "name": "Race",
+    "variables": [
+      "White alone",
+      "Black or African American alone",
+      "American Indian and Alaska Native alone",
+      "Asian alone",
+      "Native Hawaiian and Other Pacific Islander alone",
+      "Some Other Race alone",
+      "Two or More Races"
+    ]
+  },
+  "dim_228": {
+    "name": "Two or More Races",
+    "variables": [
+      "Two races including Some Other Race",
+      "Two races excluding Some Other Race, and three or more races"
+    ]
+  },
+  "dim_229": {
+    "name": "Asian Alone",
+    "variables": [
+      "East Asian",
+      "Southeast Asian",
+      "South Asian",
+      "Central Asian",
+      "Other Asian, specified",
+      "Other Asian, not specified",
+      "Two or more Asian"
+    ]
+  },
+  "dim_230": {
+    "name": "Native Hawaiian & Other Pacific Islander Alone",
+    "variables": [
+      "Polynesian",
+      "Micronesian",
+      "Melanesian",
+      "Other Native Hawaiian and Other Pacific Islander, not specified",
+      "Two or more Native Hawaiian and Other Pacific Islander"
+    ]
+  },
+  "dim_231": {
+    "name": "Asian Alone",
+    "variables": [
+      "East Asian",
+      "Southeast Asian",
+      "South Asian",
+      "Central Asian",
+      "Other Asian, specified",
+      "Other Asian, not specified"
+    ]
+  },
+  "dim_232": {
+    "name": "Native Hawaiian & Other Pacific Islander Alone",
+    "variables": [
+      "Polynesian",
+      "Micronesian",
+      "Melanesian",
+      "Other Native Hawaiian and Other Pacific Islander, not specified"
+    ]
+  },
+  "dim_233": {
+    "name": "American Indian & Alaska Native Alone",
+    "variables": [
+      "American Indian tribes, specified",
+      "American Indian, not specified",
+      "Latin American Indian",
+      "Alaska Native tribes and villages, specified",
+      "Alaska Native, not specified",
+      "American Indian and Alaska Native, not specified",
+      "Two or more American Indian and Alaska Native tribes and villages"
+    ]
+  },
+  "dim_234": {
+    "name": "American Indian & Alaska Native Alone",
+    "variables": [
+      "American Indian tribes, specified",
+      "American Indian, not specified",
+      "Latin American Indian",
+      "Alaska Native tribes and villages, specified",
+      "Alaska Native, not specified",
+      "American Indian and Alaska Native, not specified"
+    ]
+  },
+  "dim_235": {
+    "name": "Specific Origin (Hispanic or Latino)",
+    "variables": [
+      "Mexican",
+      "Puerto Rican",
+      "Cuban",
+      "Dominican (Dominican Republic)",
+      "Central American",
+      "South American",
+      "Other Hispanic or Latino"
+    ]
+  },
+  "dim_236": {
+    "name": "Specific Origin (Hispanic or Latino)",
+    "variables": [
+      "Costa Rican",
+      "Guatemalan",
+      "Honduran",
+      "Nicaraguan",
+      "Panamanian",
+      "Salvadoran",
+      "Other Central American",
+      "Argentinean",
+      "Bolivian",
+      "Chilean",
+      "Colombian",
+      "Ecuadorian",
+      "Paraguayan",
+      "Peruvian",
+      "Uruguayan",
+      "Venezuelan",
+      "Other South American",
+      "Spaniard",
+      "Spanish",
+      "Spanish American",
+      "All other Hispanic or Latino"
+    ]
+  },
+  "dim_237": {
+    "name": "Race (7 Types)",
+    "variables": [
+      "White alone",
+      "Black or African American alone",
+      "American Indian and Alaska Native alone",
+      "Asian alone",
+      "Native Hawaiian and Other Pacific Islander alone",
+      "Some other race alone",
+      "Two or more races"
+    ]
+  },
+  "dim_238": {
+    "name": "Two or More Races",
+    "variables": [
+      "Two races including Some other race",
+      "Two races excluding Some other race, and three or more races"
+    ]
+  },
+  "dim_239": {
+    "name": "Ancestry",
+    "variables": [
+      "Afghan",
+      "Albanian",
+      "Alsatian",
+      "American",
+      "Arab",
+      "Armenian",
+      "Assyrian/Chaldean/Syriac",
+      "Australian",
+      "Austrian",
+      "Basque",
+      "Belgian",
+      "Brazilian",
+      "British",
+      "Bulgarian",
+      "Cajun",
+      "Canadian",
+      "Carpatho Rusyn",
+      "Celtic",
+      "Croatian",
+      "Cypriot",
+      "Czech",
+      "Czechoslovakian",
+      "Danish",
+      "Dutch",
+      "Eastern European",
+      "English",
+      "Estonian",
+      "European",
+      "Finnish",
+      "French (except Basque)",
+      "French Canadian",
+      "German",
+      "German Russian",
+      "Greek",
+      "Guyanese",
+      "Hungarian",
+      "Icelander",
+      "Iranian",
+      "Irish",
+      "Israeli",
+      "Italian",
+      "Latvian",
+      "Lithuanian",
+      "Luxembourger",
+      "Macedonian",
+      "Maltese",
+      "New Zealander",
+      "Northern European",
+      "Norwegian",
+      "Pennsylvania German",
+      "Polish",
+      "Portuguese",
+      "Romanian",
+      "Russian",
+      "Scandinavian",
+      "Scotch-Irish",
+      "Scottish",
+      "Serbian",
+      "Slavic",
+      "Slovak",
+      "Slovene",
+      "Soviet Union",
+      "Subsaharan African",
+      "Swedish",
+      "Swiss",
+      "Turkish",
+      "Ukrainian",
+      "Welsh",
+      "West Indian (except Hispanic groups)",
+      "Yugoslavian",
+      "Other groups",
+      "Unclassified or not reported"
+    ]
+  },
+  "dim_240": {
+    "name": "Ancestry Specificed",
+    "variables": [
+      "Ancestry specified",
+      "Ancestry not specified"
+    ]
+  },
+  "dim_241": {
+    "name": "Anc",
+    "variables": [
+      "Single ancestry",
+      "Multiple ancestry",
+      "Ancestry unclassified",
+      "Ancestry not reported"
+    ]
+  },
+  "dim_242": {
+    "name": "Citizen Status (5 Types)",
+    "variables": [
+      "U.S. citizen, born in the United States",
+      "U.S. citizen, born in Puerto Rico or U.S. Island Areas",
+      "U.S. citizen, born abroad of American parent(s)",
+      "U.S. citizen by naturalization",
+      "Not a U.S. citizen"
+    ]
+  },
+  "dim_243": {
+    "name": "Place of Birth (5 Types)",
+    "variables": [
+      "Born in state of residence",
+      "Born in other state in the United States",
+      "Born outside the United States",
+      "Naturalized U.S. citizen",
+      "Not a U.S. citizen"
+    ]
+  },
+  "dim_244": {
+    "name": "Region (Place of Birth)",
+    "variables": [
+      "Northeast",
+      "Midwest",
+      "South",
+      "West",
+      "Puerto Rico",
+      "U.S. Island Areas",
+      "Born abroad of American parent(s)",
+      "Europe",
+      "Asia",
+      "Africa",
+      "Oceania",
+      "Latin America",
+      "Northern America"
+    ]
+  },
+  "dim_245": {
+    "name": "Age (2 Types)",
+    "variables": [
+      "Under 18 years",
+      "18 years and over"
+    ]
+  },
+  "dim_246": {
+    "name": "Continent of Birth",
+    "variables": [
+      "Europe",
+      "Asia",
+      "Africa",
+      "Oceania",
+      "Americas"
+    ]
+  },
+  "dim_247": {
+    "name": "Specific Region (Place of Birth)",
+    "variables": [
+      "Northern Europe",
+      "Western Europe",
+      "Southern Europe",
+      "Eastern Europe",
+      "Europe, n.e.c.",
+      "Eastern Asia",
+      "South Central Asia",
+      "South Eastern Asia",
+      "Western Asia",
+      "Asia, n.e.c.",
+      "Eastern Africa",
+      "Middle Africa",
+      "Northern Africa",
+      "Southern Africa",
+      "Western Africa",
+      "Africa, n.e.c.",
+      "Australia and New Zealand Subregion",
+      "Fiji",
+      "Marshall Islands",
+      "Micronesia",
+      "Oceania, n.e.c.",
+      "Latin America",
+      "Northern America"
+    ]
+  },
+  "dim_248": {
+    "name": "Country (Place of Birth)",
+    "variables": [
+      "Denmark",
+      "Ireland",
+      "Norway",
+      "Sweden",
+      "United Kingdom (inc. Crown Dependencies)",
+      "Other Northern Europe",
+      "Austria",
+      "Belgium",
+      "France",
+      "Germany",
+      "Netherlands",
+      "Switzerland",
+      "Other Western Europe",
+      "Greece",
+      "Italy",
+      "Portugal",
+      "Spain",
+      "Other Southern Europe",
+      "Albania",
+      "Belarus",
+      "Bosnia and Herzegovina",
+      "Bulgaria",
+      "Croatia",
+      "Czechoslovakia (includes Czech Republic and Slovakia)",
+      "Hungary",
+      "Latvia",
+      "Lithuania",
+      "Moldova",
+      "North Macedonia (Macedonia)",
+      "Poland",
+      "Romania",
+      "Russia",
+      "Serbia",
+      "Ukraine",
+      "Other Eastern Europe",
+      "China",
+      "Japan",
+      "Korea",
+      "Other Eastern Asia",
+      "Afghanistan",
+      "Bangladesh",
+      "Bhutan",
+      "India",
+      "Iran",
+      "Kazakhstan",
+      "Nepal",
+      "Pakistan",
+      "Sri Lanka",
+      "Uzbekistan",
+      "Other South Central Asia",
+      "Burma (Myanmar)",
+      "Cambodia",
+      "Indonesia",
+      "Laos",
+      "Malaysia",
+      "Philippines",
+      "Singapore",
+      "Thailand",
+      "Vietnam",
+      "Other South Eastern Asia",
+      "Armenia",
+      "Azerbaijan",
+      "Georgia",
+      "Iraq",
+      "Israel",
+      "Jordan",
+      "Kuwait",
+      "Lebanon",
+      "Saudi Arabia",
+      "Syria",
+      "Turkey",
+      "United Arab Emirates",
+      "Yemen",
+      "Other Western Asia",
+      "Eritrea",
+      "Ethiopia",
+      "Kenya",
+      "Somalia",
+      "Tanzania",
+      "Uganda",
+      "Zimbabwe",
+      "Other Eastern Africa",
+      "Cameroon",
+      "Congo",
+      "Democratic Republic of Congo (Zaire)",
+      "Other Middle Africa",
+      "Algeria",
+      "Egypt",
+      "Morocco",
+      "Sudan",
+      "Other Northern Africa",
+      "South Africa",
+      "Other Southern Africa",
+      "Cabo Verde",
+      "Ghana",
+      "Ivory Coast",
+      "Liberia",
+      "Nigeria",
+      "Senegal",
+      "Sierra Leone",
+      "Togo",
+      "Other Western Africa",
+      "Australia",
+      "Other Australian and New Zealand Subregion",
+      "Caribbean",
+      "Central America",
+      "South America",
+      "Canada",
+      "Other Northern America"
+    ]
+  },
+  "dim_249": {
+    "name": "Country (Place of Birth)",
+    "variables": [
+      "United Kingdom, excluding England and Scotland",
+      "England",
+      "Scotland",
+      "Azores Islands",
+      "China, excluding Hong Kong and Taiwan",
+      "Hong Kong",
+      "Taiwan",
+      "Bahamas",
+      "Barbados",
+      "Cuba",
+      "Dominica",
+      "Dominican Republic",
+      "Grenada",
+      "Haiti",
+      "Jamaica",
+      "St. Lucia",
+      "St. Vincent and the Grenadines",
+      "Trinidad and Tobago",
+      "West Indies",
+      "Other Caribbean",
+      "Belize",
+      "Costa Rica",
+      "El Salvador",
+      "Guatemala",
+      "Honduras",
+      "Mexico",
+      "Nicaragua",
+      "Panama",
+      "Other Central America",
+      "Argentina",
+      "Bolivia",
+      "Brazil",
+      "Chile",
+      "Colombia",
+      "Ecuador",
+      "Guyana",
+      "Peru",
+      "Uruguay",
+      "Venezuela",
+      "Other South America"
+    ]
+  },
+  "dim_250": {
+    "name": "Nativity of Own Children Under 18 Years in Families",
+    "variables": [
+      "Child is native",
+      "Child is foreign-born"
+    ]
+  },
+  "dim_251": {
+    "name": "Ratio of Income to Poverty Level",
+    "variables": [
+      "Under 1.00",
+      "1.00 to 1.99",
+      "2.00 and over"
+    ]
+  },
+  "dim_252": {
+    "name": "Naturalization",
+    "variables": [
+      "Not a U.S. citizen",
+      "Naturalized citizens"
+    ]
+  },
+  "dim_253": {
+    "name": "Period of Naturalization",
+    "variables": [
+      "Naturalized 2015 or later",
+      "Naturalized 2010 to 2014",
+      "Naturalized 2005 to 2009",
+      "Naturalized 2000 to 2004",
+      "Naturalized 1995 to 1999",
+      "Naturalized 1990 to 1994",
+      "Naturalized before 1990"
+    ]
+  },
+  "dim_254": {
+    "name": "Age (18 Types)",
+    "variables": [
+      "Under 5 years",
+      "5 to 9 years",
+      "10 to 14 years",
+      "15 to 19 years",
+      "20 to 24 years",
+      "25 to 29 years",
+      "30 to 34 years",
+      "35 to 39 years",
+      "40 to 44 years",
+      "45 to 49 years",
+      "50 to 54 years",
+      "55 to 59 years",
+      "60 to 64 years",
+      "65 to 69 years",
+      "70 to 74 years",
+      "75 to 79 years",
+      "80 to 84 years",
+      "85 years and over"
+    ]
+  },
+  "dim_255": {
+    "name": "Age (8 Types)",
+    "variables": [
+      "Under 10 years",
+      "10 to 19 years",
+      "20 to 29 years",
+      "30 to 39 years",
+      "40 to 49 years",
+      "50 to 59 years",
+      "60 to 69 years",
+      "70 years and over"
+    ]
+  },
+  "dim_256": {
+    "name": "Contry (Place of Birth)",
+    "variables": [
+      "China, Hong Kong, and Taiwan",
+      "Cuba",
+      "Dominican Republic",
+      "El Salvador",
+      "Guatemala",
+      "India",
+      "Mexico",
+      "Philippines",
+      "Vietnam",
+      "All Other Countries"
+    ]
+  },
+  "dim_257": {
+    "name": "Year of Entry (2 Types)",
+    "variables": [
+      "Entered 2010 or later",
+      "Entered before 2010"
+    ]
+  },
+  "dim_258": {
+    "name": "Age (11 Types)",
+    "variables": [
+      "Under 5 years",
+      "5 to 17 years",
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 59 years",
+      "60 and 61 years",
+      "62 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_259": {
+    "name": "Region of U.S. Residency",
+    "variables": [
+      "Current residence; Northeast",
+      "Current residence; Midwest",
+      "Current residence; South",
+      "Current residence; West"
+    ]
+  },
+  "dim_260": {
+    "name": "Moved Residency",
+    "variables": [
+      "Same residence (non-movers)",
+      "Movers within same state",
+      "Movers to different state",
+      "Movers from abroad"
+    ]
+  },
+  "dim_261": {
+    "name": "Moved from Abroad",
+    "variables": [
+      "Residence 1 year ago--",
+      "Puerto Rico",
+      "U.S. Island Areas",
+      "Foreign country"
+    ]
+  },
+  "dim_262": {
+    "name": "Metropolitan Statistical Area",
+    "variables": [
+      "Same Metropolitan Statistical Area",
+      "Different Metropolitan Statistical Area",
+      "Micropolitan Statistical Area",
+      "Not in a Metropolitan or Micropolitan Statistical Area 1 year ago"
+    ]
+  },
+  "dim_263": {
+    "name": "Micropolitan Statistical Area",
+    "variables": [
+      "Same Micropolitan Statistical Area",
+      "Different Micropolitan Statistical Area",
+      "Metropolitan Statistical Area",
+      "Not in a Metropolitan or Micropolitan Statistical Area 1 year ago"
+    ]
+  },
+  "dim_264": {
+    "name": "Moved from",
+    "variables": [
+      "Moved from principal city",
+      "Moved from remainder of Micropolitan Statistical Area",
+      "Moved from remainder of Metropolitan Statistical Area"
+    ]
+  },
+  "dim_265": {
+    "name": "Statistical Area 1 Year Ago",
+    "variables": [
+      "Metropolitan Statistical Area",
+      "Micropolitan Statistical Area",
+      "Not in a Metropolitan or Micropolitan Statistical Area 1 year ago"
+    ]
+  },
+  "dim_266": {
+    "name": "Location 1 Year Ago",
+    "variables": [
+      "Same city or town",
+      "Elsewhere",
+      "Puerto Rico",
+      "U.S. Island Areas",
+      "Foreign country"
+    ]
+  },
+  "dim_267": {
+    "name": "County of Residence",
+    "variables": [
+      "Same county",
+      "Different county (same state)",
+      "Different county"
+    ]
+  },
+  "dim_268": {
+    "name": "Living in Same Place",
+    "variables": [
+      "Living in a place",
+      "Not living in a place"
+    ]
+  },
+  "dim_269": {
+    "name": "Worked in Place of Residence",
+    "variables": [
+      "Worked in place of residence",
+      "Worked outside place of residence"
+    ]
+  },
+  "dim_270": {
+    "name": "Lived in 12 Selected States",
+    "variables": [
+      "Living in the 12 selected states",
+      "Not living in the 12 selected states"
+    ]
+  },
+  "dim_271": {
+    "name": "Worked in MD",
+    "variables": [
+      "Worked in MCD of residence",
+      "Worked outside MCD of residence"
+    ]
+  },
+  "dim_272": {
+    "name": "Aggregate Number of Vehicles Used in Commuting",
+    "variables": [
+      "Aggregate number of vehicles (car, truck, or van) used in commuting"
+    ]
+  },
+  "dim_273": {
+    "name": "Worked in MSA",
+    "variables": [
+      "Worked in Metropolitan Statistical Area of residence",
+      "Worked in a different Metropolitan Statistical Area",
+      "Worked in a Micropolitan Statistical Area",
+      "Worked outside any Metropolitan or Micropolitan Statistical Area"
+    ]
+  },
+  "dim_274": {
+    "name": "Worked in MSA",
+    "variables": [
+      "Worked in Micropolitan Statistical Area of residence",
+      "Worked in a different Micropolitan Statistical Area",
+      "Worked in a Metropolitan Statistical Area",
+      "Worked outside any Metropolitan or Micropolitan Statistical Area"
+    ]
+  },
+  "dim_275": {
+    "name": "Didn't Work in MSA",
+    "variables": [
+      "Worked in a Metropolitan Statistical Area",
+      "Worked in a Micropolitan Statistical Area",
+      "Worked outside any Metropolitan or Micropolitan Statistical Area"
+    ]
+  },
+  "dim_276": {
+    "name": "Worked in State of Residence",
+    "variables": [
+      "Worked in State of residence",
+      "Worked outside State of residence"
+    ]
+  },
+  "dim_277": {
+    "name": "Number of Workers in Household",
+    "variables": [
+      "No workers",
+      "1 worker",
+      "2 workers",
+      "3 or more workers",
+      "3 workers"
+    ]
+  },
+  "dim_278": {
+    "name": "Age under 18 Years Old (7 Types)",
+    "variables": [
+      "Under 3 years",
+      "3 and 4 years",
+      "5 years",
+      "6 to 8 years",
+      "9 to 11 years",
+      "12 to 14 years",
+      "15 to 17 years"
+    ]
+  },
+  "dim_279": {
+    "name": "Family Type",
+    "variables": [
+      "In married-couple families",
+      "In other families"
+    ]
+  },
+  "dim_280": {
+    "name": "Age of Child (5 Types)",
+    "variables": [
+      "Under 3 years",
+      "3 and 4 years",
+      "5 years",
+      "6 to 11 years",
+      "12 to 17 years"
+    ]
+  },
+  "dim_281": {
+    "name": "Type of Household (4 Types)",
+    "variables": [
+      "Married-couple household",
+      "Cohabiting couple household",
+      "In male householder, no spouse/partner present household",
+      "In female householder, no spouse/partner present household"
+    ]
+  },
+  "dim_282": {
+    "name": "Receipt of Supplemental Security Income, Cash Public Assistance Income, or Food Stamps/SNAP",
+    "variables": [
+      "Living in household with Supplemental Security Income (SSI), cash public assistance income, or Food Stamps/SNAP in the past 12 months",
+      "Living in household with no Supplemental Security Income (SSI), cash public assistance income, or Food Stamps/SNAP in the past 12 months"
+    ]
+  },
+  "dim_283": {
+    "name": "Relationship to Child",
+    "variables": [
+      "Own child",
+      "Grandchild",
+      "Other relatives",
+      "Foster child or other unrelated child"
+    ]
+  },
+  "dim_284": {
+    "name": "Relationship to Householder",
+    "variables": [
+      "Biological child",
+      "Adopted child",
+      "Stepchild"
+    ]
+  },
+  "dim_285": {
+    "name": "Relationship in Household",
+    "variables": [
+      "Householder",
+      "Opposite-sex spouse",
+      "Same-sex spouse",
+      "Opposite-sex unmarried partner",
+      "Same-sex unmarried partner",
+      "Child",
+      "Grandchild",
+      "Brother or sister",
+      "Parent",
+      "Parent-in-law",
+      "Son-in-law or daughter-in-law",
+      "Other relatives",
+      "Foster child",
+      "Other nonrelatives"
+    ]
+  },
+  "dim_286": {
+    "name": "Relationship (5 Types)",
+    "variables": [
+      "Male",
+      "Female",
+      "Biological child",
+      "Adopted child",
+      "Stepchild"
+    ]
+  },
+  "dim_287": {
+    "name": "Relationship for 65 Years and Over",
+    "variables": [
+      "Householder",
+      "Spouse",
+      "Parent",
+      "Parent-in-law",
+      "Other relatives",
+      "Nonrelatives"
+    ]
+  },
+  "dim_288": {
+    "name": "Age",
+    "variables": [
+      "18 to 34 years",
+      "35 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_289": {
+    "name": "Living Arrangements of Adults 18 Years",
+    "variables": [
+      "Lives alone",
+      "Householder living with spouse or spouse of householder",
+      "Householder living with unmarried partner or unmarried partner of householder",
+      "Child of householder",
+      "Other relatives",
+      "Other nonrelatives"
+    ]
+  },
+  "dim_290": {
+    "name": "Age of Grandchild",
+    "variables": [
+      "Grandchildren under 6 years",
+      "Grandchildren 6 to 11 years",
+      "Grandchildren 12 to 17 years"
+    ]
+  },
+  "dim_291": {
+    "name": "Grandparent Responsibility of Parent",
+    "variables": [
+      "Grandparent householder responsible for own grandchildren under 18 years",
+      "Grandparent householder not responsible for own grandchildren under 18 years"
+    ]
+  },
+  "dim_292": {
+    "name": "Presence of Parent",
+    "variables": [
+      "Parent present",
+      "No parent present"
+    ]
+  },
+  "dim_293": {
+    "name": "Median family income",
+    "variables": [
+      "Median family income in the past 12 months--"
+    ]
+  },
+  "dim_294": {
+    "name": "Median Family Income",
+    "variables": [
+      "Total",
+      "Grandparent householder and/or spouse responsible for grandchildren under 18 years (dollars)",
+      "Grandparent householder and/or spouse responsible for grandchildren under 18 years and no parent present (dollars)"
+    ]
+  },
+  "dim_295": {
+    "name": "Length of Time Responsible",
+    "variables": [
+      "Grandparent responsible less than 6 months",
+      "Grandparent responsible 6 to 11 months",
+      "Grandparent responsible 1 or 2 years",
+      "Grandparent responsible 3 or 4 years",
+      "Grandparent responsible 5 years or more"
+    ]
+  },
+  "dim_296": {
+    "name": "Disability Status of Grandparents Living With Own Grandchildren Under 18 Years",
+    "variables": [
+      "With any disability",
+      "No disability"
+    ]
+  },
+  "dim_297": {
+    "name": "Language of Grandparents Living With Own Grandchildren Under 18 Years",
+    "variables": [
+      "Speak only English",
+      "Speak other language"
+    ]
+  },
+  "dim_298": {
+    "name": "Households With Grandparents Living With Own Grandchildren Under 18 Years",
+    "variables": [
+      "Household with grandparents living with grandchildren",
+      "Household without grandparents living with grandchildren"
+    ]
+  },
+  "dim_299": {
+    "name": "With Responsibility to Grandchild",
+    "variables": [
+      "Household with grandparent responsible for own grandchildren under 18 years",
+      "Household with grandparent not responsible for own grandchildren under 18 years"
+    ]
+  },
+  "dim_300": {
+    "name": "Nonrelatives",
+    "variables": [
+      "Relatives",
+      "Nonrelatives"
+    ]
+  },
+  "dim_301": {
+    "name": "Presence of People Under 18 Years",
+    "variables": [
+      "Households with one or more people under 18 years",
+      "Households with no people under 18 years"
+    ]
+  },
+  "dim_302": {
+    "name": "Presence of Person 60 Year and Over",
+    "variables": [
+      "Households with one or more people 60 years and over",
+      "Households with no people 60 years and over"
+    ]
+  },
+  "dim_303": {
+    "name": "Presence of People 65 Years",
+    "variables": [
+      "Households with one or more people 65 years and over",
+      "Households with no people 65 years and over"
+    ]
+  },
+  "dim_304": {
+    "name": "Over, Household Size",
+    "variables": [
+      "1-person household",
+      "2-or-more-person household",
+      "1-person households"
+    ]
+  },
+  "dim_305": {
+    "name": "Cohabiting Couple Households",
+    "variables": [
+      "Cohabiting couple household",
+      "Not a cohabiting couple household"
+    ]
+  },
+  "dim_306": {
+    "name": "Presence of Own Child",
+    "variables": [
+      "With own children of the householder under 18 years",
+      "With no own children of the householder under 18 years"
+    ]
+  },
+  "dim_307": {
+    "name": "Coupled Households",
+    "variables": [
+      "Married couple households",
+      "Cohabiting couple households",
+      "All other households"
+    ]
+  },
+  "dim_308": {
+    "name": "Sex of Spouse",
+    "variables": [
+      "Opposite-sex",
+      "Same-sex"
+    ]
+  },
+  "dim_309": {
+    "name": "Householders' Sex",
+    "variables": [
+      "Male householder and male spouse",
+      "Female householder and female spouse",
+      "Male householder and male partner",
+      "Female householder and female partner"
+    ]
+  },
+  "dim_310": {
+    "name": "Nonfamily Households",
+    "variables": [
+      "Male householder",
+      "Female householder"
+    ]
+  },
+  "dim_311": {
+    "name": "Living Alone",
+    "variables": [
+      "Householder 15 to 64 years",
+      "Householder 65 years and over"
+    ]
+  },
+  "dim_312": {
+    "name": "Units in Structure (3 Types)",
+    "variables": [
+      "1-unit structures",
+      "2-or-more-unit structures",
+      "Mobile homes and all other types of units"
+    ]
+  },
+  "dim_313": {
+    "name": "Household Type",
+    "variables": [
+      "Married-couple household",
+      "Cohabiting couple household",
+      "Female householder, no spouse or partner present",
+      "Male householder, no spouse or partner present"
+    ]
+  },
+  "dim_314": {
+    "name": "Presence of Others in Household",
+    "variables": [
+      "With children of the householder under 18 years",
+      "With no children of the householder under 18 years",
+      "Living alone",
+      "With relatives, no children of the householder under 18 years",
+      "With only nonrelatives present"
+    ]
+  },
+  "dim_315": {
+    "name": "Subfamily Type",
+    "variables": [
+      "Married-couple subfamily",
+      "Mother-child subfamily",
+      "Father-child subfamily"
+    ]
+  },
+  "dim_316": {
+    "name": "Presence of Own Child",
+    "variables": [
+      "With own children under 18 years",
+      "No own children under 18 years"
+    ]
+  },
+  "dim_317": {
+    "name": "Population in Subfamilies",
+    "variables": [
+      "In married-couple subfamilies",
+      "In mother-child subfamilies",
+      "In father-child subfamilies"
+    ]
+  },
+  "dim_318": {
+    "name": "Subfamily Type",
+    "variables": [
+      "Husband/wife in a childless subfamily",
+      "Husband/wife in a subfamily with children",
+      "Child",
+      "Parent"
+    ]
+  },
+  "dim_319": {
+    "name": "Presence of Nonrelatives",
+    "variables": [
+      "Households with one or more nonrelatives",
+      "Households with no nonrelatives"
+    ]
+  },
+  "dim_320": {
+    "name": "Household Size",
+    "variables": [
+      "2-person household",
+      "3-person household",
+      "4-person household",
+      "5-person household",
+      "6-person household",
+      "7-or-more person household",
+      "1-person household"
+    ]
+  },
+  "dim_321": {
+    "name": "Multigenerational Households",
+    "variables": [
+      "Multigenerational households",
+      "All other households"
+    ]
+  },
+  "dim_322": {
+    "name": "Age 15 Year and Over (14 Types)",
+    "variables": [
+      "15 to 17 years",
+      "18 and 19 years",
+      "20 to 24 years",
+      "25 to 29 years",
+      "30 to 34 years",
+      "35 to 39 years",
+      "40 to 44 years",
+      "45 to 49 years",
+      "50 to 54 years",
+      "55 to 59 years",
+      "60 to 64 years",
+      "65 to 74 years",
+      "75 to 84 years",
+      "85 years and over"
+    ]
+  },
+  "dim_323": {
+    "name": "Median age at first marriage",
+    "variables": [
+      "Median age at first marriage --"
+    ]
+  },
+  "dim_324": {
+    "name": "Married Last Year",
+    "variables": [
+      "Married last year",
+      "Not married last year"
+    ]
+  },
+  "dim_325": {
+    "name": "Widowed Last Year",
+    "variables": [
+      "Widowed last year",
+      "Not widowed last year"
+    ]
+  },
+  "dim_326": {
+    "name": "Divorced Last Year",
+    "variables": [
+      "Divorced last year",
+      "Not divorced last year"
+    ]
+  },
+  "dim_327": {
+    "name": "Marital Status of Married Population",
+    "variables": [
+      "Married, spouse present",
+      "Married, spouse absent",
+      "Separated"
+    ]
+  },
+  "dim_328": {
+    "name": "Sex of Spouse",
+    "variables": [
+      "Opposite-sex spouse",
+      "Same-sex spouse"
+    ]
+  },
+  "dim_329": {
+    "name": "Number of Times Marriead",
+    "variables": [
+      "Once",
+      "Two times",
+      "Three or more times"
+    ]
+  },
+  "dim_330": {
+    "name": "Age 15 Years and Over (3 Types)",
+    "variables": [
+      "15 to 19 years old",
+      "20 to 34 years old",
+      "35 to 50 years old"
+    ]
+  },
+  "dim_331": {
+    "name": "Presence of Spouse or Unmarried Partner",
+    "variables": [
+      "Has a spouse present",
+      "Partner in an unmarried partner household",
+      "Other living arrangement"
+    ]
+  },
+  "dim_332": {
+    "name": "Income as a Percent of Povert Level (3 Types)",
+    "variables": [
+      "Below 100 percent of poverty level in the past 12 months",
+      "100 to 199 percent of poverty level in the past 12 months",
+      "200 percent or more of poverty level in the past 12 months"
+    ]
+  },
+  "dim_333": {
+    "name": "Receipt of Public Assistance Income",
+    "variables": [
+      "Received public assistance income",
+      "Did not receive public assistance income"
+    ]
+  },
+  "dim_334": {
+    "name": "Age 15 Years and Over (7 Types)",
+    "variables": [
+      "15 to 19 years old",
+      "20 to 24 years old",
+      "25 to 29 years old",
+      "30 to 34 years old",
+      "35 to 39 years old",
+      "40 to 44 years old",
+      "45 to 50 years old"
+    ]
+  },
+  "dim_335": {
+    "name": "Level of School",
+    "variables": [
+      "Enrolled in nursery school, preschool",
+      "Enrolled in kindergarten",
+      "Enrolled in grade 1 to grade 4",
+      "Enrolled in grade 5 to grade 8",
+      "Enrolled in grade 9 to grade 12",
+      "Enrolled in college, undergraduate years",
+      "Graduate or professional school"
+    ]
+  },
+  "dim_336": {
+    "name": "Type of School",
+    "variables": [
+      "Public school",
+      "Private school"
+    ]
+  },
+  "dim_337": {
+    "name": "School Enrollment",
+    "variables": [
+      "Enrolled in public school",
+      "Enrolled in private school",
+      "Not enrolled in school"
+    ]
+  },
+  "dim_338": {
+    "name": "Age 3 Years and Over (8 Types)",
+    "variables": [
+      "3 and 4 years",
+      "5 to 9 years",
+      "10 to 14 years",
+      "15 to 17 years",
+      "18 and 19 years",
+      "20 to 24 years",
+      "25 to 34 years",
+      "35 years and over"
+    ]
+  },
+  "dim_339": {
+    "name": "College or Graduate School Enrollment",
+    "variables": [
+      "Enrolled in public college or graduate school",
+      "Enrolled in private college or graduate school",
+      "Not enrolled in college or graduate school"
+    ]
+  },
+  "dim_340": {
+    "name": "Age 15 Years and Over (4 Types)",
+    "variables": [
+      "15 to 17 years",
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 years and over"
+    ]
+  },
+  "dim_341": {
+    "name": "High School Graduate",
+    "variables": [
+      "High school graduate (includes equivalency)",
+      "Not high school graduate"
+    ]
+  },
+  "dim_342": {
+    "name": "Employment Status (3 Types)",
+    "variables": [
+      "Employed",
+      "Unemployed",
+      "Not in labor force"
+    ]
+  },
+  "dim_343": {
+    "name": "Detailed Level of School",
+    "variables": [
+      "Enrolled in nursery school, preschool",
+      "Enrolled in kindergarten",
+      "Enrolled in grade 1",
+      "Enrolled in grade 2",
+      "Enrolled in grade 3",
+      "Enrolled in grade 4",
+      "Enrolled in grade 5",
+      "Enrolled in grade 6",
+      "Enrolled in grade 7",
+      "Enrolled in grade 8",
+      "Enrolled in grade 9",
+      "Enrolled in grade 10",
+      "Enrolled in grade 11",
+      "Enrolled in grade 12",
+      "Enrolled in college, undergraduate years",
+      "Graduate or professional school"
+    ]
+  },
+  "dim_344": {
+    "name": "Age 18 Years and Over (5 Types)",
+    "variables": [
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 to 44 years",
+      "45 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_345": {
+    "name": "Educational Attainment (16 Types)",
+    "variables": [
+      "No schooling completed",
+      "Nursery to 4th grade",
+      "5th and 6th grade",
+      "7th and 8th grade",
+      "9th grade",
+      "10th grade",
+      "11th grade",
+      "12th grade, no diploma",
+      "High school graduate (includes equivalency)",
+      "Some college, less than 1 year",
+      "Some college, 1 or more years, no degree",
+      "Associate's degree",
+      "Bachelor's degree",
+      "Master's degree",
+      "Professional school degree",
+      "Doctorate degree"
+    ]
+  },
+  "dim_346": {
+    "name": "Educational Attainment (24 Types)",
+    "variables": [
+      "No schooling completed",
+      "Nursery school",
+      "Kindergarten",
+      "1st grade",
+      "2nd grade",
+      "3rd grade",
+      "4th grade",
+      "5th grade",
+      "6th grade",
+      "7th grade",
+      "8th grade",
+      "9th grade",
+      "10th grade",
+      "11th grade",
+      "12th grade, no diploma",
+      "Regular high school diploma",
+      "GED or alternative credential",
+      "Some college, less than 1 year",
+      "Some college, 1 or more years, no degree",
+      "Associate's degree",
+      "Bachelor's degree",
+      "Master's degree",
+      "Professional school degree",
+      "Doctorate degree"
+    ]
+  },
+  "dim_347": {
+    "name": "Age 25 Year and Over (3 Types)",
+    "variables": [
+      "25 to 39 years",
+      "40 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_348": {
+    "name": "Age 25 Years and Over (2 Types)",
+    "variables": [
+      "25 to 39 years",
+      "40 to 64 years"
+    ]
+  },
+  "dim_349": {
+    "name": "Language Spoken at Home (43 Types)",
+    "variables": [
+      "Speak only English",
+      "Spanish",
+      "French (incl. Cajun)",
+      "Haitian",
+      "Italian",
+      "Portuguese",
+      "German",
+      "Yiddish, Pennsylvania Dutch or other West Germanic languages",
+      "Greek",
+      "Russian",
+      "Polish",
+      "Serbo-Croatian",
+      "Ukrainian or other Slavic languages",
+      "Armenian",
+      "Persian (incl. Farsi, Dari)",
+      "Gujarati",
+      "Hindi",
+      "Urdu",
+      "Punjabi",
+      "Bengali",
+      "Nepali, Marathi, or other Indic languages",
+      "Other Indo-European languages",
+      "Telugu",
+      "Tamil",
+      "Malayalam, Kannada, or other Dravidian languages",
+      "Chinese (incl. Mandarin, Cantonese)",
+      "Japanese",
+      "Korean",
+      "Hmong",
+      "Vietnamese",
+      "Khmer",
+      "Thai, Lao, or other Tai-Kadai languages",
+      "Other languages of Asia",
+      "Tagalog (incl. Filipino)",
+      "Ilocano, Samoan, Hawaiian, or other Austronesian languages",
+      "Arabic",
+      "Hebrew",
+      "Amharic, Somali, or other Afro-Asiatic languages",
+      "Yoruba, Twi, Igbo, or other languages of Western Africa",
+      "Swahili or other languages of Central, Eastern, and Southern Africa",
+      "Navajo",
+      "Other Native languages of North America",
+      "Other and unspecified languages"
+    ]
+  },
+  "dim_350": {
+    "name": "Detailed Household Language",
+    "variables": [
+      "English only",
+      "Spanish",
+      "French, Haitian, or Cajun",
+      "German or other West Germanic languages",
+      "Russian, Polish, or other Slavic languages",
+      "Other Indo-European languages",
+      "Korean",
+      "Chinese (incl. Mandarin, Cantonese)",
+      "Vietnamese",
+      "Tagalog (incl. Filipino)",
+      "Other Asian and Pacific Island languages",
+      "Arabic",
+      "Other and unspecified languages"
+    ]
+  },
+  "dim_351": {
+    "name": "Language Spoken at Home (English or Spanish)",
+    "variables": [
+      "Speak only English",
+      "Speak Spanish",
+      "Speak other language"
+    ]
+  },
+  "dim_352": {
+    "name": "Citizen Population",
+    "variables": [
+      "Native population",
+      "Foreign-born population"
+    ]
+  },
+  "dim_353": {
+    "name": "Age (13 Types)",
+    "variables": [
+      "Under 5 years",
+      "5 years",
+      "6 to 11 years",
+      "12 to 14 years",
+      "15 years",
+      "16 and 17 years",
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_354": {
+    "name": "Work Experience in Past 12-Months",
+    "variables": [
+      "Worked full time, year-round",
+      "Worked part-time or part-year",
+      "Did not work"
+    ]
+  },
+  "dim_355": {
+    "name": "Age of Related Children Under 18 Years",
+    "variables": [
+      "In married-couple family",
+      "In other family"
+    ]
+  },
+  "dim_356": {
+    "name": "Age of Child (3 Types)",
+    "variables": [
+      "Under 5 years",
+      "5 years",
+      "6 to 17 years"
+    ]
+  },
+  "dim_357": {
+    "name": "Age 15 Years and Over (9 Types)",
+    "variables": [
+      "15 years",
+      "16 and 17 years",
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_358": {
+    "name": "Aggregate income deficit of unrelated individuals (dollars)",
+    "variables": [
+      "Aggregate income deficit in the past 12 months of unrelated individuals (dollars)"
+    ]
+  },
+  "dim_359": {
+    "name": "Aggregate Income Deficit",
+    "variables": [
+      "Male (dollars)",
+      "Female (dollars)"
+    ]
+  },
+  "dim_360": {
+    "name": "Householder Status",
+    "variables": [
+      "Nonfamily householder",
+      "Other"
+    ]
+  },
+  "dim_361": {
+    "name": "Aggregate income deficit",
+    "variables": [
+      "Aggregate income deficit in the past 12 months"
+    ]
+  },
+  "dim_362": {
+    "name": "Number of Related Children Under 18 Years",
+    "variables": [
+      "No child",
+      "1 or 2 children",
+      "3 or 4 children",
+      "5 or more children"
+    ]
+  },
+  "dim_363": {
+    "name": "Number of Persons in Family",
+    "variables": [
+      "2 people",
+      "3 to 4 people",
+      "5 to 6 people",
+      "7 or more people"
+    ]
+  },
+  "dim_364": {
+    "name": "Supplemental Security Income",
+    "variables": [
+      "With Social Security income in the past 12 months",
+      "Without Social Security income in the past 12 months"
+    ]
+  },
+  "dim_365": {
+    "name": "Cash Public Assistance Income",
+    "variables": [
+      "With SSI and/or cash public assistance income in the past 12 months",
+      "Without SSI or cash public assistance income in the past 12 months"
+    ]
+  },
+  "dim_366": {
+    "name": "Work Experience of Householder",
+    "variables": [
+      "Householder worked full-time, year-round in the past 12 months",
+      "Householder worked part-time or part-year in the past 12 months",
+      "Householder did not work in the past 12 months"
+    ]
+  },
+  "dim_367": {
+    "name": "Spouse",
+    "variables": [
+      "Spouse worked full-time, year-round in the past 12 months",
+      "Spouse worked part-time or part-year in the past 12 months",
+      "Spouse did not work in the past 12 months"
+    ]
+  },
+  "dim_368": {
+    "name": "Age (7 Types)",
+    "variables": [
+      "Under 6 years",
+      "6 to 11 years",
+      "12 to 17 years",
+      "18 to 59 years",
+      "60 to 74 years",
+      "75 to 84 years",
+      "85 years and over"
+    ]
+  },
+  "dim_369": {
+    "name": "Living Arrangement",
+    "variables": [
+      "In family households",
+      "In non-family households and other living arrangement"
+    ]
+  },
+  "dim_370": {
+    "name": "Living Arrangement",
+    "variables": [
+      "In married couple families",
+      "In other families",
+      "Householder",
+      "Other living arrangement"
+    ]
+  },
+  "dim_371": {
+    "name": "Living Arrangement",
+    "variables": [
+      "Male householder, no spouse present",
+      "Female householder, no spouse present",
+      "Living alone",
+      "Not living alone"
+    ]
+  },
+  "dim_372": {
+    "name": "Living with Non-Relatives",
+    "variables": [
+      "All relatives",
+      "Non-relatives"
+    ]
+  },
+  "dim_373": {
+    "name": "Ratio of Income to Poverty Level (4 Types)",
+    "variables": [
+      "Under 1.30",
+      "1.30 to 1.49",
+      "1.50 to 1.84",
+      "1.85 and above"
+    ]
+  },
+  "dim_374": {
+    "name": "Number of Own Children Under 18 Years",
+    "variables": [
+      "No own child of the householder",
+      "1 or 2 own children of the householder",
+      "3 or 4 own children of the householder",
+      "5 or more own children of the householder"
+    ]
+  },
+  "dim_375": {
+    "name": "Age (10 Types)",
+    "variables": [
+      "Under 6 years",
+      "6 to 11 years",
+      "12 to 17 years",
+      "18 to 24 years",
+      "25 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_376": {
+    "name": "Nativity (4 types)",
+    "variables": [
+      "Born in the United States",
+      "Born outside the United States",
+      "Naturalized citizen",
+      "Not a citizen"
+    ]
+  },
+  "dim_377": {
+    "name": "Hearing Difficulty",
+    "variables": [
+      "With a hearing difficulty",
+      "No hearing difficulty"
+    ]
+  },
+  "dim_378": {
+    "name": "Vision Difficulty",
+    "variables": [
+      "With a vision difficulty",
+      "No vision difficulty"
+    ]
+  },
+  "dim_379": {
+    "name": "Cognitive Difficulty",
+    "variables": [
+      "With a cognitive difficulty",
+      "No cognitive difficulty"
+    ]
+  },
+  "dim_380": {
+    "name": "Ambulatory Difficulty",
+    "variables": [
+      "With an ambulatory difficulty",
+      "No ambulatory difficulty"
+    ]
+  },
+  "dim_381": {
+    "name": "Self-Care Difficulty",
+    "variables": [
+      "With a self-care difficulty",
+      "No self-care difficulty"
+    ]
+  },
+  "dim_382": {
+    "name": "Age 18 Years and Over (4 Types)",
+    "variables": [
+      "18 to 34 years",
+      "35 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_383": {
+    "name": "Independent Living Difficulty",
+    "variables": [
+      "With an independent living difficulty",
+      "No independent living difficulty"
+    ]
+  },
+  "dim_384": {
+    "name": "Health Insurace Type",
+    "variables": [
+      "With private health insurance coverage",
+      "With public health coverage"
+    ]
+  },
+  "dim_385": {
+    "name": "Household Size",
+    "variables": [
+      "1-person households",
+      "2-person households",
+      "3-person households",
+      "4-person households",
+      "5-person households",
+      "6-person households",
+      "7-or-more-person households"
+    ]
+  },
+  "dim_386": {
+    "name": "Wth Earnings",
+    "variables": [
+      "With earnings",
+      "No earnings"
+    ]
+  },
+  "dim_387": {
+    "name": "Wage or Salary Income",
+    "variables": [
+      "With wage or salary income",
+      "No wage or salary income"
+    ]
+  },
+  "dim_388": {
+    "name": "Self-Employment Income",
+    "variables": [
+      "With self-employment income",
+      "No self-employment income"
+    ]
+  },
+  "dim_389": {
+    "name": "Interest, Dividends, or Net Rental Income",
+    "variables": [
+      "With interest, dividends, or net rental income",
+      "No interest, dividends, or net rental income"
+    ]
+  },
+  "dim_390": {
+    "name": "Social Security Income",
+    "variables": [
+      "With Social Security income",
+      "No Social Security income"
+    ]
+  },
+  "dim_391": {
+    "name": "Supplemental Security Income",
+    "variables": [
+      "With Supplemental Security Income (SSI)",
+      "No Supplemental Security Income (SSI)"
+    ]
+  },
+  "dim_392": {
+    "name": "Public Assistance Income",
+    "variables": [
+      "With public assistance income",
+      "No public assistance income"
+    ]
+  },
+  "dim_393": {
+    "name": "Public Assistance Income or Food Stamps/SNAP",
+    "variables": [
+      "With cash public assistance or Food Stamps/SNAP",
+      "No cash public assistance or Food Stamps/SNAP"
+    ]
+  },
+  "dim_394": {
+    "name": "Retirement Income",
+    "variables": [
+      "With retirement income",
+      "No retirement income"
+    ]
+  },
+  "dim_395": {
+    "name": "Other Types of Income",
+    "variables": [
+      "With other types of income",
+      "No other types of income"
+    ]
+  },
+  "dim_396": {
+    "name": "Aggregate wage or salary income",
+    "variables": [
+      "Aggregate wage or salary income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_397": {
+    "name": "Aggregate self-employment income",
+    "variables": [
+      "Aggregate self-employment income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_398": {
+    "name": "Aggregate interest, dividends, or net rental income",
+    "variables": [
+      "Aggregate interest, dividends, or net rental income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_399": {
+    "name": "Aggregate Social Security income",
+    "variables": [
+      "Aggregate Social Security income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_400": {
+    "name": "Aggregate Supplemental Security Income (SSI)",
+    "variables": [
+      "Aggregate Supplemental Security Income (SSI) in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_401": {
+    "name": "Aggregate public assistance income",
+    "variables": [
+      "Aggregate public assistance income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_402": {
+    "name": "Aggregate retirement income",
+    "variables": [
+      "Aggregate retirement income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_403": {
+    "name": "Aggregate other types of income",
+    "variables": [
+      "Aggregate other types of income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_404": {
+    "name": "Household Income Quintile Upper Limits",
+    "variables": [
+      "Quintile Upper Limits",
+      "Lower Limit of Top 5 Percent"
+    ]
+  },
+  "dim_405": {
+    "name": "Household Income Quintile",
+    "variables": [
+      "Lowest Quintile",
+      "Second Quintile",
+      "Third Quintile",
+      "Fourth Quintile"
+    ]
+  },
+  "dim_406": {
+    "name": "Mean Household Income of Quintile",
+    "variables": [
+      "Quintile Means",
+      "Top 5 Percent"
+    ]
+  },
+  "dim_407": {
+    "name": "Shares of Aggregate Household Income",
+    "variables": [
+      "Quintile Share of Aggregate Income",
+      "Top 5 Percent"
+    ]
+  },
+  "dim_408": {
+    "name": "Gini Index",
+    "variables": [
+      "Gini Index"
+    ]
+  },
+  "dim_409": {
+    "name": "Median family income",
+    "variables": [
+      "Median family income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_410": {
+    "name": "Number of Earners in Family",
+    "variables": [
+      "No earners (dollars)",
+      "1 earner (dollars)",
+      "2 earners (dollars)",
+      "3 or more earners (dollars)"
+    ]
+  },
+  "dim_411": {
+    "name": "Number of Earners in Family",
+    "variables": [
+      "No earners",
+      "1 earner",
+      "2 earners",
+      "3 or more earners"
+    ]
+  },
+  "dim_412": {
+    "name": "Cash Public Assistance Income or Households Receiving Food Stamps/SNAP Benefits",
+    "variables": [
+      "With cash public assistance income or households receiving Food Stamps/SNAP benefits in the past 12 months",
+      "No cash public assistance income or household Food Stamps/SNAP benefits in the past 12 months"
+    ]
+  },
+  "dim_413": {
+    "name": "Median family income",
+    "variables": [
+      "Median family income in the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_414": {
+    "name": "Family Type",
+    "variables": [
+      "Married-couple family --",
+      "Other family --"
+    ]
+  },
+  "dim_415": {
+    "name": "Family Type",
+    "variables": [
+      "Male householder, no spouse present --",
+      "Female householder, no spouse present --"
+    ]
+  },
+  "dim_416": {
+    "name": "Aggregate Family Income",
+    "variables": [
+      "No workers (dollars)",
+      "1 worker (dollars)",
+      "2 workers, both spouses worked (dollars)",
+      "2 workers, other (dollars)",
+      "3 or more workers, both spouses worked (dollars)",
+      "3 or more workers, other (dollars)"
+    ]
+  },
+  "dim_417": {
+    "name": "Aggregate Family Income",
+    "variables": [
+      "Married couple family (dollars)",
+      "Other family (dollars)"
+    ]
+  },
+  "dim_418": {
+    "name": "Family Type",
+    "variables": [
+      "Male householder, no spouse present (dollars)",
+      "Female householder, no spouse present (dollars)"
+    ]
+  },
+  "dim_419": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 24 years (dollars)",
+      "Householder 25 to 34 years (dollars)",
+      "Householder 35 to 44 years (dollars)",
+      "Householder 45 to 54 years (dollars)",
+      "Householder 55 to 59 years (dollars)",
+      "Householder 60 to 64 years (dollars)",
+      "Householder 65 to 74 years (dollars)",
+      "Householder 75 years and over (dollars)"
+    ]
+  },
+  "dim_420": {
+    "name": "Median nonfamily household income ",
+    "variables": [
+      "Median nonfamily household income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_421": {
+    "name": "Median nonfamily household income",
+    "variables": [
+      "Median nonfamily household income in the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_422": {
+    "name": "Median Nonfamily Household Income",
+    "variables": [
+      "Male householder --",
+      "Female householder --"
+    ]
+  },
+  "dim_423": {
+    "name": "Living Alone",
+    "variables": [
+      "Living alone --",
+      "Not living alone --"
+    ]
+  },
+  "dim_424": {
+    "name": "Aggregate Nonfamily Household Income",
+    "variables": [
+      "Male householder (dollars)",
+      "Female householder (dollars)"
+    ]
+  },
+  "dim_425": {
+    "name": "Living Alone",
+    "variables": [
+      "Living alone (dollars)",
+      "Not living alone (dollars)"
+    ]
+  },
+  "dim_426": {
+    "name": "Per capita income",
+    "variables": [
+      "Per capita income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_427": {
+    "name": "Aggregate income",
+    "variables": [
+      "Aggregate income in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_428": {
+    "name": "Median income",
+    "variables": [
+      "Median income in the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_429": {
+    "name": "Earnings",
+    "variables": [
+      "No earnings",
+      "With earnings"
+    ]
+  },
+  "dim_430": {
+    "name": "Median earnings",
+    "variables": [
+      "Median earnings in the past 12 months (in 2023 inflation-adjusted dollars)"
+    ]
+  },
+  "dim_431": {
+    "name": "Age",
+    "variables": [
+      "18 to 34 years",
+      "35 to 54 years",
+      "55 to 64 years",
+      "65 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_432": {
+    "name": "Period of Military Service",
+    "variables": [
+      "Gulf War (9/2001 or later), no Gulf War (8/1990 to 8/2001), no Vietnam Era",
+      "Gulf War (9/2001 or later) and Gulf War (8/1990 to 8/2001), no Vietnam Era",
+      "Gulf War (9/2001 or later), and Gulf War (8/1990 to 8/2001), and Vietnam Era",
+      "Gulf War (8/1990 to 8/2001), no Vietnam Era",
+      "Gulf War (8/1990 to 8/2001) and Vietnam Era",
+      "Vietnam Era, no Korean War, no World War II",
+      "Vietnam Era and Korean War, no World War II",
+      "Vietnam Era and Korean War and World War II",
+      "Korean War, no Vietnam Era, no World War II",
+      "Korean War and World War II, no Vietnam Era",
+      "World War II, no Korean War, no Vietnam Era",
+      "Between Gulf War and Vietnam Era only",
+      "Between Vietnam Era and Korean War only",
+      "Between Korean War and World War II only",
+      "Pre-World War II only"
+    ]
+  },
+  "dim_433": {
+    "name": "Median income",
+    "variables": [
+      "Median income in the past 12 months (in 2023 inflation-adjusted dollars)--"
+    ]
+  },
+  "dim_434": {
+    "name": "Age",
+    "variables": [
+      "18 to 34 years",
+      "35 to 54 years",
+      "55 to 64 years"
+    ]
+  },
+  "dim_435": {
+    "name": "Service-Connected Disability-Rating Status",
+    "variables": [
+      "Has no service-connected disability rating",
+      "Has a service-connected disability rating"
+    ]
+  },
+  "dim_436": {
+    "name": "Ratings",
+    "variables": [
+      "0 percent",
+      "10 or 20 percent",
+      "30 or 40 percent",
+      "50 or 60 percent",
+      "70 percent or higher",
+      "Rating not reported"
+    ]
+  },
+  "dim_437": {
+    "name": "Presence of People 60 Years",
+    "variables": [
+      "At least one person in household 60 years or over",
+      "No people in household 60 years or over"
+    ]
+  },
+  "dim_438": {
+    "name": "Presence of Children Under 18 Years",
+    "variables": [
+      "With children under 18 years",
+      "No children under 18 years"
+    ]
+  },
+  "dim_439": {
+    "name": "Household Type",
+    "variables": [
+      "Married-couple family",
+      "Other family",
+      "Nonfamily households"
+    ]
+  },
+  "dim_440": {
+    "name": "Median household income",
+    "variables": [
+      "Median household income in the past 12 months (in 2023 inflation-adjusted dollars)--"
+    ]
+  },
+  "dim_441": {
+    "name": "Persons with Disability Status",
+    "variables": [
+      "Households with 1 or more persons with a disability",
+      "Households with no persons with a disability"
+    ]
+  },
+  "dim_442": {
+    "name": "Age",
+    "variables": [
+      "16 to 19 years",
+      "20 and 21 years",
+      "22 to 24 years",
+      "25 to 29 years",
+      "30 to 34 years",
+      "35 to 44 years",
+      "45 to 54 years",
+      "55 to 59 years",
+      "60 and 61 years",
+      "62 to 64 years",
+      "65 to 69 years",
+      "70 to 74 years",
+      "75 years and over"
+    ]
+  },
+  "dim_443": {
+    "name": "Presence of Own Children Under 18 Years",
+    "variables": [
+      "With own children under 18 years",
+      "No children under 18 years"
+    ]
+  },
+  "dim_444": {
+    "name": "Family Type",
+    "variables": [
+      "Opposite-sex married-couple family",
+      "Other family"
+    ]
+  },
+  "dim_445": {
+    "name": "Employment Status of Husband",
+    "variables": [
+      "Husband in labor force",
+      "Husband not in labor force",
+      "Male householder, no spouse present",
+      "Female householder, no spouse present"
+    ]
+  },
+  "dim_446": {
+    "name": "Employment Status",
+    "variables": [
+      "Employed or in Armed Forces",
+      "Unemployed",
+      "In labor force",
+      "Not in labor force"
+    ]
+  },
+  "dim_447": {
+    "name": "Employment Status",
+    "variables": [
+      "Employed or in Armed Forces",
+      "Wife in labor force",
+      "Unemployed"
+    ]
+  },
+  "dim_448": {
+    "name": "Employment Status",
+    "variables": [
+      "Employed or in Armed Forces",
+      "Wife in labor force",
+      "Unemployed",
+      "Wife not in labor force"
+    ]
+  },
+  "dim_449": {
+    "name": "Living Arrangements",
+    "variables": [
+      "Both parents in labor force",
+      "Father only in labor force",
+      "Mother only in labor force",
+      "Neither parent in labor force",
+      "Living with father",
+      "Living with mother"
+    ]
+  },
+  "dim_450": {
+    "name": "Work Experience of Householder",
+    "variables": [
+      "Householder worked full-time, year-round in the past 12 months",
+      "Householder worked less than full-time, year-round in the past 12 months",
+      "Householder did not work in the past 12 months"
+    ]
+  },
+  "dim_451": {
+    "name": "Work Experience of Spouse",
+    "variables": [
+      "Spouse worked full-time, year-round in the past 12 months",
+      "Spouse worked less than full-time, year-round in the past 12 months",
+      "Spouse did not work in the past 12 months"
+    ]
+  },
+  "dim_452": {
+    "name": "Median age",
+    "variables": [
+      "Median age--"
+    ]
+  },
+  "dim_453": {
+    "name": "Aggregate usual hours",
+    "variables": [
+      "Aggregate usual hours"
+    ]
+  },
+  "dim_454": {
+    "name": "Mean usual hours",
+    "variables": [
+      "Mean usual hours--"
+    ]
+  },
+  "dim_455": {
+    "name": "Full-Time, Year-Round Work Status",
+    "variables": [
+      "16 to 19 years",
+      "20 to 24 years",
+      "25 to 44 years",
+      "45 to 54 years",
+      "55 to 64 years",
+      "65 to 69 years",
+      "70 years and over"
+    ]
+  },
+  "dim_456": {
+    "name": "Full-Time, Year-Round Work Status",
+    "variables": [
+      "Worked full-time, year-round",
+      "Worked less than full-time, year-round"
+    ]
+  },
+  "dim_457": {
+    "name": "Occupancy Status",
+    "variables": [
+      "Occupied",
+      "Vacant"
+    ]
+  },
+  "dim_458": {
+    "name": "Vacancy Status",
+    "variables": [
+      "For rent",
+      "Rented, not occupied",
+      "For sale only",
+      "Sold, not occupied",
+      "For seasonal, recreational, or occasional use",
+      "For migrant workers",
+      "Other vacant"
+    ]
+  },
+  "dim_459": {
+    "name": "Vacant - Current Residence Elsewhere",
+    "variables": [
+      "Vacant - current residence elsewhere",
+      "All other vacant units"
+    ]
+  },
+  "dim_460": {
+    "name": "Race of Householder",
+    "variables": [
+      "Householder who is White alone",
+      "Householder who is Black or African American alone",
+      "Householder who is American Indian and Alaska Native alone",
+      "Householder who is Asian alone",
+      "Householder who is Native Hawaiian and Other Pacific Islander alone",
+      "Householder who is Some other race alone",
+      "Householder who is Two or more races"
+    ]
+  },
+  "dim_461": {
+    "name": "Householder of Two or More Races",
+    "variables": [
+      "Householder who is Two races including Some other race",
+      "Householder who is Two races excluding Some other race, and three or more races"
+    ]
+  },
+  "dim_462": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 24 years",
+      "Householder 25 to 34 years",
+      "Householder 35 to 44 years",
+      "Householder 45 to 54 years",
+      "Householder 55 to 59 years",
+      "Householder 60 to 64 years",
+      "Householder 65 to 74 years",
+      "Householder 75 to 84 years",
+      "Householder 85 years and over"
+    ]
+  },
+  "dim_463": {
+    "name": "Household Size",
+    "variables": [
+      "1-person household",
+      "2-person household",
+      "3-person household",
+      "4-person household",
+      "5-person household",
+      "6-person household",
+      "7-or-more person household"
+    ]
+  },
+  "dim_464": {
+    "name": "Average household size",
+    "variables": [
+      "Average household size --"
+    ]
+  },
+  "dim_465": {
+    "name": "Presence of Own Children",
+    "variables": [
+      "With related children of the householder under 18",
+      "No related children of the householder under 18"
+    ]
+  },
+  "dim_466": {
+    "name": "Presence of Own Children",
+    "variables": [
+      "With own children of the householder under 18",
+      "No own children of the householder under 18"
+    ]
+  },
+  "dim_467": {
+    "name": "Age of Children",
+    "variables": [
+      "Under 6 years only",
+      "Under 6 years and 6 to 17 years",
+      "6 to 17 years"
+    ]
+  },
+  "dim_468": {
+    "name": "Educational Attainment of Householder",
+    "variables": [
+      "Less than high school graduate",
+      "High school graduate (including equivalency)",
+      "Some college or associate's degree",
+      "Bachelor's degree or higher"
+    ]
+  },
+  "dim_469": {
+    "name": "Occupants per Room",
+    "variables": [
+      "0.50 or less occupants per room",
+      "0.51 to 1.00 occupants per room",
+      "1.01 to 1.50 occupants per room",
+      "1.51 to 2.00 occupants per room",
+      "2.01 or more occupants per room"
+    ]
+  },
+  "dim_470": {
+    "name": "Median number of rooms",
+    "variables": [
+      "Median number of rooms"
+    ]
+  },
+  "dim_471": {
+    "name": "Median number of rooms",
+    "variables": [
+      "Median number of rooms --"
+    ]
+  },
+  "dim_472": {
+    "name": "Total population in occupied housing units",
+    "variables": [
+      "Total population in occupied housing units"
+    ]
+  },
+  "dim_473": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 34 years",
+      "Householder 35 to 44 years",
+      "Householder 45 to 54 years",
+      "Householder 55 to 59 years",
+      "Householder 60 to 64 years",
+      "Householder 65 to 74 years",
+      "Householder 75 years and over"
+    ]
+  },
+  "dim_474": {
+    "name": "Total Population in Occupied Housing Units",
+    "variables": [
+      "1, detached or attached",
+      "2 to 4",
+      "5 or more",
+      "Mobile home",
+      "Boat, RV, van, etc."
+    ]
+  },
+  "dim_475": {
+    "name": "Median year structure built",
+    "variables": [
+      "Median year structure built"
+    ]
+  },
+  "dim_476": {
+    "name": "Median year structure built",
+    "variables": [
+      "Median year structure built --"
+    ]
+  },
+  "dim_477": {
+    "name": "Median Year Structure Built",
+    "variables": [
+      "Total",
+      "Owner occupied",
+      "Renter occupied"
+    ]
+  },
+  "dim_478": {
+    "name": "Median year householder moved into unit",
+    "variables": [
+      "Median year householder moved into unit --"
+    ]
+  },
+  "dim_479": {
+    "name": "Telephone Service Available",
+    "variables": [
+      "With telephone service available",
+      "No telephone service available"
+    ]
+  },
+  "dim_480": {
+    "name": "Vehicles Available",
+    "variables": [
+      "No vehicle available",
+      "1 or more vehicles available"
+    ]
+  },
+  "dim_481": {
+    "name": "Aggregate number of vehicles available",
+    "variables": [
+      "Aggregate number of vehicles available"
+    ]
+  },
+  "dim_482": {
+    "name": "Plumbing Facilities",
+    "variables": [
+      "Complete plumbing facilities",
+      "Lacking plumbing facilities"
+    ]
+  },
+  "dim_483": {
+    "name": "Occupants per Room",
+    "variables": [
+      "1.00 or less occupants per room",
+      "1.01 or more occupants per room"
+    ]
+  },
+  "dim_484": {
+    "name": "Year Structure Built",
+    "variables": [
+      "Built 1950 or later",
+      "Built 1940 to 1949",
+      "Built 1939 or earlier"
+    ]
+  },
+  "dim_485": {
+    "name": "Lower contract rent quartile",
+    "variables": [
+      "Lower contract rent quartile"
+    ]
+  },
+  "dim_486": {
+    "name": "Median contract rent",
+    "variables": [
+      "Median contract rent"
+    ]
+  },
+  "dim_487": {
+    "name": "Upper contract rent quartile",
+    "variables": [
+      "Upper contract rent quartile"
+    ]
+  },
+  "dim_488": {
+    "name": "Aggregate contract rent",
+    "variables": [
+      "Aggregate contract rent"
+    ]
+  },
+  "dim_489": {
+    "name": "Aggregate rent asked",
+    "variables": [
+      "Aggregate rent asked"
+    ]
+  },
+  "dim_490": {
+    "name": "Median gross rent",
+    "variables": [
+      "Median gross rent"
+    ]
+  },
+  "dim_491": {
+    "name": "Aggregate Gross Rent",
+    "variables": [
+      "1, detached or attached",
+      "2 to 4",
+      "5 to 19",
+      "20 to 49",
+      "50 or more",
+      "Mobile home",
+      "Boat, RV, van, etc."
+    ]
+  },
+  "dim_492": {
+    "name": "Bedrooms",
+    "variables": [
+      "No bedroom",
+      "1 bedroom",
+      "2 bedrooms",
+      "3 or more bedrooms"
+    ]
+  },
+  "dim_493": {
+    "name": "Gross Rent",
+    "variables": [
+      "Less than $300",
+      "$300 to $499",
+      "$500 to $749",
+      "$750 to $999",
+      "$1,000 to $1,499",
+      "$1,500 or more"
+    ]
+  },
+  "dim_494": {
+    "name": "Inclusion of Utilities in Rent",
+    "variables": [
+      "Pay extra for one or more utilities",
+      "No extra payment for any utilities"
+    ]
+  },
+  "dim_495": {
+    "name": "Median gross rent as a percentage of household income",
+    "variables": [
+      "Median gross rent as a percentage of household income"
+    ]
+  },
+  "dim_496": {
+    "name": "Lower value quartile (dollars)",
+    "variables": [
+      "Lower value quartile (dollars)"
+    ]
+  },
+  "dim_497": {
+    "name": "Upper value quartile (dollars)",
+    "variables": [
+      "Upper value quartile (dollars)"
+    ]
+  },
+  "dim_498": {
+    "name": "Age of Householder",
+    "variables": [
+      "Householder 15 to 24 years (dollars)",
+      "Householder 25 to 34 years (dollars)",
+      "Householder 35 to 64 years (dollars)",
+      "Householder 65 years and over (dollars)"
+    ]
+  },
+  "dim_499": {
+    "name": "Units in Structure",
+    "variables": [
+      "1, detached (dollars)",
+      "1, attached (dollars)",
+      "2 (dollars)",
+      "3 or 4 (dollars)",
+      "5 or more (dollars)",
+      "Mobile home (dollars)",
+      "Boat, RV, van, etc. (dollars)"
+    ]
+  },
+  "dim_500": {
+    "name": "Mortgage Status",
+    "variables": [
+      "Housing units with a mortgage, contract to purchase, or similar debt",
+      "Housing units without a mortgage"
+    ]
+  },
+  "dim_501": {
+    "name": "Mortgage Status",
+    "variables": [
+      "Housing units with no second mortgage and no home equity loan",
+      "Housing units with multiple mortgages",
+      "Home equity loan without a primary mortgage"
+    ]
+  },
+  "dim_502": {
+    "name": "Mortgage Status",
+    "variables": [
+      "Mortgage with both second mortgage and home equity loan",
+      "Mortgage, with only home equity loan",
+      "Mortgage, with only second mortgage"
+    ]
+  },
+  "dim_503": {
+    "name": "Aggregate price asked (dollars)",
+    "variables": [
+      "Aggregate price asked (dollars)"
+    ]
+  },
+  "dim_504": {
+    "name": "Selected Monthly Owner Costs",
+    "variables": [
+      "Less than $200",
+      "$200 to $299",
+      "$300 to $399",
+      "$400 to $499",
+      "$500 to $599",
+      "$600 to $699",
+      "$700 to $799",
+      "$800 to $899",
+      "$900 to $999",
+      "$1,000 to $1,249",
+      "$1,250 to $1,499",
+      "$1,500 to $1,999",
+      "$2,000 to $2,499",
+      "$2,500 to $2,999",
+      "$3,000 to $3,499",
+      "$3,500 to $3,999",
+      "$4,000 or more",
+      "Less than $100",
+      "$100 to $149",
+      "$150 to $199",
+      "$200 to $249",
+      "$250 to $299",
+      "$300 to $349",
+      "$350 to $399",
+      "$1000 to $1,099",
+      "$1100 to $1,199",
+      "$1200 to $1,299",
+      "$1300 to $1,399",
+      "$1400 to $1,499",
+      "$1,500 or more"
+    ]
+  },
+  "dim_505": {
+    "name": "Median selected monthly owner costs (dollars)",
+    "variables": [
+      "Median selected monthly owner costs (dollars) --"
+    ]
+  },
+  "dim_506": {
+    "name": "Median Selected Monthly Owner Costs",
+    "variables": [
+      "Total",
+      "Housing units with a mortgage (dollars)",
+      "Housing units without a mortgage (dollars)"
+    ]
+  },
+  "dim_507": {
+    "name": "Aggregate selected monthly owner costs (dollars)",
+    "variables": [
+      "Aggregate selected monthly owner costs (dollars)"
+    ]
+  },
+  "dim_508": {
+    "name": "Aggregate real estate taxes paid (dollars)",
+    "variables": [
+      "Aggregate real estate taxes paid (dollars)"
+    ]
+  },
+  "dim_509": {
+    "name": "Aggregate Real Estate Taxes Paid",
+    "variables": [
+      "Aggregate real estate taxes paid for units with a mortgage (dollars)",
+      "Aggregate real estate taxes paid for units without a mortgage (dollars)"
+    ]
+  },
+  "dim_510": {
+    "name": "Median selected monthly owner costs as a percentage of household income",
+    "variables": [
+      "Median selected monthly owner costs as a percentage of household income in the past 12 months --"
+    ]
+  },
+  "dim_511": {
+    "name": "Median Selected Monthly Owner Costs as a Percentage of Household Income",
+    "variables": [
+      "Total",
+      "Housing units with a mortgage",
+      "Housing units without a mortgage"
+    ]
+  },
+  "dim_512": {
+    "name": "Selected Monthly Owner Costs",
+    "variables": [
+      "Less than $200",
+      "$200 to $299",
+      "$300 to $399",
+      "$400 to $499",
+      "$500 to $599",
+      "$600 to $699",
+      "$700 to $799",
+      "$800 to $899",
+      "$900 to $999",
+      "$1,000 to $1,249",
+      "$1,250 to $1,499",
+      "$1,500 to $1,999",
+      "$2,000 to $2,499",
+      "$2,500 to $2,999",
+      "$3,000 to $3,499",
+      "$3,500 to $3,999",
+      "$4,000 or more"
+    ]
+  },
+  "dim_513": {
+    "name": "Household Income",
+    "variables": [
+      "Less than $10,000",
+      "$10,000 to $19,999",
+      "$20,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 to $149,999",
+      "$150,000 or more"
+    ]
+  },
+  "dim_514": {
+    "name": "Value",
+    "variables": [
+      "Less than $50,000",
+      "$50,000 to $99,999",
+      "$100,000 to $149,999",
+      "$150,000 to $199,999",
+      "$200,000 to $299,999",
+      "$300,000 to $499,999",
+      "$500,000 to $749,999",
+      "$750,000 to $999,999",
+      "$1,000,000 or more"
+    ]
+  },
+  "dim_515": {
+    "name": "Median Value",
+    "variables": [
+      "Median value for units with a mortgage",
+      "Median value for units without a mortgage"
+    ]
+  },
+  "dim_516": {
+    "name": "Household Income",
+    "variables": [
+      "Less than $10,000",
+      "$10,000 to $24,999",
+      "$25,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 to $149,999",
+      "$150,000 or more"
+    ]
+  },
+  "dim_517": {
+    "name": "Median household income",
+    "variables": [
+      "Median household income --"
+    ]
+  },
+  "dim_518": {
+    "name": "Median Household Income",
+    "variables": [
+      "Median household income for units with a mortgage",
+      "Median household income for units without a mortgage"
+    ]
+  },
+  "dim_519": {
+    "name": "Ratio of Value to Household Income",
+    "variables": [
+      "Less than 2.0",
+      "2.0 to 2.9",
+      "3.0 to 3.9",
+      "4.0 or more",
+      "Not computed"
+    ]
+  },
+  "dim_520": {
+    "name": "Household Income",
+    "variables": [
+      "Less than $20,000",
+      "$20,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 or more",
+      "Zero or negative income"
+    ]
+  },
+  "dim_521": {
+    "name": "Real Estate Taxes Paid",
+    "variables": [
+      "Less than $800",
+      "$800 to $1,499",
+      "$1,500 to $1,999",
+      "$2,000 to $2,999",
+      "$3,000 or more",
+      "No real estate taxes paid"
+    ]
+  },
+  "dim_522": {
+    "name": "Median real estate taxes paid",
+    "variables": [
+      "Median real estate taxes paid --"
+    ]
+  },
+  "dim_523": {
+    "name": "Median Real Estate Taxes Paid",
+    "variables": [
+      "Median real estate taxes paid for units with a mortgage",
+      "Median real estate taxes paid for units without a mortgage"
+    ]
+  },
+  "dim_524": {
+    "name": "Monthly Housing Costs",
+    "variables": [
+      "Less than $100",
+      "$100 to $199",
+      "$200 to $299",
+      "$300 to $399",
+      "$400 to $499",
+      "$500 to $599",
+      "$600 to $699",
+      "$700 to $799",
+      "$800 to $899",
+      "$900 to $999",
+      "$1,000 to $1,499",
+      "$1,500 to $1,999",
+      "$2,000 to $2,499",
+      "$2,500 to $2,999",
+      "$3,000 or more",
+      "No cash rent"
+    ]
+  },
+  "dim_525": {
+    "name": "Median monthly housing costs",
+    "variables": [
+      "Median monthly housing costs"
+    ]
+  },
+  "dim_526": {
+    "name": "Housing Costs as a Percentage of Household Income",
+    "variables": [
+      "Less than $20,000",
+      "$20,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 or more",
+      "Zero or negative income",
+      "No cash rent"
+    ]
+  },
+  "dim_527": {
+    "name": "Aggregate gross rent (dollars)",
+    "variables": [
+      "Aggregate gross rent (dollars)"
+    ]
+  },
+  "dim_528": {
+    "name": "Household Size",
+    "variables": [
+      "1-person household",
+      "2-or-more person household"
+    ]
+  },
+  "dim_529": {
+    "name": "Household Income",
+    "variables": [
+      "Less than $5,000",
+      "$5,000 to $9,999",
+      "$10,000 to $14,999",
+      "$15,000 to $19,999",
+      "$20,000 to $24,999",
+      "$25,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 to $149,999",
+      "$150,000 or more"
+    ]
+  },
+  "dim_530": {
+    "name": "Tenure",
+    "variables": [
+      "Owner occupied (dollars)",
+      "Renter occupied (dollars)"
+    ]
+  },
+  "dim_531": {
+    "name": "Household income the past 12 months",
+    "variables": [
+      "Household income the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_532": {
+    "name": "Value",
+    "variables": [
+      "Value less than $10,000",
+      "Value $10,000 to $19,999",
+      "Value $20,000 to $29,999",
+      "Value $30,000 to $39,999",
+      "Value $40,000 to $49,999",
+      "Value $50,000 to $59,999",
+      "Value $60,000 to $69,999",
+      "Value $70,000 to $79,999",
+      "Value $80,000 to $89,999",
+      "Value $90,000 to $99,999",
+      "Value $100,000 to $199,999",
+      "Value $200,000 to $249,999",
+      "Value $250,000 to $499,999",
+      "Value $500,000 or more"
+    ]
+  },
+  "dim_533": {
+    "name": "Household income",
+    "variables": [
+      "Household income in the past 12 months (in 2023 inflation-adjusted dollars) --"
+    ]
+  },
+  "dim_534": {
+    "name": "Gross Rent",
+    "variables": [
+      "Less than $100",
+      "$100 to $199",
+      "$200 to $299",
+      "$300 to $399",
+      "$400 to $499",
+      "$500 to $599",
+      "$600 to $699",
+      "$700 to $799",
+      "$800 to $899",
+      "$900 to $999",
+      "$1,000 to $1,249",
+      "$1,250 to $1,499",
+      "$1,500 to $1,999",
+      "$2,000 or more"
+    ]
+  },
+  "dim_535": {
+    "name": "Selected Physical",
+    "variables": [
+      "With one selected condition",
+      "With two selected conditions",
+      "With three selected conditions",
+      "With four selected conditions",
+      "No selected conditions"
+    ]
+  },
+  "dim_536": {
+    "name": "Household Size",
+    "variables": [
+      "1-person household",
+      "2-person household",
+      "3-person household",
+      "4-person household",
+      "5-or-more person household"
+    ]
+  },
+  "dim_537": {
+    "name": "Year Structure Built",
+    "variables": [
+      "Built 2020 or later",
+      "Built 2000 to 2019",
+      "Built 1980 to 1999",
+      "Built 1960 to 1979",
+      "Built 1940 to 1959",
+      "Built 1939 or earlier"
+    ]
+  },
+  "dim_538": {
+    "name": "Year Householder Moved Into Unit",
+    "variables": [
+      "Moved in 2018 or later",
+      "Moved in 2010 to 2017",
+      "Moved in 2000 to 2009",
+      "Moved in 1990 to 1999",
+      "Moved in 1989 or earlier"
+    ]
+  },
+  "dim_539": {
+    "name": "Monthly Electricity Costs",
+    "variables": [
+      "Not charged, not used, or payment included in other fees",
+      "Charged for electricity"
+    ]
+  },
+  "dim_540": {
+    "name": "Monthly Electricity Costs",
+    "variables": [
+      "Less than $50",
+      "$50 to $99",
+      "$100 to $149",
+      "$150 to $199",
+      "$200 to $249",
+      "$250 or more"
+    ]
+  },
+  "dim_541": {
+    "name": "Monthly Gas Costs",
+    "variables": [
+      "Not charged, not used, or payment included in other fees",
+      "Charged for gas"
+    ]
+  },
+  "dim_542": {
+    "name": "Monthly Gas Costs",
+    "variables": [
+      "Less than $25",
+      "$25 to $49",
+      "$50 to $74",
+      "$75 to $99",
+      "$100 to $149",
+      "$150 or more"
+    ]
+  },
+  "dim_543": {
+    "name": "Annual Water",
+    "variables": [
+      "Not charged or payment included in other fees",
+      "Charged for water and sewer"
+    ]
+  },
+  "dim_544": {
+    "name": "Sewer Costs",
+    "variables": [
+      "Less than $125",
+      "$125 to $249",
+      "$250 to $499",
+      "$500 to $749",
+      "$750 to $999",
+      "$1,000 or more"
+    ]
+  },
+  "dim_545": {
+    "name": "Annual Other Fuel Costs",
+    "variables": [
+      "Not charged, not used, or payment included in other fees",
+      "Charged for other fuels"
+    ]
+  },
+  "dim_546": {
+    "name": "Annual Other Fuel Costs",
+    "variables": [
+      "Less than $250",
+      "$250 to $749",
+      "$750 or more"
+    ]
+  },
+  "dim_547": {
+    "name": "Structure Type",
+    "variables": [
+      "1-unit, detached",
+      "1-unit, attached",
+      "2-9 units",
+      "10 or more units",
+      "Mobile home, Boat, RV, Van, etc.",
+      "Mobile home"
+    ]
+  },
+  "dim_548": {
+    "name": "Bedrooms",
+    "variables": [
+      "One or fewer bedrooms",
+      "Two bedrooms",
+      "Three or more bedrooms"
+    ]
+  },
+  "dim_549": {
+    "name": "Lower gross rent quartile (dollars)",
+    "variables": [
+      "Lower gross rent quartile (dollars)"
+    ]
+  },
+  "dim_550": {
+    "name": "Upper gross rent quartile (dollars)",
+    "variables": [
+      "Upper gross rent quartile (dollars)"
+    ]
+  },
+  "dim_551": {
+    "name": "Tenure",
+    "variables": [
+      "Owned Units with a Mortgage",
+      "Owned Units without a Mortgage",
+      "Rented"
+    ]
+  },
+  "dim_552": {
+    "name": "Housing Costs as a Percentage of Household Income",
+    "variables": [
+      "Over 30 Percent",
+      "Over 50 Percent",
+      "Not Calculated"
+    ]
+  },
+  "dim_553": {
+    "name": "Insurance Costs",
+    "variables": [
+      "Less than $100",
+      "$100 to $299",
+      "$300 to $499",
+      "$500 to $799",
+      "$800 to $999",
+      "$1000 to $1499",
+      "$1500 to $1999",
+      "$2000 to $2499",
+      "$2500 to $2999",
+      "$3000 to $3499",
+      "$3500 to $3999",
+      "$4000 or more"
+    ]
+  },
+  "dim_554": {
+    "name": "Age of Population",
+    "variables": [
+      "Population under 18 years",
+      "Population 18 to 64 years",
+      "Population 65 years and over",
+      "Population 65 years"
+    ]
+  },
+  "dim_555": {
+    "name": "College/university student housing",
+    "variables": [
+      "College/university student housing"
+    ]
+  },
+  "dim_556": {
+    "name": "Group Quarters Type",
+    "variables": [
+      "Adult correctional facilities",
+      "Nursing facilities/skilled nursing facilities",
+      "College/university student housing",
+      "Military quarters/military ships"
+    ]
+  },
+  "dim_557": {
+    "name": "Age of Population",
+    "variables": [
+      "Population under 18 years",
+      "Population 18 to 64 years",
+      "Population 65 years and over"
+    ]
+  },
+  "dim_558": {
+    "name": "World Region of Birth",
+    "variables": [
+      "Europe",
+      "Asia",
+      "Latin America",
+      "Other"
+    ]
+  },
+  "dim_559": {
+    "name": "Group Quarters Type",
+    "variables": [
+      "College/university student housing",
+      "Military quarters/military ships"
+    ]
+  },
+  "dim_560": {
+    "name": "Types of Health Insurance Coverage",
+    "variables": [
+      "Under 19 years",
+      "19 to 34 years",
+      "35 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_561": {
+    "name": "Number of Types of Health Insurance",
+    "variables": [
+      "With one type of health insurance coverage",
+      "With two or more types of health insurance coverage",
+      "No health insurance coverage"
+    ]
+  },
+  "dim_562": {
+    "name": "Health Insurance Coverage",
+    "variables": [
+      "With employer-based health insurance only",
+      "With direct-purchase health insurance only",
+      "With Medicare coverage only",
+      "With Medicaid/means-tested public coverage only",
+      "With TRICARE/military health coverage only",
+      "With VA Health Care only",
+      "With employer-based and direct-purchase coverage",
+      "With employer-based and Medicare coverage",
+      "With Medicare and Medicaid/means-tested public coverage",
+      "Other private only combinations",
+      "Other public only combinations",
+      "Other coverage combinations",
+      "With direct-purchase and Medicare coverage"
+    ]
+  },
+  "dim_563": {
+    "name": "Household Income",
+    "variables": [
+      "Under $25,000",
+      "$25,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 to $99,999",
+      "$100,000 or more"
+    ]
+  },
+  "dim_564": {
+    "name": "Age",
+    "variables": [
+      "26 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_565": {
+    "name": "Citizenship Status",
+    "variables": [
+      "Naturalized",
+      "Noncitizen"
+    ]
+  },
+  "dim_566": {
+    "name": "Enrollment Status",
+    "variables": [
+      "With private health insurance coverage",
+      "No private health insurance coverage"
+    ]
+  },
+  "dim_567": {
+    "name": "Types of Computers in Household",
+    "variables": [
+      "Desktop or laptop with no other type of computing device",
+      "Smartphone with no other type of computing device",
+      "Tablet or other portable wireless computer with no other type of computing device",
+      "Other computer with no other type of computing device"
+    ]
+  },
+  "dim_568": {
+    "name": "Types of Internet Subscriptions in Household",
+    "variables": [
+      "Dial-up with no other type of Internet subscription",
+      "Broadband of any type",
+      "Cellular data plan",
+      "Broadband such as cable, fiber optic or DSL",
+      "Satellite Internet service",
+      "Other service with no other type of Internet subscription"
+    ]
+  },
+  "dim_569": {
+    "name": "Types of Internet Subscriptions in Household",
+    "variables": [
+      "Cellular data plan with no other type of Internet subscription",
+      "Broadband such as cable, fiber optic or DSL with no other type of Internet subscription",
+      "Satellite Internet service with no other type of Internet subscription"
+    ]
+  },
+  "dim_570": {
+    "name": "Presence of Internet Subscription in Household",
+    "variables": [
+      "Less than $10,000",
+      "$10,000 to $19,999",
+      "$20,000 to $34,999",
+      "$35,000 to $49,999",
+      "$50,000 to $74,999",
+      "$75,000 or more"
+    ]
+  },
+  "dim_571": {
+    "name": "Educational Attainment",
+    "variables": [
+      "Less than high school graduate or equivalency",
+      "High school graduate (includes equivalency) , some college or associate's degree",
+      "Bachelor's degree or higher"
+    ]
+  },
+  "dim_572": {
+    "name": "Labor Force Status",
+    "variables": [
+      "In the civilian labor force",
+      "Not in labor force"
+    ]
+  },
+  "dim_573": {
+    "name": "Presence of a Computer",
+    "variables": [
+      "Has a computer",
+      "No Computer"
+    ]
+  },
+  "dim_574": {
+    "name": "Type of Internet Subscription in Household",
+    "variables": [
+      "With dial-up Internet subscription alone",
+      "With a broadband subscription",
+      "Without Internet subscription"
+    ]
+  },
+  "dim_575": {
+    "name": "Type of Internet Subscription in Household",
+    "variables": [
+      "With a fixed broadband Internet subscription",
+      "Cellular data plan alone or with dial-up"
+    ]
+  },
+  "dim_576": {
+    "name": "Cellular Data Plan",
+    "variables": [
+      "With a cellular data plan",
+      "Without a cellular data plan"
+    ]
+  },
+  "dim_577": {
+    "name": "Computers in Household",
+    "variables": [
+      "Desktop or laptop",
+      "Smartphone, tablet or other portable wireless computer or other computer"
+    ]
+  },
+  "dim_578": {
+    "name": "Computers in Household",
+    "variables": [
+      "Desktop or laptop alone",
+      "Smartphone, tablet or other portable wireless computer or other computer, no desktop or laptop"
+    ]
+  },
+  "dim_579": {
+    "name": "Internet Subscriptions in Household",
+    "variables": [
+      "Dial-up alone",
+      "Broadband such as cable, fiber optic, or DSL",
+      "Satellite Internet service",
+      "Other service"
+    ]
+  },
+  "dim_580": {
+    "name": "Age of Population",
+    "variables": [
+      "Population 3 and older",
+      "Population 2 and under"
+    ]
+  },
+  "dim_581": {
+    "name": "Enrollment Status",
+    "variables": [
+      "Enrolled in school",
+      "Not Enrolled in school"
+    ]
+  },
+  "dim_582": {
+    "name": "Computer Ownership",
+    "variables": [
+      "Pre-K to 4th Grade",
+      "5th to 8th Grade",
+      "9th to 12th Grade",
+      "Undergraduate or Higher"
+    ]
+  },
+  "dim_583": {
+    "name": "Internet Subscription Status",
+    "variables": [
+      "Has a computer and internet subscription",
+      "No subscription or no computer"
+    ]
+  },
+  "dim_584": {
+    "name": "Age",
+    "variables": [
+      "18 to 29 years",
+      "30 to 44 years",
+      "45 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_585": {
+    "name": "Poverty Status",
+    "variables": [
+      "Income in the past 12 months below poverty level",
+      "Income in the past 12 months at or above the poverty level"
+    ]
+  },
+  "dim_586": {
+    "name": "Unweighted Housing Unit Sample",
+    "variables": [
+      "Initial addresses selected",
+      "Final number of housing unit interviews"
+    ]
+  },
+  "dim_587": {
+    "name": "Unweighted Group Quarters Population Sample",
+    "variables": [
+      "Initial sample selected",
+      "Final synthetic interviews"
+    ]
+  },
+  "dim_588": {
+    "name": "Final actual interviews",
+    "variables": [
+      "Final actual interviews"
+    ]
+  },
+  "dim_589": {
+    "name": "Final interviews (actual and synthetic)",
+    "variables": [
+      "Final interviews (actual and synthetic)"
+    ]
+  },
+  "dim_590": {
+    "name": "Total Population Coverage Rate",
+    "variables": [
+      "White",
+      "Black or African American",
+      "American Indian and Alaska Native",
+      "Asian",
+      "Native Hawaiian and Other Pacific Islander"
+    ]
+  },
+  "dim_591": {
+    "name": "Nonresponse Rates With Reasons",
+    "variables": [
+      "Refusal",
+      "Unable To Locate",
+      "No One Home",
+      "Temporarily Absent",
+      "Language Problem",
+      "Insufficient Data",
+      "Contact Attempts Halted",
+      "Other Reason"
+    ]
+  },
+  "dim_592": {
+    "name": "Nonresponse Rates With Reasons",
+    "variables": [
+      "Group Quarters Person Refusal",
+      "Unable To Locate Group Quarters Person",
+      "Resident Temporarily Absent",
+      "Language Problem",
+      "Insufficient Data",
+      "Group Quarters Person Other Reason",
+      "Whole Group Quarters Refusal",
+      "Whole Group Quarters Other Reason"
+    ]
+  },
+  "dim_593": {
+    "name": "Residence 1 Year Ago",
+    "variables": [
+      "Different house",
+      "Same house"
+    ]
+  },
+  "dim_594": {
+    "name": "Allocation of Private Vehicle Occupancy",
+    "variables": [
+      "Car, truck, or van",
+      "Other means (including those who worked from home)"
+    ]
+  },
+  "dim_595": {
+    "name": "Time of departure to go to work",
+    "variables": [
+      "Time of departure to go to work --"
+    ]
+  },
+  "dim_596": {
+    "name": "Time arriving at work",
+    "variables": [
+      "Time arriving at work --"
+    ]
+  },
+  "dim_597": {
+    "name": "Allocation of Time Arriving at Work From Home",
+    "variables": [
+      "Allocated for either departure time or minutes to work",
+      "Not allocated for either departure time or minutes to work"
+    ]
+  },
+  "dim_598": {
+    "name": "Length of time",
+    "variables": [
+      "Length of time --"
+    ]
+  },
+  "dim_599": {
+    "name": "Specific languages spoken",
+    "variables": [
+      "Specific languages spoken --"
+    ]
+  },
+  "dim_600": {
+    "name": "Allocation of Language Spoken at Home",
+    "variables": [
+      "Language status allocated",
+      "Language status not allocated"
+    ]
+  },
+  "dim_601": {
+    "name": "Ability to speak English",
+    "variables": [
+      "Ability to speak English --"
+    ]
+  },
+  "dim_602": {
+    "name": "Allocation of Poverty Status",
+    "variables": [
+      "Total",
+      "Percent of income allocated for individuals with income in the past 12 months below poverty level --",
+      "Percent of income allocated for individuals with income in the past 12 months at or above poverty level --"
+    ]
+  },
+  "dim_603": {
+    "name": "Allocation of Poverty Status",
+    "variables": [
+      "Total",
+      "Percent of family income allocated for families with income in the past 12 months below poverty level --",
+      "Percent of family income allocated for families with income in the past 12 months at or above poverty level --"
+    ]
+  },
+  "dim_604": {
+    "name": "Allocation of Disability Items",
+    "variables": [
+      "One or more disability items allocated",
+      "No disability items allocated"
+    ]
+  },
+  "dim_605": {
+    "name": "Age",
+    "variables": [
+      "15 to 17 years",
+      "18 years and over"
+    ]
+  },
+  "dim_606": {
+    "name": "Allocation of Earnings",
+    "variables": [
+      "Total",
+      "Percent of earnings allocated --"
+    ]
+  },
+  "dim_607": {
+    "name": "Allocation of Earnings",
+    "variables": [
+      "No earnings allocated",
+      "Dollar value of zero allocated",
+      "More than 0 to less than 10 percent of total earnings for individual allocated",
+      "10 to less than 25 percent of total earnings for individual allocated",
+      "25 to less than 50 percent of total earnings for individual allocated",
+      "50 to less than 100 percent of total earnings for individual allocated",
+      "100 percent of total earnings for individual allocated"
+    ]
+  },
+  "dim_608": {
+    "name": "Usual hours worked per week",
+    "variables": [
+      "Usual hours worked per week in the past 12 months --"
+    ]
+  },
+  "dim_609": {
+    "name": "Weeks worked",
+    "variables": [
+      "Weeks worked in the past 12 months --"
+    ]
+  },
+  "dim_610": {
+    "name": "Selected monthly owner costs",
+    "variables": [
+      "Selected monthly owner costs --"
+    ]
+  },
+  "dim_611": {
+    "name": "Number of Items Allocated",
+    "variables": [
+      "One or more items allocated",
+      "No items allocated"
+    ]
+  },
+  "dim_612": {
+    "name": "Allocation of Selected Monthly Owner Costs",
+    "variables": [
+      "1 or more items allocated",
+      "Not allocated"
+    ]
+  },
+  "dim_613": {
+    "name": "Allocation of Health Insurance Coverage",
+    "variables": [
+      "One or more health insurance items allocated",
+      "No health insurance items allocated"
+    ]
+  },
+  "dim_614": {
+    "name": "Allocation of Private Health Insurance",
+    "variables": [
+      "One or more private health insurance items allocated",
+      "No private health insurance items allocated"
+    ]
+  },
+  "dim_615": {
+    "name": "Allocation of Public Health Insurance",
+    "variables": [
+      "One or more public coverage items allocated",
+      "No public coverage items allocated"
+    ]
+  },
+  "dim_616": {
+    "name": "Allocation of Household Internet Subscription Type",
+    "variables": [
+      "Dial-up",
+      "Broadband such as cable, fiberoptic, or DSL, satellite, and other service",
+      "Cellular data plan"
+    ]
+  },
+  "dim_617": {
+    "name": "Detailed Race",
+    "variables": [
+      "Population of one race",
+      "Population of two or more races"
+    ]
+  },
+  "dim_618": {
+    "name": "Detailed Race",
+    "variables": [
+      "White alone",
+      "Black or African American alone",
+      "American Indian and Alaska Native alone",
+      "Asian alone",
+      "Native Hawaiian and Other Pacific Islander alone",
+      "Some Other Race alone",
+      "Two races including Some Other Race",
+      "Two races excluding Some Other Race, and three or more races",
+      "Population of two races",
+      "Population of three races",
+      "Population of four or more races"
+    ]
+  },
+  "dim_619": {
+    "name": "Detailed Two or more Races",
+    "variables": [
+      "White; Black or African American",
+      "White; American Indian and Alaska Native",
+      "White; Asian",
+      "White; Some Other Race",
+      "Black or African American; American Indian and Alaska Native",
+      "Black or African American; Some Other Race",
+      "All other two race combinations"
+    ]
+  },
+  "dim_620": {
+    "name": "Selected Groups (Asian Alone)",
+    "variables": [
+      "Asian Indian",
+      "Chinese",
+      "Filipino",
+      "Japanese",
+      "Korean",
+      "Vietnamese",
+      "Other Asian"
+    ]
+  },
+  "dim_621": {
+    "name": "Selected Groups (NHOPI)",
+    "variables": [
+      "Chamorro",
+      "Native Hawaiian",
+      "Samoan",
+      "Other Native Hawaiian and Other Pacific Islander"
+    ]
+  },
+  "dim_622": {
+    "name": "Villages",
+    "variables": [
+      "Aztec",
+      "Blackfeet Tribe of the Blackfeet Indian Reservation of Montana",
+      "Maya",
+      "Native Village of Barrow Inupiat Traditional Government",
+      "Navajo Nation",
+      "Nome Eskimo Community",
+      "Other American Indian and Alaska Native"
+    ]
+  },
+  "dim_623": {
+    "name": "Language Spoken at Home",
+    "variables": [
+      "Speak only English",
+      "Spanish",
+      "French, Haitian, or Cajun",
+      "German or other West Germanic languages",
+      "Russian, Polish, or other Slavic languages",
+      "Other Indo-European languages",
+      "Korean",
+      "Chinese (incl. Mandarin, Cantonese)",
+      "Vietnamese",
+      "Tagalog (incl. Filipino)",
+      "Other Asian and Pacific Island languages",
+      "Arabic",
+      "Other and unspecified languages"
+    ]
+  },
+  "dim_624": {
+    "name": "Household Language",
+    "variables": [
+      "English only",
+      "Spanish",
+      "Other Indo-European languages",
+      "Asian and Pacific Island languages",
+      "Other languages"
+    ]
+  },
+  "dim_625": {
+    "name": "Ratio of Income to Poverty Level",
+    "variables": [
+      "Under .50",
+      ".50 to .99",
+      "1.00 to 1.24",
+      "1.25 to 1.49",
+      "1.50 to 1.84",
+      "1.85 to 1.99",
+      "2.00 and over"
+    ]
+  },
+  "dim_626": {
+    "name": "Number of Disabilities",
+    "variables": [
+      "With one type of disability",
+      "With two or more types of disability",
+      "No disability"
+    ]
+  },
+  "dim_627": {
+    "name": "Employment Status",
+    "variables": [
+      "In the labor force",
+      "Not in labor force"
+    ]
+  },
+  "dim_628": {
+    "name": "Work Experience",
+    "variables": [
+      "Worked full-time, year round",
+      "Worked less than full-time, year round",
+      "Did not work"
+    ]
+  },
+  "dim_629": {
+    "name": "Poverty Status",
+    "variables": [
+      "Income in the past 12-months below poverty level",
+      "Income in the past 12-months at or above poverty level"
+    ]
+  },
+  "dim_630": {
+    "name": "Ratio of Income to Poverty Level",
+    "variables": [
+      "Under .50",
+      ".50 to .99",
+      "1.00 to 1.49",
+      "1.50 to 1.99",
+      "2.00 and over"
+    ]
+  },
+  "dim_631": {
+    "name": "Age",
+    "variables": [
+      "18 to 64 years",
+      "65 years and over"
+    ]
+  },
+  "dim_632": {
+    "name": "Employer-base Health Insurance",
+    "variables": [
+      "With employer-based health insurance",
+      "No employer-based health insurance"
+    ]
+  },
+  "dim_633": {
+    "name": "Direct-Purchase Health Insurance",
+    "variables": [
+      "With direct-purchase health insurance",
+      "No direct-purchase health insurance"
+    ]
+  },
+  "dim_634": {
+    "name": "Medicare Coverage",
+    "variables": [
+      "With Medicare coverage",
+      "No Medicare coverage"
+    ]
+  },
+  "dim_635": {
+    "name": "Medicaid/Means-Tested Public Coverage",
+    "variables": [
+      "With Medicaid/means-tested public coverage",
+      "No Medicaid/means-tested public coverage"
+    ]
+  },
+  "dim_636": {
+    "name": "TRICARE/Military Health Coverage",
+    "variables": [
+      "With TRICARE/military health coverage",
+      "No TRICARE/military health coverage"
+    ]
+  },
+  "dim_637": {
+    "name": "VA Health Care",
+    "variables": [
+      "With VA Health Care",
+      "No VA Health Care"
+    ]
+  },
+  "dim_638": {
+    "name": "Health Insurance Coverage",
+    "variables": [
+      "With employer-based health insurance",
+      "With direct-purchase health insurance",
+      "With Medicare coverage",
+      "With Medicaid/means-tested public coverage"
+    ]
+  },
+  "dim_639": {
+    "name": "Health Insurance Coverage",
+    "variables": [
+      "In family households",
+      "In non-family households and other living arrangements"
+    ]
+  },
+  "dim_640": {
+    "name": "Living Arrangement",
+    "variables": [
+      "In married couple families",
+      "In other families"
+    ]
+  },
+  "dim_641": {
+    "name": "Insurance Reference Person",
+    "variables": [
+      "Male reference person, no spouse present",
+      "Female reference person, no spouse present"
+    ]
+  }
+}
