@@ -1592,6 +1592,192 @@ class DimensionTable:
 
         return pct
 
+    # ------------------------------------------------------------------
+    # Export helpers
+    # ------------------------------------------------------------------
+
+    _VTYPE_LABELS = {
+        "estimate":         "Estimate",
+        "moe":              "MOE",
+        "percent_estimate": "Percent Estimate",
+        "percent_moe":      "Percent MOE",
+        "total":            "Total",
+    }
+
+    def _to_wide_flat(self, value_mode: str = "estimate") -> "pd.DataFrame":
+        """Return a simplified flat DataFrame suitable for CSV export.
+
+        Dim columns from ``self.dims`` become plain string columns.  Data
+        columns are renamed from the 7-level MultiIndex to
+        ``"{geography name} - {year} ({value type})"`` so that
+        ``concept``, ``universe``, and ``survey`` — which are identical
+        for every column — are dropped from the header and captured
+        instead in the resource metadata.
+        """
+        wide = self.percent() if value_mode == "percent" else self.wide()
+
+        # Extract row index (dim values) into a plain DataFrame before
+        # touching the column MultiIndex, to avoid tuple-column artefacts
+        # that arise when calling reset_index() on a MultiIndex-column frame.
+        dims_flat = wide.index.to_frame(index=False)
+
+        # Build simplified column names from the MultiIndex tuples
+        new_col_names = []
+        for col in wide.columns:
+            col_map = dict(zip(wide.columns.names, col))
+            geo_name = col_map.get("name", "")
+            year = col_map.get("reference_period", "")
+            vtype = col_map.get("value_type", "")
+            label = self._VTYPE_LABELS.get(vtype, vtype.replace("_", " ").title())
+            new_col_names.append(f"{geo_name} - {year} ({label})")
+
+        data_flat = pd.DataFrame(
+            wide.values,
+            columns=new_col_names,
+            index=range(len(wide)),
+        )
+        return pd.concat([dims_flat, data_flat], axis=1)
+
+    def create_schema(self, value_mode: str = "estimate") -> "frictionless.Schema":
+        """Build a frictionless Schema for the flat wide export.
+
+        Dimension columns are typed as ``string``; data columns
+        (estimates, MOE, etc.) are typed as ``number``.  The primary key
+        is the list of dimension column names.
+
+        Parameters
+        ----------
+        value_mode:
+            ``'estimate'`` (default) or ``'percent'``.  Determines which
+            value columns appear in the flat output.
+        """
+        import frictionless
+
+        flat = self._to_wide_flat(value_mode)
+        dim_names = list(self.dims.columns)
+        data_cols = [c for c in flat.columns if c not in dim_names]
+
+        dim_fields = [
+            {"name": d, "type": "string", "description": f"Dimension: {d}"}
+            for d in dim_names
+        ]
+        data_fields = [
+            {"name": c, "type": "number", "missingValues": MISSING_VALUES}
+            for c in data_cols
+        ]
+
+        descriptor = {
+            "fields": dim_fields + data_fields,
+            "missingValues": MISSING_VALUES,
+            "primaryKey": dim_names,
+        }
+        result = frictionless.Schema.validate_descriptor(descriptor)
+        if not result.valid:
+            raise ValueError(f"Schema descriptor invalid: {result}")
+        return frictionless.Schema.from_descriptor(descriptor)
+
+    def create_resource(
+        self,
+        name: str,
+        *,
+        title: str | None = None,
+        description: str | None = None,
+    ) -> "frictionless.Resource":
+        """Build a frictionless Resource descriptor for the flat export.
+
+        ``concept``, ``universe``, and ``survey`` are stored as private
+        custom fields (``_concept``, ``_universe``, ``_survey``) rather
+        than as column-level headers.
+
+        Parameters
+        ----------
+        name:
+            Slug used as the resource name and base filename.
+        title:
+            Human-readable title.  Defaults to the table concept string.
+        description:
+            Narrative description.  Defaults to a sentence combining
+            concept, survey, and universe.
+
+        Notes
+        -----
+        ``self._export_filename`` and ``self._export_schema_filename``
+        must be set before calling this method (done automatically by
+        :meth:`save`).
+        """
+        import frictionless
+
+        concept = str(self.long["concept"].dropna().iloc[0])
+        universe = str(self.long["universe"].dropna().iloc[0])
+        survey = str(self.long["survey"].dropna().iloc[0])
+
+        descriptor = {
+            "name": name,
+            "title": title or concept,
+            "description": (
+                description
+                or f"{concept} from {survey}. Universe: {universe}."
+            ),
+            "path": self._export_filename,
+            "schema": self._export_schema_filename,
+            "_concept": concept,
+            "_universe": universe,
+            "_survey": survey,
+            "sources": [{"title": "US Census Bureau", "path": "https://api.census.gov"}],
+        }
+        return frictionless.Resource.from_descriptor(descriptor)
+
+    def save(
+        self,
+        output_path,
+        name: str,
+        *,
+        value_mode: str = "estimate",
+        title: str | None = None,
+    ) -> None:
+        """Export the DimensionTable to a flat CSV with frictionless artifacts.
+
+        Writes three files to *output_path*:
+
+        * ``{name}.csv``           — flat wide DataFrame (human-readable columns)
+        * ``{name}.schema.yaml``   — frictionless Schema
+        * ``{name}.resource.yaml`` — frictionless Resource (validated)
+
+        Parameters
+        ----------
+        output_path:
+            Directory to write files into (created if it does not exist).
+        name:
+            Base filename slug (e.g. ``"b01001-franklin"``).
+        value_mode:
+            ``'estimate'`` (default) or ``'percent'``.
+        title:
+            Optional human-readable title for the resource descriptor.
+        """
+        import contextlib
+        import frictionless
+
+        output = Path(output_path)
+        output.mkdir(parents=True, exist_ok=True)
+
+        self._export_filename = f"{name}.csv"
+        self._export_schema_filename = f"{name}.schema.yaml"
+        resource_filename = f"{name}.resource.yaml"
+
+        self._to_wide_flat(value_mode).to_csv(output / self._export_filename, index=False)
+
+        schema = self.create_schema(value_mode)
+        schema.to_yaml(str(output / self._export_schema_filename))
+
+        with contextlib.chdir(output):
+            resource = self.create_resource(name, title=title)
+            resource.to_yaml(resource_filename)
+            result = frictionless.Resource(resource_filename).validate()
+
+        if not result.valid:
+            self.logger.error("Resource validation failed: %s", result.stats)
+            raise RuntimeError("Resource validation failed after save.")
+
 
 # ---------------------------------------------------------------------------
 # RaceDimensionTable

@@ -1,3 +1,7 @@
+## 2026-06-01 — DimensionTable export methods (issue #99, feat/dimension-table-export)
+
+Added `_to_wide_flat`, `create_schema`, `create_resource`, and `save` to `DimensionTable`. The flat export collapses the 7-level column MultiIndex from `wide()`/`percent()` into human-readable `"{geo name} - {year} ({value type})"` data column names, with dim columns as plain string columns. `concept`, `universe`, and `survey` move from column headers to resource metadata (`_concept`, `_universe`, `_survey`). Output: `{name}.csv` + `{name}.schema.yaml` + `{name}.resource.yaml`, validated with frictionless. Pattern follows `CensusAPI.save()` exactly.
+
 ## 2026-06-01 — Auto-detect drop method in DimensionTable.drop (issue #95)
 
 Removed the `method` parameter from `DimensionTable.drop()`. The choice between filtering to pre-existing subtotal rows vs. summing leaf rows is now auto-detected via `_has_partial_subtotals()` — True when rows exist where the target dim is `''` but a sibling dim (with 2+ distinct global values) is non-empty. Also added a guard so dropping the last remaining dim column uses filter instead of crashing `_aggregate_dim` with empty `other_dims`. Explorer updated to remove `_choose_drop_method` helper and simplify all `dt.drop()` call sites.

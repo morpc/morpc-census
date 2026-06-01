@@ -1830,3 +1830,190 @@ class TestRaceTable:
         with patch('frictionless.Resource.validate', return_value=fake_result):
             rt.save(tmp_path)
         assert (tmp_path / f'{rt.name}.resource.yaml').exists()
+
+
+# ---------------------------------------------------------------------------
+# TestDimensionTableExport
+# ---------------------------------------------------------------------------
+
+class TestDimensionTableExport:
+    """Tests for DimensionTable._to_wide_flat / create_schema / create_resource / save."""
+
+    def _make_dt(self):
+        """Two-geography cross-dim DimensionTable (nativity × sex)."""
+        base = _make_long_cross()
+        # Add a second geography so data columns span two geos
+        geo2 = base.copy()
+        geo2['geoidfq'] = '0500000US39041'
+        geo2['name'] = 'Delaware County, Ohio'
+        import pandas as _pd
+        return DimensionTable(_pd.concat([base, geo2], ignore_index=True))
+
+    # --- _to_wide_flat ---
+
+    def test_to_wide_flat_has_dim_columns(self):
+        dt = self._make_dt()
+        flat = dt._to_wide_flat()
+        for dim in dt.dims.columns:
+            assert dim in flat.columns, f"Dim column '{dim}' missing from flat output"
+
+    def test_to_wide_flat_data_col_format(self):
+        dt = self._make_dt()
+        flat = dt._to_wide_flat()
+        data_cols = [c for c in flat.columns if c not in dt.dims.columns]
+        assert len(data_cols) > 0
+        for col in data_cols:
+            # Must match "{name} - {year} ({label})"
+            assert ' - ' in col and '(' in col and col.endswith(')')
+
+    def test_to_wide_flat_no_metadata_cols(self):
+        dt = self._make_dt()
+        flat = dt._to_wide_flat()
+        for meta in ('concept', 'universe', 'survey', 'geoidfq'):
+            assert meta not in flat.columns, f"Metadata column '{meta}' should not be in flat output"
+
+    def test_to_wide_flat_estimate_label(self):
+        dt = self._make_dt()
+        flat = dt._to_wide_flat(value_mode='estimate')
+        data_cols = [c for c in flat.columns if c not in dt.dims.columns]
+        assert any('Estimate' in c for c in data_cols)
+
+    def test_to_wide_flat_percent_label(self):
+        dt = self._make_dt()
+        flat = dt._to_wide_flat(value_mode='percent')
+        data_cols = [c for c in flat.columns if c not in dt.dims.columns]
+        assert any('Estimate' in c or 'Percent' in c for c in data_cols)
+
+    # --- create_schema ---
+
+    def test_create_schema_dim_fields_are_string(self):
+        import frictionless
+        dt = self._make_dt()
+        schema = dt.create_schema()
+        dim_names = list(dt.dims.columns)
+        for field in schema.fields:
+            if field.name in dim_names:
+                assert field.type == 'string', f"Dim field '{field.name}' should be string"
+
+    def test_create_schema_data_fields_are_number(self):
+        import frictionless
+        dt = self._make_dt()
+        schema = dt.create_schema()
+        dim_names = list(dt.dims.columns)
+        for field in schema.fields:
+            if field.name not in dim_names:
+                assert field.type == 'number', f"Data field '{field.name}' should be number"
+
+    def test_create_schema_primary_key_is_dim_names(self):
+        import frictionless
+        dt = self._make_dt()
+        schema = dt.create_schema()
+        assert list(schema.primary_key) == list(dt.dims.columns)
+
+    def test_create_schema_returns_frictionless_schema(self):
+        import frictionless
+        dt = self._make_dt()
+        schema = dt.create_schema()
+        assert isinstance(schema, frictionless.Schema)
+
+    # --- create_resource ---
+
+    def test_create_resource_contains_concept(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test')
+        assert captured['_concept'] == dt.long['concept'].dropna().iloc[0]
+
+    def test_create_resource_contains_universe(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test')
+        assert captured['_universe'] == dt.long['universe'].dropna().iloc[0]
+
+    def test_create_resource_title_defaults_to_concept(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test')
+        assert captured['title'] == dt.long['concept'].dropna().iloc[0]
+
+    def test_create_resource_custom_title(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test', title='My Custom Title')
+        assert captured['title'] == 'My Custom Title'
+
+    # --- save ---
+
+    def test_save_writes_csv(self, tmp_path):
+        dt = self._make_dt()
+        fake = MagicMock()
+        fake.valid = True
+        with patch('frictionless.Resource.validate', return_value=fake):
+            dt.save(tmp_path, 'test-export')
+        assert (tmp_path / 'test-export.csv').exists()
+
+    def test_save_writes_schema(self, tmp_path):
+        dt = self._make_dt()
+        fake = MagicMock()
+        fake.valid = True
+        with patch('frictionless.Resource.validate', return_value=fake):
+            dt.save(tmp_path, 'test-export')
+        assert (tmp_path / 'test-export.schema.yaml').exists()
+
+    def test_save_writes_resource(self, tmp_path):
+        dt = self._make_dt()
+        fake = MagicMock()
+        fake.valid = True
+        with patch('frictionless.Resource.validate', return_value=fake):
+            dt.save(tmp_path, 'test-export')
+        assert (tmp_path / 'test-export.resource.yaml').exists()
+
+    def test_save_csv_has_correct_columns(self, tmp_path):
+        import pandas as _pd
+        dt = self._make_dt()
+        fake = MagicMock()
+        fake.valid = True
+        with patch('frictionless.Resource.validate', return_value=fake):
+            dt.save(tmp_path, 'test-export')
+        written = _pd.read_csv(tmp_path / 'test-export.csv')
+        for dim in dt.dims.columns:
+            assert dim in written.columns
+        for meta in ('concept', 'universe', 'survey', 'geoidfq'):
+            assert meta not in written.columns
+
+    def test_save_raises_on_invalid_resource(self, tmp_path):
+        dt = self._make_dt()
+        fake = MagicMock()
+        fake.valid = False
+        fake.stats = {}
+        with patch('frictionless.Resource.validate', return_value=fake):
+            with pytest.raises(RuntimeError, match='validation failed'):
+                dt.save(tmp_path, 'test-export')
