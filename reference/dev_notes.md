@@ -1,3 +1,7 @@
+## 2026-06-01 — Auto-detect drop method in DimensionTable.drop (issue #95)
+
+Removed the `method` parameter from `DimensionTable.drop()`. The choice between filtering to pre-existing subtotal rows vs. summing leaf rows is now auto-detected via `_has_partial_subtotals()` — True when rows exist where the target dim is `''` but a sibling dim (with 2+ distinct global values) is non-empty. Also added a guard so dropping the last remaining dim column uses filter instead of crashing `_aggregate_dim` with empty `other_dims`. Explorer updated to remove `_choose_drop_method` helper and simplify all `dt.drop()` call sites.
+
 # morpc-census dev notes
 
 ## 2026-05-18 — Fix numeric Census sentinel values in DimensionTable.wide() (branch fix/numeric-sentinel-values, closes #84)
