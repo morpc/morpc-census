@@ -1195,10 +1195,23 @@ class DimensionTable:
 
         named = list(dim_names or [])
         n = len(dims.columns)
-        dims.columns = [
+        raw_names = [
             named[i] if i < len(named) and named[i] is not None else f'dim_{i}'
             for i in range(n)
         ]
+        # Deduplicate: if two columns would share a name, append a counter suffix
+        # to the second and subsequent occurrences so pandas never gets duplicate
+        # column names (which break Series access and corrupt Categorical conversion).
+        seen_names: dict = {}
+        deduped: list = []
+        for name in raw_names:
+            if name in seen_names:
+                seen_names[name] += 1
+                deduped.append(f"{name} {seen_names[name]}")
+            else:
+                seen_names[name] = 1
+                deduped.append(name)
+        dims.columns = deduped
 
         # Convert each column to an ordered categorical using first-appearance
         # order (Census variables are returned in their defined order).

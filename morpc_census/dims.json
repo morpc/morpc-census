@@ -1138,7 +1138,7 @@
       "Bus",
       "Subway or elevated rail",
       "Long-distance train or commuter rail",
-      "Light rail, streetcar or trolley (carro p\u00fablico in Puerto Rico)",
+      "Light rail, streetcar or trolley (carro público in Puerto Rico)",
       "Ferryboat"
     ]
   },
@@ -2358,7 +2358,7 @@
       "Drove alone",
       "Carpooled",
       "Bus",
-      "Subway or elevated rail, Light rail, streetcar, or trolley (carro p\u00fablico in Puerto Rico)",
+      "Subway or elevated rail, Light rail, streetcar, or trolley (carro público in Puerto Rico)",
       "Long-distance train or commuter rail or Ferryboat"
     ]
   },
@@ -2419,7 +2419,7 @@
       "Drove alone",
       "Carpooled",
       "Bus",
-      "Subway or elevated rail or Light rail, streetcar or trolley (carro p\u00fablico in Puerto Rico)",
+      "Subway or elevated rail or Light rail, streetcar or trolley (carro público in Puerto Rico)",
       "Long-distance train or commuter rail or Ferryboat"
     ]
   },
@@ -2453,7 +2453,7 @@
     ]
   },
   "dim_163": {
-    "name": "Household Type",
+    "name": "Household Subtype",
     "variables": [
       "Married-couple family",
       "Other family",
@@ -2462,7 +2462,7 @@
     ]
   },
   "dim_164": {
-    "name": "Household Type",
+    "name": "Household Subtype",
     "variables": [
       "Married-couple family",
       "Other family",
