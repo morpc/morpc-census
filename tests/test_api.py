@@ -1970,6 +1970,48 @@ class TestDimensionTableExport:
             dt.create_resource('test', title='My Custom Title')
         assert captured['title'] == 'My Custom Title'
 
+    def test_create_resource_contains_geographies(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test')
+        expected = sorted(dt.long['name'].dropna().unique().tolist())
+        assert captured['_geographies'] == expected
+
+    def test_create_resource_contains_vintages(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test')
+        expected = sorted(int(v) for v in dt.long['reference_period'].dropna().unique())
+        assert captured['_vintages'] == expected
+
+    def test_create_resource_description_includes_geo_and_year(self):
+        import frictionless
+        dt = self._make_dt()
+        dt._export_filename = 'test.csv'
+        dt._export_schema_filename = 'test.schema.yaml'
+        captured = {}
+        with patch.object(
+            frictionless.Resource, 'from_descriptor',
+            side_effect=lambda d: captured.update(d) or MagicMock()
+        ):
+            dt.create_resource('test')
+        year = str(int(dt.long['reference_period'].dropna().iloc[0]))
+        assert year in captured['description']
+
     # --- save ---
 
     def test_save_writes_csv(self, tmp_path):
