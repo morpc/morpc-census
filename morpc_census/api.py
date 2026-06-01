@@ -1685,9 +1685,10 @@ class DimensionTable:
     ) -> "frictionless.Resource":
         """Build a frictionless Resource descriptor for the flat export.
 
-        ``concept``, ``universe``, and ``survey`` are stored as private
-        custom fields (``_concept``, ``_universe``, ``_survey``) rather
-        than as column-level headers.
+        Geographic names, vintages, ``concept``, ``universe``, and ``survey``
+        are auto-extracted from ``self.long`` and stored as private custom
+        fields so they appear in the descriptor without inflating column
+        headers.
 
         Parameters
         ----------
@@ -1696,8 +1697,8 @@ class DimensionTable:
         title:
             Human-readable title.  Defaults to the table concept string.
         description:
-            Narrative description.  Defaults to a sentence combining
-            concept, survey, and universe.
+            Narrative description.  Auto-built from concept, survey,
+            universe, geographies, and vintages when not supplied.
 
         Notes
         -----
@@ -1711,18 +1712,38 @@ class DimensionTable:
         universe = str(self.long["universe"].dropna().iloc[0])
         survey = str(self.long["survey"].dropna().iloc[0])
 
+        # Extract geographic coverage
+        if "name" in self.long.columns:
+            geo_names = sorted(self.long["name"].dropna().unique().tolist())
+        else:
+            geo_names = sorted(self.long["geoidfq"].dropna().unique().tolist())
+        vintages = sorted(int(v) for v in self.long["reference_period"].dropna().unique())
+
+        year_str = ", ".join(str(v) for v in vintages)
+        geo_count = len(geo_names)
+        geo_summary = (
+            geo_names[0] if geo_count == 1
+            else f"{geo_names[0]} and {geo_count - 1} other{'s' if geo_count > 2 else ''}"
+            if geo_count <= 3
+            else f"{geo_count} geographies"
+        )
+
+        auto_description = (
+            f"{concept} from {survey} ({year_str}) "
+            f"for {geo_summary}. Universe: {universe}."
+        )
+
         descriptor = {
             "name": name,
             "title": title or concept,
-            "description": (
-                description
-                or f"{concept} from {survey}. Universe: {universe}."
-            ),
+            "description": description or auto_description,
             "path": self._export_filename,
             "schema": self._export_schema_filename,
             "_concept": concept,
             "_universe": universe,
             "_survey": survey,
+            "_geographies": geo_names,
+            "_vintages": vintages,
             "sources": [{"title": "US Census Bureau", "path": "https://api.census.gov"}],
         }
         return frictionless.Resource.from_descriptor(descriptor)
@@ -1734,6 +1755,7 @@ class DimensionTable:
         *,
         value_mode: str = "estimate",
         title: str | None = None,
+        description: str | None = None,
     ) -> None:
         """Export the DimensionTable to a flat CSV with frictionless artifacts.
 
@@ -1753,6 +1775,8 @@ class DimensionTable:
             ``'estimate'`` (default) or ``'percent'``.
         title:
             Optional human-readable title for the resource descriptor.
+        description:
+            Optional narrative description for the resource descriptor.
         """
         import contextlib
         import frictionless
@@ -1764,13 +1788,16 @@ class DimensionTable:
         self._export_schema_filename = f"{name}.schema.yaml"
         resource_filename = f"{name}.resource.yaml"
 
+        self.logger.info(f"Writing dimension table to {output / self._export_filename}.")
         self._to_wide_flat(value_mode).to_csv(output / self._export_filename, index=False)
 
+        self.logger.info(f"Writing schema to {output / self._export_schema_filename}.")
         schema = self.create_schema(value_mode)
         schema.to_yaml(str(output / self._export_schema_filename))
 
+        self.logger.info(f"Writing resource to {output / resource_filename}.")
         with contextlib.chdir(output):
-            resource = self.create_resource(name, title=title)
+            resource = self.create_resource(name, title=title, description=description)
             resource.to_yaml(resource_filename)
             result = frictionless.Resource(resource_filename).validate()
 

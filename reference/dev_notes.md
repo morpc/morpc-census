@@ -1,3 +1,7 @@
+## 2026-06-01 — Enhance DimensionTable.create_resource() with rich metadata (#101)
+
+Auto-extracts geography names and vintages from self.long; builds a richer auto-description including geography summary and years; adds _geographies and _vintages keys to the resource descriptor. Adds description param to save(). Adds info logging to save() matching CensusAPI style.
+
 ## 2026-06-01 — DimensionTable export methods (issue #99, feat/dimension-table-export)
 
 Added `_to_wide_flat`, `create_schema`, `create_resource`, and `save` to `DimensionTable`. The flat export collapses the 7-level column MultiIndex from `wide()`/`percent()` into human-readable `"{geo name} - {year} ({value type})"` data column names, with dim columns as plain string columns. `concept`, `universe`, and `survey` move from column headers to resource metadata (`_concept`, `_universe`, `_survey`). Output: `{name}.csv` + `{name}.schema.yaml` + `{name}.resource.yaml`, validated with frictionless. Pattern follows `CensusAPI.save()` exactly.
