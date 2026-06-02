@@ -1,3 +1,23 @@
+## fetch_dec_variable_groups.py — decennial variable-group catalog (issue #109)
+
+Added `scripts/fetch_dec_variable_groups.py`, which walks the Census API
+hierarchy (survey → vintages → groups → variables) for each implemented
+decennial survey and writes `scripts/dec_variable_groups.json` (883 entries),
+mirroring the structure of `acs_variable_groups.json` for the dimension-naming
+pipeline.
+
+- Surveys/vintages: dec/pl (2020, 2010, 2000), dec/dhc (2020), dec/sf1 (2010, 2000).
+- Uses urllib directly — does NOT use `morpc_census.Endpoint` and sends no API key.
+- `_filter_variables()` auto-detects two naming conventions:
+  - Modern (`P1_001N`): keep codes ending `N`, drop annotations ending `NA`.
+  - Legacy (`P001001`, race-iteration `P012A005`): regex `^[A-Z]+\d+[A-Z]?\d+$`,
+    which excludes error vars (`P012001ERR`). Fixing the legacy regex to allow an
+    embedded race letter eliminated 426 spuriously-empty dec/sf1 groups.
+- `_normalize_universe()` maps blank universes via group-code prefix
+  (P/PCT/PCO→Total population, H/HCT→Housing units, GQ→Group quarters population).
+- Compound key `{slug}/{vintage}/{group}` distinguishes group codes that differ
+  across vintages (dec/pl uses PL001-PL004 in 2000 but P1-P4 in 2010/2020).
+
 ## 2026-06-02 — Normalize universe strings for dec surveys (#107)
 
 Added _UNIVERSE_CODE_MAP (raw API codes → readable strings) and _UNIVERSE_PREFIX_MAP (group code prefix fallback). Group.universe and CensusAPI.universe both normalize. CensusAPI.universe no longer cross-vintage-looks up for non-ACS surveys.
