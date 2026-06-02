@@ -1,3 +1,7 @@
+## 2026-06-02 — Drop all-null columns from DimensionTable flat export (#105)
+
+Added data_flat.dropna(axis=1, how='all') in _to_wide_flat(). create_schema() calls _to_wide_flat() so the schema automatically reflects only populated columns.
+
 ## 2026-06-02 — Remove missingValues from DimensionTable.create_schema() (#103)
 
 The table schema is for a processed wide output that doesn't use Census error codes. Removed top-level missingValues from the descriptor.

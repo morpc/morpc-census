@@ -1636,6 +1636,9 @@ class DimensionTable:
             columns=new_col_names,
             index=range(len(wide)),
         )
+        # Drop data columns that are entirely null — e.g. a value type that
+        # was not populated for any row in this table.
+        data_flat = data_flat.dropna(axis=1, how="all")
         return pd.concat([dims_flat, data_flat], axis=1)
 
     def create_schema(self, value_mode: str = "estimate") -> "frictionless.Schema":
