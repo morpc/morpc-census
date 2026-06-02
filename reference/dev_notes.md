@@ -1,3 +1,36 @@
+## Decennial dimension-naming pipeline + runtime files (issue #109)
+
+Built the dec analogue of the ACS dimension-naming workflow and wired it into
+DimensionTable via the survey-aware loaders:
+
+- scripts/build_dec_dimension_sets.py — parses dec_variable_groups.json into
+  shift-aligned value-sets and collapses to 699 unique dims. Reuses the ACS
+  shift/collapse/concept helpers; dec-specific bits: no `Estimate!!` prefix,
+  pre-filtered codes used verbatim, Title-Cased concepts normalized (connector
+  words lowercased, `[NN]` suffixes stripped) so the concept parser splits them.
+  Writes scripts/dec_group_variable_sets.json + scripts/dec_dimension_sets.json.
+- scripts/name_dec_dimension_sets.py — names each dim independently (single
+  value -> that value; else top concept component). Unlike the ACS greedy
+  namer it does NOT remove a concept from other dims, because the same true
+  dimension (e.g. Sex as [Female,Male] and [Male,Female]) appears as several
+  value-sets that should all be named "Sex"; _match_col_names disambiguates by
+  Jaccard at runtime. Result: 699/699 named. Writes morpc_census/dec_dim_names.json.
+- scripts/build_dec_dims.py — writes runtime morpc_census/dec_dims.json
+  ({dim_###: {name, variables}}) and morpc_census/dec_group_dims.json
+  ({group: [dim_###]}) by inverting each dim's group listing, mapping compound
+  `{slug}/{vintage}/{group}` keys to bare group codes (the union of dim ids a
+  bare code uses across vintages/surveys becomes its candidate set).
+
+Modern decennial (2020 dec/pl, dec/dhc — underscore+N codes) now resolves
+named dimension columns end-to-end (verified P12 -> Total/Sex/Age). Added
+TestDimensionTableDecNaming (3 tests); full suite 314 pass.
+
+KNOWN GAP: legacy decennial variable codes (dec/sf1, dec/pl 2010/2000, e.g.
+P012011) carry no value-type suffix, so CensusAPI._melt_wide_to_long drops
+them (VARIABLE_TYPES has no '' entry) before they reach DimensionTable. The dec
+dim files cover those groups, but flowing legacy data through requires
+fetch-layer changes (suffix-less variable handling) — a separate effort.
+
 ## Namespace dimension files by survey family (acs_/dec_) (issue #109)
 
 Renamed the ACS dimension data files so decennial equivalents can live

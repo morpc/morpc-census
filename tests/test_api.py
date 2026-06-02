@@ -334,6 +334,66 @@ class TestDimensionTableParseDims:
         assert cats.index('Male') < cats.index('Female')
 
 
+def _make_long_dec_sex_by_age():
+    """Modern decennial (dec/dhc) Sex-by-Age long frame (P12-style codes/labels).
+
+    Modern dec variable codes carry an underscore + ``N`` suffix, so the group
+    code (``P12``) is recoverable for the dec_group_dims lookup.
+    """
+    rows = [
+        ('P12_001N', ' !!Total:'),
+        ('P12_002N', ' !!Total:!!Male:'),
+        ('P12_003N', ' !!Total:!!Male:!!Under 5 years'),
+        ('P12_004N', ' !!Total:!!Male:!!5 to 9 years'),
+        ('P12_026N', ' !!Total:!!Female:'),
+        ('P12_027N', ' !!Total:!!Female:!!Under 5 years'),
+        ('P12_028N', ' !!Total:!!Female:!!5 to 9 years'),
+    ]
+    return pd.DataFrame({
+        'variable': [c for c, _ in rows],
+        'variable_label': [lbl for _, lbl in rows],
+        'geoidfq': ['0500000US39049'] * len(rows),
+        'name': ['Franklin County, Ohio'] * len(rows),
+        'concept': ['Sex By Age For Selected Age Categories'] * len(rows),
+        'universe': ['Total population'] * len(rows),
+        'survey': ['dec/dhc'] * len(rows),
+        'reference_period': [2020] * len(rows),
+        'estimate': [100, 50, 10, 12, 50, 9, 11],
+    })
+
+
+class TestDimensionTableDecNaming:
+    """Decennial dim naming resolves via the dec_* dimension files (survey-aware)."""
+
+    def test_modern_dec_resolves_named_columns(self):
+        dims = DimensionTable(_make_long_dec_sex_by_age()).dims
+        assert list(dims.columns) == ['Total', 'Sex', 'Age']
+
+    def test_dim_family_selects_dec_for_decennial_surveys(self):
+        from morpc_census.api import _dim_family
+        assert _dim_family('dec/pl') == 'dec'
+        assert _dim_family('dec/dhc') == 'dec'
+        assert _dim_family('acs/acs5') == 'acs'
+        assert _dim_family('acs/acs1') == 'acs'
+        assert _dim_family(None) == 'acs'
+
+    def test_acs_unaffected_by_dec_files(self):
+        # A real ACS group (B01001) must still resolve via the acs_* files.
+        acs = pd.DataFrame({
+            'variable': ['B01001_001', 'B01001_002', 'B01001_026'],
+            'variable_label': ['Total:', 'Total:!!Male:', 'Total:!!Female:'],
+            'geoidfq': ['0500000US39049'] * 3,
+            'name': ['Franklin County, Ohio'] * 3,
+            'concept': ['Sex by Age'] * 3,
+            'universe': ['Total population'] * 3,
+            'survey': ['acs/acs5'] * 3,
+            'reference_period': [2023] * 3,
+            'estimate': [100, 50, 50],
+        })
+        dims = DimensionTable(acs).dims
+        assert list(dims.columns) == ['Total', 'Sex']
+
+
 # ---------------------------------------------------------------------------
 # TestDimensionTableCrossVintage
 # ---------------------------------------------------------------------------
