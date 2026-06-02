@@ -17,7 +17,7 @@ import pandas as pd
 
 HERE = Path(__file__).parent
 DIMS_FILE = HERE / "dimension_sets.json"
-NAMES_FILE = HERE.parent / "morpc_census" / "dim_names.json"
+NAMES_FILE = HERE.parent / "morpc_census" / "acs_dim_names.json"
 SIM_FILE = HERE / "dim_similarity.csv"
 
 BOLD  = "\033[1m"

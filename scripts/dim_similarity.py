@@ -4,7 +4,7 @@ Similarity between two dims = Jaccard index of their ACS group sets × 100.
 
 Reads:
     scripts/dimension_sets.json
-    morpc_census/dim_names.json
+    morpc_census/acs_dim_names.json
 
 Writes:
     scripts/dim_similarity.csv   (dims × dims, values = Jaccard similarity %)
@@ -22,7 +22,7 @@ import pandas as pd
 
 HERE = Path(__file__).parent
 DIM_SETS = HERE / "dimension_sets.json"
-DIM_NAMES = HERE.parent / "morpc_census" / "dim_names.json"
+DIM_NAMES = HERE.parent / "morpc_census" / "acs_dim_names.json"
 OUT = HERE / "dim_similarity.csv"
 
 EXCLUDE = {"dim_000", "dim_002"}

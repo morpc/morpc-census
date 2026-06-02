@@ -1,3 +1,23 @@
+## Namespace dimension files by survey family (acs_/dec_) (issue #109)
+
+Renamed the ACS dimension data files so decennial equivalents can live
+alongside them:
+
+- morpc_census/dim_names.json   → acs_dim_names.json   (build-time, {dim_###: name})
+- morpc_census/dims.json        → acs_dims.json        (runtime, {dim_###: {name, variables}})
+- morpc_census/group_dims.json  → acs_group_dims.json  (runtime, {group: [dim_ids]})
+
+Made the runtime loaders survey-aware via `_dim_family(survey)` (returns
+"dec" for dec/* surveys, else "acs"); `_load_dims_json`, `_load_group_dims_json`,
+and `_load_dim_names_json` now take a `family` arg and read `{family}_*.json`.
+`_match_col_names` and `_parse_dims` thread the family through from the long
+frame's `survey` column, so dec tables will use dec_* files once created and
+ACS behavior is unchanged (all 197 api tests pass). Missing dec_* files fall
+back to empty dicts (→ dim_N), so nothing breaks before they exist.
+
+Updated ACS build scripts (build_dims, dim_namer, name_dimension_sets,
+dim_similarity, dim_network) to read/write the acs_* filenames.
+
 ## fetch_dec_variable_groups.py — decennial variable-group catalog (issue #109)
 
 Added `scripts/fetch_dec_variable_groups.py`, which walks the Census API
