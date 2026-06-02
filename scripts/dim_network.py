@@ -6,7 +6,7 @@ A slider controls the threshold live; hovering a node shows its name and variabl
 Reads:
     scripts/dim_similarity.csv
     scripts/dimension_sets.json
-    morpc_census/dim_names.json
+    morpc_census/acs_dim_names.json
 
 Writes:
     scripts/dim_network.html
@@ -24,7 +24,7 @@ import pandas as pd
 HERE = Path(__file__).parent
 SIM = HERE / "dim_similarity.csv"
 DIM_SETS = HERE / "dimension_sets.json"
-DIM_NAMES = HERE.parent / "morpc_census" / "dim_names.json"
+DIM_NAMES = HERE.parent / "morpc_census" / "acs_dim_names.json"
 OUT = HERE / "dim_network.html"
 
 EXCLUDE = {"dim_000", "dim_002"}

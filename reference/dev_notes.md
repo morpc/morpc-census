@@ -1,3 +1,111 @@
+## Fix pre-existing CI failures: drop Python 3.10, pandas dtype (issue #109)
+
+CI was latently red on main (surfaced by PR #110). Two pre-existing,
+dec-unrelated issues fixed here so #110 can merge:
+
+- Drop Python 3.10: the save() methods use contextlib.chdir (3.11+), so the
+  package never actually worked on 3.10 despite requires-python ">=3.10".
+  Bumped requires-python to ">=3.11" and removed 3.10 from the CI matrix.
+- pandas dtype: two TestDimensionTableExport tests assigned np.nan into an
+  int64 wide column (FutureWarning on pandas 2.3.0, hard TypeError on newer
+  CI pandas). Cast wide to float64 before nulling a column.
+
+## Legacy decennial fetch support — suffix-less variable codes (issue #109)
+
+Closes the KNOWN GAP noted below: legacy decennial vintages (dec/sf1,
+dec/pl 2010/2000) now flow through the fetch path and resolve dec dim names.
+
+- morpc_census/api.py _melt_wide_to_long: legacy count codes carry no value-type
+  suffix (e.g. P012011, PL001004, P012A005). After the suffixed-code regex,
+  rows still unmatched whose code matches `^[A-Z]+\d{3}[A-Z]?\d{3}$` are mapped
+  to value type 'total' (exact counts). Error/annotation codes (…ERR) end in
+  letters, fail the digit-terminated pattern, and are dropped as before.
+- New shared helper `_group_code_from_variable(variable)`: modern codes use the
+  part before '_' (B01001_001E -> B01001, P12_003N -> P12); legacy codes drop
+  the 3-digit line number (P012011 -> P012, P012A005 -> P012A, PL001004 ->
+  PL001). Used by _parse_dims and get_concept_dims_from_long, replacing the
+  inline underscore-only regex so legacy tables look up dec_group_dims.
+- scripts/build_dec_dims.py now keys dec_group_dims.json by that derived code
+  (via a representative variable from dec_variable_groups.json) instead of the
+  API group name, so build-time keys match runtime extraction. Verified live
+  fetch is blocked only by the missing Census API key (group() data endpoint),
+  not by code.
+- Tests: TestLegacyDecennialMelt (legacy counts survive melt() as 'total', ERR
+  dropped) and legacy cases in DimensionTable naming. Full suite 316 pass.
+
+## Decennial dimension-naming pipeline + runtime files (issue #109)
+
+Built the dec analogue of the ACS dimension-naming workflow and wired it into
+DimensionTable via the survey-aware loaders:
+
+- scripts/build_dec_dimension_sets.py — parses dec_variable_groups.json into
+  shift-aligned value-sets and collapses to 699 unique dims. Reuses the ACS
+  shift/collapse/concept helpers; dec-specific bits: no `Estimate!!` prefix,
+  pre-filtered codes used verbatim, Title-Cased concepts normalized (connector
+  words lowercased, `[NN]` suffixes stripped) so the concept parser splits them.
+  Writes scripts/dec_group_variable_sets.json + scripts/dec_dimension_sets.json.
+- scripts/name_dec_dimension_sets.py — names each dim independently (single
+  value -> that value; else top concept component). Unlike the ACS greedy
+  namer it does NOT remove a concept from other dims, because the same true
+  dimension (e.g. Sex as [Female,Male] and [Male,Female]) appears as several
+  value-sets that should all be named "Sex"; _match_col_names disambiguates by
+  Jaccard at runtime. Result: 699/699 named. Writes morpc_census/dec_dim_names.json.
+- scripts/build_dec_dims.py — writes runtime morpc_census/dec_dims.json
+  ({dim_###: {name, variables}}) and morpc_census/dec_group_dims.json
+  ({group: [dim_###]}) by inverting each dim's group listing, mapping compound
+  `{slug}/{vintage}/{group}` keys to bare group codes (the union of dim ids a
+  bare code uses across vintages/surveys becomes its candidate set).
+
+Modern decennial (2020 dec/pl, dec/dhc — underscore+N codes) now resolves
+named dimension columns end-to-end (verified P12 -> Total/Sex/Age). Added
+TestDimensionTableDecNaming (3 tests); full suite 314 pass.
+
+KNOWN GAP: legacy decennial variable codes (dec/sf1, dec/pl 2010/2000, e.g.
+P012011) carry no value-type suffix, so CensusAPI._melt_wide_to_long drops
+them (VARIABLE_TYPES has no '' entry) before they reach DimensionTable. The dec
+dim files cover those groups, but flowing legacy data through requires
+fetch-layer changes (suffix-less variable handling) — a separate effort.
+
+## Namespace dimension files by survey family (acs_/dec_) (issue #109)
+
+Renamed the ACS dimension data files so decennial equivalents can live
+alongside them:
+
+- morpc_census/dim_names.json   → acs_dim_names.json   (build-time, {dim_###: name})
+- morpc_census/dims.json        → acs_dims.json        (runtime, {dim_###: {name, variables}})
+- morpc_census/group_dims.json  → acs_group_dims.json  (runtime, {group: [dim_ids]})
+
+Made the runtime loaders survey-aware via `_dim_family(survey)` (returns
+"dec" for dec/* surveys, else "acs"); `_load_dims_json`, `_load_group_dims_json`,
+and `_load_dim_names_json` now take a `family` arg and read `{family}_*.json`.
+`_match_col_names` and `_parse_dims` thread the family through from the long
+frame's `survey` column, so dec tables will use dec_* files once created and
+ACS behavior is unchanged (all 197 api tests pass). Missing dec_* files fall
+back to empty dicts (→ dim_N), so nothing breaks before they exist.
+
+Updated ACS build scripts (build_dims, dim_namer, name_dimension_sets,
+dim_similarity, dim_network) to read/write the acs_* filenames.
+
+## fetch_dec_variable_groups.py — decennial variable-group catalog (issue #109)
+
+Added `scripts/fetch_dec_variable_groups.py`, which walks the Census API
+hierarchy (survey → vintages → groups → variables) for each implemented
+decennial survey and writes `scripts/dec_variable_groups.json` (883 entries),
+mirroring the structure of `acs_variable_groups.json` for the dimension-naming
+pipeline.
+
+- Surveys/vintages: dec/pl (2020, 2010, 2000), dec/dhc (2020), dec/sf1 (2010, 2000).
+- Uses urllib directly — does NOT use `morpc_census.Endpoint` and sends no API key.
+- `_filter_variables()` auto-detects two naming conventions:
+  - Modern (`P1_001N`): keep codes ending `N`, drop annotations ending `NA`.
+  - Legacy (`P001001`, race-iteration `P012A005`): regex `^[A-Z]+\d+[A-Z]?\d+$`,
+    which excludes error vars (`P012001ERR`). Fixing the legacy regex to allow an
+    embedded race letter eliminated 426 spuriously-empty dec/sf1 groups.
+- `_normalize_universe()` maps blank universes via group-code prefix
+  (P/PCT/PCO→Total population, H/HCT→Housing units, GQ→Group quarters population).
+- Compound key `{slug}/{vintage}/{group}` distinguishes group codes that differ
+  across vintages (dec/pl uses PL001-PL004 in 2000 but P1-P4 in 2010/2020).
+
 ## 2026-06-02 — Normalize universe strings for dec surveys (#107)
 
 Added _UNIVERSE_CODE_MAP (raw API codes → readable strings) and _UNIVERSE_PREFIX_MAP (group code prefix fallback). Group.universe and CensusAPI.universe both normalize. CensusAPI.universe no longer cross-vintage-looks up for non-ACS surveys.

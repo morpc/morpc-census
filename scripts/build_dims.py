@@ -1,6 +1,6 @@
-"""Merge dim_names.json + dimension_sets.json → morpc_census/dims.json.
+"""Merge acs_dim_names.json + dimension_sets.json → morpc_census/acs_dims.json.
 
-Run after build_dimension_sets.py or after editing dim_names.json via dim_namer.py.
+Run after build_dimension_sets.py or after editing acs_dim_names.json via dim_namer.py.
 """
 
 from __future__ import annotations
@@ -9,9 +9,9 @@ import json
 from pathlib import Path
 
 HERE       = Path(__file__).parent
-NAMES_FILE = HERE.parent / "morpc_census" / "dim_names.json"
+NAMES_FILE = HERE.parent / "morpc_census" / "acs_dim_names.json"
 SETS_FILE  = HERE / "dimension_sets.json"
-OUT_FILE   = HERE.parent / "morpc_census" / "dims.json"
+OUT_FILE   = HERE.parent / "morpc_census" / "acs_dims.json"
 
 
 def main() -> None:

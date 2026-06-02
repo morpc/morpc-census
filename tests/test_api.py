@@ -334,6 +334,66 @@ class TestDimensionTableParseDims:
         assert cats.index('Male') < cats.index('Female')
 
 
+def _make_long_dec_sex_by_age():
+    """Modern decennial (dec/dhc) Sex-by-Age long frame (P12-style codes/labels).
+
+    Modern dec variable codes carry an underscore + ``N`` suffix, so the group
+    code (``P12``) is recoverable for the dec_group_dims lookup.
+    """
+    rows = [
+        ('P12_001N', ' !!Total:'),
+        ('P12_002N', ' !!Total:!!Male:'),
+        ('P12_003N', ' !!Total:!!Male:!!Under 5 years'),
+        ('P12_004N', ' !!Total:!!Male:!!5 to 9 years'),
+        ('P12_026N', ' !!Total:!!Female:'),
+        ('P12_027N', ' !!Total:!!Female:!!Under 5 years'),
+        ('P12_028N', ' !!Total:!!Female:!!5 to 9 years'),
+    ]
+    return pd.DataFrame({
+        'variable': [c for c, _ in rows],
+        'variable_label': [lbl for _, lbl in rows],
+        'geoidfq': ['0500000US39049'] * len(rows),
+        'name': ['Franklin County, Ohio'] * len(rows),
+        'concept': ['Sex By Age For Selected Age Categories'] * len(rows),
+        'universe': ['Total population'] * len(rows),
+        'survey': ['dec/dhc'] * len(rows),
+        'reference_period': [2020] * len(rows),
+        'estimate': [100, 50, 10, 12, 50, 9, 11],
+    })
+
+
+class TestDimensionTableDecNaming:
+    """Decennial dim naming resolves via the dec_* dimension files (survey-aware)."""
+
+    def test_modern_dec_resolves_named_columns(self):
+        dims = DimensionTable(_make_long_dec_sex_by_age()).dims
+        assert list(dims.columns) == ['Total', 'Sex', 'Age']
+
+    def test_dim_family_selects_dec_for_decennial_surveys(self):
+        from morpc_census.api import _dim_family
+        assert _dim_family('dec/pl') == 'dec'
+        assert _dim_family('dec/dhc') == 'dec'
+        assert _dim_family('acs/acs5') == 'acs'
+        assert _dim_family('acs/acs1') == 'acs'
+        assert _dim_family(None) == 'acs'
+
+    def test_acs_unaffected_by_dec_files(self):
+        # A real ACS group (B01001) must still resolve via the acs_* files.
+        acs = pd.DataFrame({
+            'variable': ['B01001_001', 'B01001_002', 'B01001_026'],
+            'variable_label': ['Total:', 'Total:!!Male:', 'Total:!!Female:'],
+            'geoidfq': ['0500000US39049'] * 3,
+            'name': ['Franklin County, Ohio'] * 3,
+            'concept': ['Sex by Age'] * 3,
+            'universe': ['Total population'] * 3,
+            'survey': ['acs/acs5'] * 3,
+            'reference_period': [2023] * 3,
+            'estimate': [100, 50, 50],
+        })
+        dims = DimensionTable(acs).dims
+        assert list(dims.columns) == ['Total', 'Sex']
+
+
 # ---------------------------------------------------------------------------
 # TestDimensionTableCrossVintage
 # ---------------------------------------------------------------------------
@@ -1133,6 +1193,56 @@ class TestCensusAPIGroupOptional:
         api.endpoint.__dict__['groups'] = {}
         long = api.melt()
         assert (long['universe'] == '').all()
+
+
+# ---------------------------------------------------------------------------
+# TestLegacyDecennialMelt
+# ---------------------------------------------------------------------------
+
+class TestLegacyDecennialMelt:
+    """Legacy decennial variables carry no value-type suffix (e.g. P012001).
+
+    _melt_wide_to_long must keep them as exact counts ('total') while still
+    dropping error/annotation codes (…ERR)."""
+
+    _fake_endpoints = {'dec/sf1': [2010]}
+    _fake_raw = pd.DataFrame({
+        'GEO_ID':     ['0500000US39049'],
+        'NAME':       ['Franklin County'],
+        'P012001':    ['1000'],   # legacy count
+        'P012002':    ['480'],    # legacy count
+        'P012001ERR': ['0'],      # legacy error annotation -> must be dropped
+    })
+    _fake_vars = {
+        'P012001':    {'label': 'Total', 'concept': 'SEX BY AGE'},
+        'P012002':    {'label': 'Total!!Male', 'concept': 'SEX BY AGE'},
+        'P012001ERR': {'label': 'Margin of error', 'concept': 'SEX BY AGE'},
+    }
+
+    def _make(self):
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=self._fake_endpoints), \
+             patch('morpc_census.geos.geoinfo_from_scope_sumlevel', return_value={'for': 'county:049'}), \
+             patch.object(CensusAPI, '_fetch', return_value=self._fake_raw):
+            ep = Endpoint('dec/sf1', 2010)
+            api = CensusAPI(
+                ep, 'franklin',
+                variables=['P012001', 'P012002', 'P012001ERR'],
+                return_long=False,
+            )
+        api.__dict__['vars'] = self._fake_vars
+        api.endpoint.__dict__['groups'] = {}
+        return api
+
+    def test_legacy_counts_survive_as_total(self):
+        # melt() pivots variable_type into value columns; legacy counts -> 'total'.
+        long = self._make().melt()
+        assert set(long['variable']) == {'P012001', 'P012002'}
+        assert 'total' in long.columns
+        assert long.loc[long['variable'] == 'P012001', 'total'].iloc[0] == 1000
+
+    def test_legacy_error_variable_dropped(self):
+        long = self._make().melt()
+        assert 'P012001ERR' not in set(long['variable'])
 
 
 # ---------------------------------------------------------------------------
@@ -1948,7 +2058,7 @@ class TestDimensionTableExport:
     def test_to_wide_flat_drops_all_null_columns(self):
         import numpy as _np
         dt = self._make_dt()
-        wide = dt.wide()
+        wide = dt.wide().astype('float64')
         n_full = len(wide.columns)
         # Null out the first data column entirely
         wide.iloc[:, 0] = _np.nan
@@ -1961,7 +2071,7 @@ class TestDimensionTableExport:
     def test_create_schema_excludes_all_null_columns(self):
         import numpy as _np
         dt = self._make_dt()
-        wide = dt.wide()
+        wide = dt.wide().astype('float64')
         wide.iloc[:, 0] = _np.nan
         dt.wide = lambda: wide
         flat = dt._to_wide_flat()

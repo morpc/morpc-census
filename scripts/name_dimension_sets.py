@@ -13,7 +13,7 @@ Reads:
     scripts/dimension_sets.json       from build_dimension_sets.py
 
 Writes:
-    morpc_census/dim_names.json       {dim_###: name}
+    morpc_census/acs_dim_names.json   {dim_###: name}
 
 Usage:
     python scripts/name_dimension_sets.py
@@ -25,7 +25,7 @@ from pathlib import Path
 
 HERE = Path(__file__).parent
 DIM_SETS = HERE / "dimension_sets.json"
-OUT = HERE.parent / "morpc_census" / "dim_names.json"
+OUT = HERE.parent / "morpc_census" / "acs_dim_names.json"
 
 
 def _pad(key: str) -> str:
