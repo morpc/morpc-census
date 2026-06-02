@@ -1884,6 +1884,30 @@ class TestDimensionTableExport:
         data_cols = [c for c in flat.columns if c not in dt.dims.columns]
         assert any('Estimate' in c or 'Percent' in c for c in data_cols)
 
+    def test_to_wide_flat_drops_all_null_columns(self):
+        import numpy as _np
+        dt = self._make_dt()
+        wide = dt.wide()
+        n_full = len(wide.columns)
+        # Null out the first data column entirely
+        wide.iloc[:, 0] = _np.nan
+        dt.wide = lambda: wide
+        flat = dt._to_wide_flat()
+        data_cols = [c for c in flat.columns if c not in dt.dims.columns]
+        # Should have one fewer data column than the unmodified wide output
+        assert len(data_cols) == n_full - 1
+
+    def test_create_schema_excludes_all_null_columns(self):
+        import numpy as _np
+        dt = self._make_dt()
+        wide = dt.wide()
+        wide.iloc[:, 0] = _np.nan
+        dt.wide = lambda: wide
+        flat = dt._to_wide_flat()
+        schema = dt.create_schema()
+        schema_field_names = [f.name for f in schema.fields]
+        assert schema_field_names == list(flat.columns)
+
     # --- create_schema ---
 
     def test_create_schema_dim_fields_are_string(self):
