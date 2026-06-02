@@ -43,6 +43,62 @@ from morpc_census.constants import (  # noqa: E402
     NTD_AGEMAP_ORDER,
 )
 
+# ---------------------------------------------------------------------------
+# Universe normalization
+# ---------------------------------------------------------------------------
+
+# Raw universe codes returned by some Census API endpoints (e.g. dec/pl) that
+# need to be converted to human-readable strings.
+_UNIVERSE_CODE_MAP: dict[str, str] = {
+    "TOTAL_POP":            "Total population",
+    "TOTAL_POP_18_OVER":    "Population 18 years and over",
+    "TOTAL_POP_UNDER_20":   "Population under 20 years",
+    "TOTAL_POP_UNDER_18":   "Population under 18 years",
+    "TOTAL_POP_65_OVER":    "Population 65 years and over",
+    "HOUSING_UNIT":         "Housing units",
+    "OCCUPIED_HU":          "Occupied housing units",
+    "VACANT_HU":            "Vacant housing units",
+    "GQ_POP":               "Group quarters population",
+    "INSTITUTIONALIZED":    "Institutionalized population",
+    "NONINSTITUTIONALIZED": "Noninstitutionalized population",
+    "HOUSEHOLDS":           "Households",
+    "FAMILIES":             "Families",
+    "NONFAMILY_HH":         "Nonfamily households",
+    "RACES_TALLIED":        "Total races tallied",
+}
+
+# Fallback universe by group code prefix when the API returns an empty string.
+# Keys are uppercase prefixes in priority order (longer prefixes checked first).
+_UNIVERSE_PREFIX_MAP: list[tuple[str, str]] = [
+    ("PCT",  "Total population"),
+    ("PCO",  "Total population"),
+    ("HCT",  "Housing units"),
+    ("HH",   "Households"),
+    ("GQ",   "Group quarters population"),
+    ("H",    "Housing units"),
+    ("P",    "Total population"),
+]
+
+
+def _normalize_universe(raw: str, group_code: str) -> str:
+    """Return a human-readable universe string.
+
+    1. If *raw* is a known code in ``_UNIVERSE_CODE_MAP``, return the mapping.
+    2. If *raw* is already non-empty (and not a known code), return it as-is.
+    3. Otherwise infer from the group code prefix via ``_UNIVERSE_PREFIX_MAP``.
+    4. Final fallback: ``"Total population"``.
+    """
+    if raw in _UNIVERSE_CODE_MAP:
+        return _UNIVERSE_CODE_MAP[raw]
+    if raw:
+        return raw
+    upper = group_code.upper()
+    for prefix, label in _UNIVERSE_PREFIX_MAP:
+        if upper.startswith(prefix):
+            return label
+    return "Total population"
+
+
 MISSING_VALUES = [
     "", "-222222222", "-333333333", "-555555555",
     "-666666666", "-888888888", "-999999999", "*****",
@@ -265,8 +321,13 @@ class Group:
 
     @property
     def universe(self) -> str:
-        """Universe description string (read from :attr:`Endpoint.groups` — no extra network call)."""
-        return self.endpoint.groups[self.code].get('universe', '')
+        """Universe description string (read from :attr:`Endpoint.groups` — no extra network call).
+
+        Raw codes (e.g. ``TOTAL_POP``, ``HOUSING_UNIT``) are mapped to human-readable
+        text.  Empty strings are inferred from the group code prefix.
+        """
+        raw = self.endpoint.groups[self.code].get('universe', '')
+        return _normalize_universe(raw, self.code)
 
     @cached_property
     def variables(self) -> dict:
@@ -691,20 +752,29 @@ class CensusAPI:
 
     @cached_property
     def universe(self) -> str:
-        """Universe description string. Falls back to 2023 vintage when year < 2023."""
+        """Universe description string.
+
+        For ACS surveys, falls back to a 2023 vintage lookup when the requested
+        year is older (older ACS endpoints often omit universe metadata).
+        For non-ACS surveys (e.g. decennial) the group's own universe is used
+        directly and normalised via :func:`_normalize_universe`.
+        """
         if self.group is None:
             return 'Not defined — no group specified'
+        is_acs = self.endpoint.survey.startswith('acs/')
         try:
             source = (
-                self.group if self.endpoint.year >= 2023
+                self.group
+                if not is_acs or self.endpoint.year >= 2023
                 else Group(Endpoint(self.endpoint.survey, 2023), self.group.code)
             )
             return source.universe
         except Exception as e:
             self.logger.warning(
-                f"Universe not defined for {self.endpoint.survey}/{self.group.code}: {e}"
+                "Universe lookup failed for %s/%s: %s — inferring from group code.",
+                self.endpoint.survey, self.group.code, e,
             )
-            return 'Not defined in API — see CensusAPI.request for endpoint details'
+            return _normalize_universe('', self.group.code)
 
     @cached_property
     def vars(self) -> dict:

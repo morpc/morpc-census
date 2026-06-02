@@ -1307,6 +1307,67 @@ class TestGroup:
         assert universe == 'All people'
 
 
+class TestNormalizeUniverse:
+    """Tests for _normalize_universe — the universe code/prefix resolution helper."""
+
+    def test_known_code_mapped(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('TOTAL_POP', 'P1') == 'Total population'
+
+    def test_housing_unit_code_mapped(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('HOUSING_UNIT', 'H1') == 'Housing units'
+
+    def test_18_over_code_mapped(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('TOTAL_POP_18_OVER', 'P3') == 'Population 18 years and over'
+
+    def test_human_readable_string_passthrough(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('Occupied housing units', 'H10') == 'Occupied housing units'
+
+    def test_empty_P_prefix_infers_total_population(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('', 'P1') == 'Total population'
+        assert _normalize_universe('', 'PL001') == 'Total population'
+        assert _normalize_universe('', 'PCT001') == 'Total population'
+
+    def test_empty_H_prefix_infers_housing_units(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('', 'H1') == 'Housing units'
+        assert _normalize_universe('', 'HCT001') == 'Housing units'
+
+    def test_empty_unknown_prefix_falls_back_to_total_population(self):
+        from morpc_census.api import _normalize_universe
+        assert _normalize_universe('', 'UNKNOWN001') == 'Total population'
+
+    def test_group_universe_with_raw_code(self):
+        """Group.universe normalises raw API codes to human-readable text."""
+        fake_endpoints = {'dec/pl': [2020]}
+        fake_groups = {'groups': [
+            {'name': 'P1', 'description': 'RACE', 'variables': '', 'universe': 'TOTAL_POP'},
+            {'name': 'H1', 'description': 'OCCUPANCY STATUS', 'variables': '', 'universe': 'HOUSING_UNIT'},
+        ]}
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=fake_endpoints), \
+             patch('morpc.req.get_json_safely', return_value=fake_groups):
+            ep = Endpoint('dec/pl', 2020)
+            assert Group(ep, 'P1').universe == 'Total population'
+            assert Group(ep, 'H1').universe == 'Housing units'
+
+    def test_group_universe_with_empty_string(self):
+        """Group.universe infers from group code prefix when API returns empty string."""
+        fake_endpoints = {'dec/pl': [2000]}
+        fake_groups = {'groups': [
+            {'name': 'PL001', 'description': 'RACE', 'variables': '', 'universe': ''},
+            {'name': 'PL002', 'description': 'HISPANIC', 'variables': '', 'universe': ''},
+        ]}
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=fake_endpoints), \
+             patch('morpc.req.get_json_safely', return_value=fake_groups):
+            ep = Endpoint('dec/pl', 2000)
+            assert Group(ep, 'PL001').universe == 'Total population'
+            assert Group(ep, 'PL002').universe == 'Total population'
+
+
 # ---------------------------------------------------------------------------
 # Shared helpers for TimeSeries and RaceTable tests
 # ---------------------------------------------------------------------------

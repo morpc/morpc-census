@@ -1,3 +1,7 @@
+## 2026-06-02 — Normalize universe strings for dec surveys (#107)
+
+Added _UNIVERSE_CODE_MAP (raw API codes → readable strings) and _UNIVERSE_PREFIX_MAP (group code prefix fallback). Group.universe and CensusAPI.universe both normalize. CensusAPI.universe no longer cross-vintage-looks up for non-ACS surveys.
+
 ## 2026-06-02 — Drop all-null columns from DimensionTable flat export (#105)
 
 Added data_flat.dropna(axis=1, how='all') in _to_wide_flat(). create_schema() calls _to_wide_flat() so the schema automatically reflects only populated columns.
