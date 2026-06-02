@@ -1,3 +1,7 @@
+## 2026-06-02 — Remove missingValues from DimensionTable.create_schema() (#103)
+
+The table schema is for a processed wide output that doesn't use Census error codes. Removed top-level missingValues from the descriptor.
+
 ## 2026-06-01 — Enhance DimensionTable.create_resource() with rich metadata (#101)
 
 Auto-extracts geography names and vintages from self.long; builds a richer auto-description including geography summary and years; adds _geographies and _vintages keys to the resource descriptor. Adds description param to save(). Adds info logging to save() matching CensusAPI style.

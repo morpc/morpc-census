@@ -1662,13 +1662,12 @@ class DimensionTable:
             for d in dim_names
         ]
         data_fields = [
-            {"name": c, "type": "number", "missingValues": MISSING_VALUES}
+            {"name": c, "type": "number"}
             for c in data_cols
         ]
 
         descriptor = {
             "fields": dim_fields + data_fields,
-            "missingValues": MISSING_VALUES,
             "primaryKey": dim_names,
         }
         result = frictionless.Schema.validate_descriptor(descriptor)
