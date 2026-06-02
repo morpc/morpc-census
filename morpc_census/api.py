@@ -416,6 +416,29 @@ def _load_group_dims_json(family: str = "acs") -> dict:
         return {}
 
 
+def _group_code_from_variable(variable: str) -> str:
+    """Derive the table/group code key from a single variable code.
+
+    Modern codes (ACS and decennial 2020) carry an underscore: the key is the
+    part before it — ``B01001_001E`` -> ``B01001``, ``P12_003N`` -> ``P12``.
+
+    Legacy decennial codes have no underscore and pack a 3-digit table number,
+    an optional race-iteration letter, and a 3-digit line number: the key drops
+    the line number — ``P012011`` -> ``P012``, ``P012A005`` -> ``P012A``,
+    ``PL001004`` -> ``PL001``.  This matches the keys built into
+    ``dec_group_dims.json`` (see scripts/build_dec_dims.py).
+
+    Returns ``''`` when neither pattern matches.
+    """
+    m = re.match(r'^([A-Z][A-Z0-9]+)_', variable)
+    if m:
+        return m.group(1)
+    m = re.match(r'^([A-Z]+\d{3}[A-Z]?)\d{3}$', variable)
+    if m:
+        return m.group(1)
+    return ''
+
+
 def _match_col_names(dims_df: "pd.DataFrame", group_code: str, family: str = "acs") -> list:
     """Match parsed dim columns to human-readable names via the dim files.
 
@@ -545,9 +568,7 @@ def get_concept_dims_from_long(long_df: "pd.DataFrame") -> dict[str, str]:
 
     group_code = ""
     if "variable" in long_df.columns:
-        m = re.match(r"^([A-Z][A-Z0-9]+)_", str(long_df["variable"].iloc[0]))
-        if m:
-            group_code = m.group(1)
+        group_code = _group_code_from_variable(str(long_df["variable"].iloc[0]))
 
     survey = str(long_df["survey"].iloc[0]) if "survey" in long_df.columns and len(long_df) else ""
     overrides = _load_dim_names_json(_dim_family(survey))
@@ -966,6 +987,14 @@ class CensusAPI:
         parsed = long['variable'].str.extract(r'^([A-Z0-9_]+[0-9]+)([A-Z]{1,2})$')
         long['variable'] = parsed[0].fillna(long['variable'])
         long['variable_type'] = parsed[1].map(VARIABLE_TYPES)
+        # Legacy decennial codes (e.g. P012011, PL001004, P012A005) carry no
+        # value-type suffix; they are exact counts, so map them to 'total'.
+        # Error/annotation codes (…ERR) end in letters and fail this digit-
+        # terminated pattern, so they remain unmatched and are dropped below.
+        legacy = long['variable_type'].isna() & long['variable'].str.match(
+            r'^[A-Z]+\d{3}[A-Z]?\d{3}$'
+        )
+        long.loc[legacy, 'variable_type'] = 'total'
         return long.loc[long['variable_type'].notna()]
 
     def _attach_dataset_metadata(self, long: pd.DataFrame, id_cols: list[str]) -> pd.DataFrame:
@@ -1267,9 +1296,7 @@ class DimensionTable:
         if dim_names is None:
             group_code = ''
             if 'variable' in self.long.columns and len(self.long):
-                m = re.match(r'^([A-Z][A-Z0-9]+)_', str(self.long['variable'].iloc[0]))
-                if m:
-                    group_code = m.group(1)
+                group_code = _group_code_from_variable(str(self.long['variable'].iloc[0]))
             if group_code:
                 survey = ''
                 if 'survey' in self.long.columns and len(self.long):

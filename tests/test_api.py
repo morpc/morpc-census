@@ -1196,6 +1196,56 @@ class TestCensusAPIGroupOptional:
 
 
 # ---------------------------------------------------------------------------
+# TestLegacyDecennialMelt
+# ---------------------------------------------------------------------------
+
+class TestLegacyDecennialMelt:
+    """Legacy decennial variables carry no value-type suffix (e.g. P012001).
+
+    _melt_wide_to_long must keep them as exact counts ('total') while still
+    dropping error/annotation codes (…ERR)."""
+
+    _fake_endpoints = {'dec/sf1': [2010]}
+    _fake_raw = pd.DataFrame({
+        'GEO_ID':     ['0500000US39049'],
+        'NAME':       ['Franklin County'],
+        'P012001':    ['1000'],   # legacy count
+        'P012002':    ['480'],    # legacy count
+        'P012001ERR': ['0'],      # legacy error annotation -> must be dropped
+    })
+    _fake_vars = {
+        'P012001':    {'label': 'Total', 'concept': 'SEX BY AGE'},
+        'P012002':    {'label': 'Total!!Male', 'concept': 'SEX BY AGE'},
+        'P012001ERR': {'label': 'Margin of error', 'concept': 'SEX BY AGE'},
+    }
+
+    def _make(self):
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=self._fake_endpoints), \
+             patch('morpc_census.geos.geoinfo_from_scope_sumlevel', return_value={'for': 'county:049'}), \
+             patch.object(CensusAPI, '_fetch', return_value=self._fake_raw):
+            ep = Endpoint('dec/sf1', 2010)
+            api = CensusAPI(
+                ep, 'franklin',
+                variables=['P012001', 'P012002', 'P012001ERR'],
+                return_long=False,
+            )
+        api.__dict__['vars'] = self._fake_vars
+        api.endpoint.__dict__['groups'] = {}
+        return api
+
+    def test_legacy_counts_survive_as_total(self):
+        # melt() pivots variable_type into value columns; legacy counts -> 'total'.
+        long = self._make().melt()
+        assert set(long['variable']) == {'P012001', 'P012002'}
+        assert 'total' in long.columns
+        assert long.loc[long['variable'] == 'P012001', 'total'].iloc[0] == 1000
+
+    def test_legacy_error_variable_dropped(self):
+        long = self._make().melt()
+        assert 'P012001ERR' not in set(long['variable'])
+
+
+# ---------------------------------------------------------------------------
 # TestGetApiKey
 # ---------------------------------------------------------------------------
 

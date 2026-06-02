@@ -1,3 +1,26 @@
+## Legacy decennial fetch support — suffix-less variable codes (issue #109)
+
+Closes the KNOWN GAP noted below: legacy decennial vintages (dec/sf1,
+dec/pl 2010/2000) now flow through the fetch path and resolve dec dim names.
+
+- morpc_census/api.py _melt_wide_to_long: legacy count codes carry no value-type
+  suffix (e.g. P012011, PL001004, P012A005). After the suffixed-code regex,
+  rows still unmatched whose code matches `^[A-Z]+\d{3}[A-Z]?\d{3}$` are mapped
+  to value type 'total' (exact counts). Error/annotation codes (…ERR) end in
+  letters, fail the digit-terminated pattern, and are dropped as before.
+- New shared helper `_group_code_from_variable(variable)`: modern codes use the
+  part before '_' (B01001_001E -> B01001, P12_003N -> P12); legacy codes drop
+  the 3-digit line number (P012011 -> P012, P012A005 -> P012A, PL001004 ->
+  PL001). Used by _parse_dims and get_concept_dims_from_long, replacing the
+  inline underscore-only regex so legacy tables look up dec_group_dims.
+- scripts/build_dec_dims.py now keys dec_group_dims.json by that derived code
+  (via a representative variable from dec_variable_groups.json) instead of the
+  API group name, so build-time keys match runtime extraction. Verified live
+  fetch is blocked only by the missing Census API key (group() data endpoint),
+  not by code.
+- Tests: TestLegacyDecennialMelt (legacy counts survive melt() as 'total', ERR
+  dropped) and legacy cases in DimensionTable naming. Full suite 316 pass.
+
 ## Decennial dimension-naming pipeline + runtime files (issue #109)
 
 Built the dec analogue of the ACS dimension-naming workflow and wired it into

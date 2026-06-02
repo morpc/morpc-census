@@ -9,11 +9,15 @@ Writes:
     morpc_census/dec_group_dims.json   {group_code: [dim_###, ...]}
 
 ``dec_dims.json`` mirrors ``acs_dims.json``.  ``dec_group_dims.json`` is built
-by inverting each dim's ``groups`` listing: the source keys are compound
-``{slug}/{vintage}/{group}`` identifiers, so the bare group code (the final
-path segment) is recovered and the same bare code accumulates the union of dim
-ids it uses across every vintage/survey.  At runtime ``_match_col_names``
-disambiguates the resulting candidate set by Jaccard over the actual values.
+by inverting each dim's ``groups`` listing.  The source keys are compound
+``{slug}/{vintage}/{group}`` identifiers, but the runtime looks groups up by the
+code it can derive from a variable code (``_group_code_from_variable``), which
+differs from the API group *name* for legacy vintages (variable ``P012011`` ->
+key ``P012`` while the group name is ``P12``).  So each compound key is mapped
+to that derived code via a representative variable from dec_variable_groups.json,
+and the same derived code accumulates the union of dim ids it uses across every
+vintage/survey.  At runtime ``_match_col_names`` disambiguates the resulting
+candidate set by Jaccard over the actual values.
 
 Usage:
     python scripts/build_dec_dims.py
@@ -23,9 +27,12 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from morpc_census.api import _group_code_from_variable
+
 HERE = Path(__file__).parent
 NAMES_FILE = HERE.parent / "morpc_census" / "dec_dim_names.json"
 SETS_FILE = HERE / "dec_dimension_sets.json"
+SOURCE_FILE = HERE / "dec_variable_groups.json"
 OUT_DIMS = HERE.parent / "morpc_census" / "dec_dims.json"
 OUT_GROUP_DIMS = HERE.parent / "morpc_census" / "dec_group_dims.json"
 
@@ -38,6 +45,14 @@ def _pad(key: str) -> str:
 def main() -> None:
     dim_names = json.loads(NAMES_FILE.read_text())
     dim_sets = json.loads(SETS_FILE.read_text())
+    source = json.loads(SOURCE_FILE.read_text())
+
+    # compound key -> runtime-derivable group code (from a representative variable)
+    compound_to_code: dict[str, str] = {}
+    for compound_key, meta in source.items():
+        variables = meta.get("variables", {})
+        if variables:
+            compound_to_code[compound_key] = _group_code_from_variable(next(iter(variables)))
 
     # dec_dims.json -------------------------------------------------------
     dims: dict[str, dict] = {}
@@ -53,8 +68,10 @@ def main() -> None:
     for unpadded, entry in dim_sets.items():
         padded = _pad(unpadded)
         for compound_key in entry.get("groups", [{}])[0]:
-            bare = compound_key.rsplit("/", 1)[-1]
-            ids = group_dims.setdefault(bare, [])
+            code = compound_to_code.get(compound_key)
+            if not code:
+                continue
+            ids = group_dims.setdefault(code, [])
             if padded not in ids:
                 ids.append(padded)
     # stable, readable ordering
