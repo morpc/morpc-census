@@ -688,12 +688,16 @@ def _fetch_layer(sumlevel: SumLevel, geoids: list[str], year: int | None, survey
 
     chunks = [geoids[i:i + chunk_size] for i in range(0, len(geoids), chunk_size)]
     results = []
-    for i, chunk in enumerate(chunks):
-        if len(chunks) > 1:
-            logger.info(f"  chunk {i + 1}/{len(chunks)} ({len(chunk)} records)")
-        where = "GEOID in ({})".format(', '.join(f"'{g}'" for g in chunk))
-        r = ArcGISResource.from_url(name='temp', url=url, where=where, outfields='GEOID', max_record_count=chunk_size)
-        results.append(r.to_geodataframe())
+    import enlighten
+    with enlighten.Manager() as manager:
+        pb = manager.counter(total=len(geoids), desc=f"Fetching {sumlevel.name}", unit="geographies")
+        for i, chunk in enumerate(chunks):
+            if len(chunks) > 1:
+                logger.info(f"  chunk {i + 1}/{len(chunks)} ({len(chunk)} records)")
+            where = "GEOID in ({})".format(', '.join(f"'{g}'" for g in chunk))
+            r = ArcGISResource.from_url(name='temp', url=url, where=where, outfields='GEOID', max_record_count=chunk_size)
+            results.append(r.to_geodataframe(show_progress=False))
+            pb.update(len(chunk))
 
     return pd.concat(results)
 
