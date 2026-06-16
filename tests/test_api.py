@@ -2417,11 +2417,57 @@ class TestCensusAPILoad:
         with pytest.raises(FileNotFoundError):
             CensusAPI.load(tmp_path / 'does-not-exist.resource.yaml')
 
-    def test_resource_without_morpc_raises(self, tmp_path):
+    def test_resource_has_no_morpc_block(self, tmp_path):
+        """save() no longer stores a private _morpc block; the resource carries only
+        standard frictionless fields and is still loadable."""
         import frictionless
-        (tmp_path / 'x.long.csv').write_text('geoidfq,variable,estimate\n0400000US39,B01001_001,1\n')
-        desc = {'name': 'x', 'path': 'x.long.csv',
-                'sources': [{'title': 'US Census Bureau API', 'path': 'http://x'}]}
-        frictionless.Resource.from_descriptor(desc).to_yaml(str(tmp_path / 'x.resource.yaml'))
-        with pytest.raises(RuntimeError, match='_morpc'):
-            CensusAPI.load(tmp_path / 'x.resource.yaml')
+        api = self._saved_api(tmp_path)
+        descriptor = frictionless.Resource.from_descriptor(
+            str(tmp_path / f'{api.name}.resource.yaml')
+        ).to_descriptor()
+        assert '_morpc' not in descriptor
+        CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+
+    # -- recovery across the three group/variables modes -------------------
+
+    def _save_and_load(self, tmp_path, **kwargs):
+        api = CensusAPI(Endpoint('acs/acs5', 2023), 'franklin', _skip_fetch=True, **kwargs)
+        api.request = {
+            'url': 'https://api.census.gov/data/2023/acs/acs5?',
+            'params': {'get': 'group(B01001)', 'for': 'county:049,041', 'in': 'state:39'},
+        }
+        api.long = self._make_long()
+        api.save(tmp_path)
+        return api, CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+
+    def test_recover_group_only_no_sumlevel(self, tmp_path):
+        api, loaded = self._save_and_load(tmp_path, group='B01001')
+        assert loaded.name == api.name
+        assert loaded.scope.name == 'franklin'
+        assert loaded.sumlevel is None
+        assert loaded.group.code == 'B01001'
+        assert loaded.variables is None
+
+    def test_recover_variables_only(self, tmp_path):
+        variables = ['B01001_001E', 'B01001_001M', 'B01001_002E', 'B01001_002M']
+        api, loaded = self._save_and_load(tmp_path, variables=variables, sumlevel='county')
+        assert loaded.name == api.name
+        assert loaded.scope.name == 'franklin'
+        assert loaded.sumlevel.name == 'county'
+        assert loaded.group is None
+        assert set(loaded.variables) == set(variables)
+
+    def test_recover_group_and_variables(self, tmp_path):
+        # The requested subset must match what _make_long() carries (E + M for both
+        # base codes), so the round-trip recovers exactly these variables.
+        variables = ['B01001_001E', 'B01001_001M', 'B01001_002E', 'B01001_002M']
+        group_vars = {v: {} for v in variables}
+        with patch.object(Group, 'variables', property(lambda self: group_vars)):
+            api, loaded = self._save_and_load(
+                tmp_path, group='B01001', variables=variables, sumlevel='county',
+            )
+        assert loaded.name == api.name
+        assert loaded.scope.name == 'franklin'
+        assert loaded.sumlevel.name == 'county'
+        assert loaded.group.code == 'B01001'
+        assert set(loaded.variables) == set(variables)

@@ -1,3 +1,33 @@
+## Recover CensusAPI.load() metadata from name + long data (drop _morpc block)
+
+2026-06-16. `load()` no longer depends on the `_morpc` descriptor that #114 added
+to the resource; `save()`/`create_resource()` stop writing it. All six
+constructor args are recovered instead by the new `_recover_metadata(name, long)`:
+
+- `survey` / `year` — the uniform `survey` / `reference_period` columns.
+- `variables` — base `variable` codes re-suffixed from the present value-type
+  columns via new `_recover_variable_codes()` (the same inverse-`VARIABLE_TYPES`
+  mapping `_long_to_data()` uses; legacy decennial codes stay verbatim). Returned
+  only when the name carries the `-select-variables` marker, else `None`.
+- `group` — table code from `_group_code_from_variable()` on the variable codes,
+  kept only when the name ends with the matching `-{code}` segment (this is what
+  distinguishes group-only / variables-only / both modes — the long data alone
+  can't, since all three can yield identical rows).
+- `sumlevel` — parsed from the `geoidfq` summary level (`GeoIDFQ.parse(...).sumlevel`),
+  kept only when the name carries that hierarchy token. The geoids always encode
+  a summary level, so the name's presence/absence of the token is the source of
+  truth for whether `sumlevel` was supplied.
+- `scope` — whatever known `SCOPES` key remains in the name once the survey,
+  year, sumlevel, group, and variable markers are stripped (anchored parsing:
+  the other parts are recovered from the data first, so the survey's embedded
+  dashes don't make the parse ambiguous).
+
+`load()` no longer raises when a `_morpc` block is absent; it raises `ValueError`
+only if the name doesn't match the data's survey/year or the residual token isn't
+a known scope. Tests: replaced `test_resource_without_morpc_raises` with
+`test_resource_has_no_morpc_block` and added recovery tests for all three modes
+(group-only/no-sumlevel, variables-only, group+variables). 220 api tests pass.
+
 ## Add CensusAPI.load() — reconstruct an instance from save() output (#114)
 
 2026-06-16. Round-trips `save()`: `CensusAPI.load(resource_path)` rebuilds a

@@ -1210,20 +1210,104 @@ class CensusAPI:
             'path': self.filename,
             'schema': self.schema_filename,
             'sources': [{'title': 'US Census Bureau API', 'path': self.request['url'], '_params': self.request['params']}],
-            # Constructor arguments, captured so CensusAPI.load() can faithfully
-            # rebuild the instance from this resource without re-fetching.
-            '_morpc': self._reconstruction_metadata(),
         })
 
-    def _reconstruction_metadata(self) -> dict:
-        """Constructor arguments needed by :meth:`load` to rebuild this instance."""
+    @staticmethod
+    def _recover_variable_codes(long: pd.DataFrame) -> set[str]:
+        """Reconstruct the full Census variable codes (with type suffix) in *long*.
+
+        Inverse of the variable-code splitting done in :meth:`melt`: each value-type
+        column maps back to its suffix via :data:`VARIABLE_TYPES`, except legacy
+        decennial codes (which carry no suffix and are emitted verbatim).
+        """
+        inverse_types = {v: k for k, v in VARIABLE_TYPES.items()}
+        legacy_re = re.compile(r'^[A-Z]+\d{3}[A-Z]?\d{3}$')
+        codes: set[str] = set()
+        for vt in (c for c in long.columns if c in VARIABLE_TYPES.values()):
+            base = long.loc[long[vt].notna(), 'variable']
+            full = base + inverse_types[vt]
+            if vt == 'total':
+                full = full.where(~base.str.match(legacy_re), base)
+            codes.update(full)
+        return codes
+
+    @staticmethod
+    def _recover_metadata(name: str, long: pd.DataFrame) -> dict:
+        """Recover the constructor arguments for :meth:`load` from saved output.
+
+        Reconstructs the six arguments that :meth:`save` does not store explicitly,
+        using only the canonical dataset *name* (see :func:`censusapi_name`) and the
+        long-format data:
+
+        - ``survey`` / ``year``  — the uniform ``survey`` / ``reference_period`` columns.
+        - ``variables``          — base ``variable`` codes re-suffixed from the present
+          value-type columns (see :meth:`_recover_variable_codes`); ``None`` unless
+          *name* carries the ``-select-variables`` marker.
+        - ``group``              — table code parsed from the variable codes, kept only
+          when *name* carries the matching ``-{code}`` segment.
+        - ``sumlevel``           — summary level parsed from the ``geoidfq`` values, kept
+          only when *name* carries its hierarchy token (the geoids always encode a
+          summary level, but the name omits the token when ``sumlevel`` was ``None``).
+        - ``scope``              — the scope key remaining in *name* once the survey,
+          year, sumlevel, group, and variable markers are removed.
+
+        Raises
+        ------
+        ValueError
+            If *name* does not match the survey/year of the data, or the remaining
+            token is not a recognised scope.
+        """
+        from morpc_census.geos import SCOPES, GeoIDFQ
+
+        survey = str(long['survey'].iloc[0])
+        year = int(long['reference_period'].iloc[0])
+
+        # censusapi_name() lowercases everything and lays the parts out as
+        # census-{survey}-{year}-{sumlevel_part}{scope}{group_part}{var_part}.
+        prefix = f"census-{survey.replace('/', '-')}-{year}-".lower()
+        if not name.startswith(prefix):
+            raise ValueError(
+                f"Dataset name {name!r} does not match survey/year {survey}/{year}."
+            )
+        blob = name[len(prefix):]
+
+        # var_part: a trailing '-select-variables' marks an explicit variable list.
+        has_variables = blob.endswith('-select-variables')
+        if has_variables:
+            blob = blob[: -len('-select-variables')]
+
+        # group_part: a trailing '-{code}' for a table code that appears in the data.
+        group = None
+        group_codes = {_group_code_from_variable(v) for v in long['variable'].unique()}
+        group_codes.discard('')
+        for code in group_codes:
+            if blob.endswith(f"-{code.lower()}"):
+                group = code
+                blob = blob[: -(len(code) + 1)]
+                break
+
+        variables = sorted(CensusAPI._recover_variable_codes(long)) if has_variables else None
+
+        # sumlevel_part: a leading '{hierarchy-token}-' derived from the geoidfqs.
+        sl = GeoIDFQ.parse(str(long['geoidfq'].iloc[0])).sumlevel
+        token = (sl.hierarchy_string or sl.name).replace('-', '').lower()
+        sumlevel = None
+        if blob.startswith(f"{token}-") and blob[len(token) + 1:] in SCOPES:
+            sumlevel = sl.name
+            blob = blob[len(token) + 1:]
+
+        if blob not in SCOPES:
+            raise ValueError(
+                f"Could not recover a known scope from dataset name {name!r}; got {blob!r}."
+            )
+
         return {
-            'survey': self.endpoint.survey,
-            'year': self.endpoint.year,
-            'scope': self.scope.name,
-            'sumlevel': None if self.sumlevel is None else self.sumlevel.name,
-            'group': None if self.group is None else self.group.code,
-            'variables': self.variables,
+            'survey': survey,
+            'year': year,
+            'scope': blob,
+            'sumlevel': sumlevel,
+            'group': group,
+            'variables': variables,
         }
 
     def save(self, output_path):
@@ -1286,6 +1370,10 @@ class CensusAPI:
         ``Group`` may still make lightweight metadata lookups, as during normal
         construction; the large data fetch is what is skipped.)
 
+        The constructor arguments are recovered from the dataset name and the long
+        data via :meth:`_recover_metadata`; nothing beyond the standard frictionless
+        resource fields needs to be stored at save time.
+
         Parameters
         ----------
         resource_path : str or path-like
@@ -1300,9 +1388,9 @@ class CensusAPI:
         ------
         FileNotFoundError
             If the resource file or its referenced long CSV is missing.
-        RuntimeError
-            If the resource predates load() support (no ``_morpc`` block) and
-            therefore lacks the metadata needed to rebuild the instance.
+        ValueError
+            If the constructor arguments cannot be recovered from the dataset
+            name and long data (see :meth:`_recover_metadata`).
 
         Examples
         --------
@@ -1316,26 +1404,21 @@ class CensusAPI:
             raise FileNotFoundError(f"Resource file not found: {resource_path}")
 
         descriptor = frictionless.Resource.from_descriptor(str(resource_path)).to_descriptor()
-        meta = descriptor.get('_morpc')
-        if meta is None:
-            raise RuntimeError(
-                f"{resource_path} has no '_morpc' metadata block; it was saved by a "
-                "version predating CensusAPI.load() support and cannot be reconstructed. "
-                "Re-save it with the current version to enable loading."
-            )
 
         long_path = resource_path.parent / descriptor['path']
         if not long_path.exists():
             raise FileNotFoundError(f"Long-format data file not found: {long_path}")
         long = pd.read_csv(long_path)
 
+        meta = cls._recover_metadata(descriptor['name'], long)
+
         endpoint = Endpoint(meta['survey'], meta['year'])
         obj = cls(
             endpoint,
             meta['scope'],
-            group=meta.get('group'),
-            sumlevel=meta.get('sumlevel'),
-            variables=meta.get('variables'),
+            group=meta['group'],
+            sumlevel=meta['sumlevel'],
+            variables=meta['variables'],
             _skip_fetch=True,
         )
         # Restore the original request from the saved descriptor rather than
