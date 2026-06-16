@@ -717,6 +717,7 @@ class CensusAPI:
         sumlevel: str | SumLevel | None = None,
         variables: list[str] | None = None,
         return_long: bool = True,
+        _skip_fetch: bool = False,
     ):
         if group is None and variables is None:
             raise ValueError("At least one of 'group' or 'variables' must be provided.")
@@ -750,6 +751,13 @@ class CensusAPI:
             .getChild(self.name)
         )
         self.logger.info(f"Initializing CensusAPI for {self.name}.")
+
+        # load() reconstructs the instance from saved files and populates
+        # ``request``/``data``/``long`` itself, so request-building (which
+        # resolves scope geoids over the network) and the data fetch are skipped.
+        if _skip_fetch:
+            self.logger.info("Skipping fetch (instance is being reconstructed via load()).")
+            return
 
         self.logger.info("Building request URL and parameters.")
         self.request = self._build_request()
@@ -1051,6 +1059,66 @@ class CensusAPI:
             )
         return long
 
+    def _long_to_data(self, long: pd.DataFrame | None = None) -> pd.DataFrame:
+        """Reverse :meth:`melt`, reconstructing the wide raw-fetch ``data`` frame.
+
+        Each value-type column in the long table (``estimate``, ``moe``,
+        ``percent_estimate``, ``percent_moe``, ``total``) is mapped back to the
+        original Census variable code by re-appending its type suffix (the
+        inverse of :data:`VARIABLE_TYPES`), then pivoted from rows back into
+        wide columns keyed on ``GEO_ID`` (and ``NAME`` when present).
+
+        Legacy decennial codes (matching ``^[A-Z]+\\d{3}[A-Z]?\\d{3}$``) carry no
+        type suffix — :meth:`melt` records them under ``total`` while leaving the
+        ``variable`` code intact — so those are emitted verbatim rather than
+        gaining an ``N`` suffix.
+
+        Non-data columns that :meth:`melt` discards (state/county/annotation
+        codes) are not recoverable from the long table and are therefore absent
+        from the reconstructed frame; the result still round-trips cleanly back
+        through :meth:`melt`.
+
+        Parameters
+        ----------
+        long : pandas.DataFrame, optional
+            Long-format table to invert. Defaults to ``self.long``.
+
+        Returns
+        -------
+        pandas.DataFrame
+            Wide-format frame mirroring the original Census API fetch.
+        """
+        long = self.long if long is None else long
+        has_name = 'name' in long.columns
+        id_cols = ['geoidfq', 'name'] if has_name else ['geoidfq']
+        value_cols = [c for c in long.columns if c in VARIABLE_TYPES.values()]
+        if not value_cols:
+            raise ValueError("Long data has no value columns to reconstruct from.")
+
+        inverse_types = {v: k for k, v in VARIABLE_TYPES.items()}
+        legacy_re = re.compile(r'^[A-Z]+\d{3}[A-Z]?\d{3}$')
+
+        parts = []
+        for vt in value_cols:
+            sub = long.loc[long[vt].notna(), id_cols + ['variable', vt]].copy()
+            if sub.empty:
+                continue
+            codes = sub['variable'] + inverse_types[vt]
+            if vt == 'total':
+                # Legacy decennial codes have no suffix; keep them verbatim.
+                codes = codes.where(~sub['variable'].str.match(legacy_re), sub['variable'])
+            sub = sub.assign(variable=codes).rename(columns={vt: 'value'})
+            parts.append(sub[id_cols + ['variable', 'value']])
+
+        tall = pd.concat(parts, ignore_index=True)
+        data = (
+            tall.pivot(index=id_cols, columns='variable', values='value')
+            .reset_index()
+            .rename_axis(None, axis=1)
+            .rename(columns={'geoidfq': 'GEO_ID', 'name': 'NAME'})
+        )
+        return data
+
     # ------------------------------------------------------------------
     # Frictionless metadata
     # ------------------------------------------------------------------
@@ -1142,7 +1210,21 @@ class CensusAPI:
             'path': self.filename,
             'schema': self.schema_filename,
             'sources': [{'title': 'US Census Bureau API', 'path': self.request['url'], '_params': self.request['params']}],
+            # Constructor arguments, captured so CensusAPI.load() can faithfully
+            # rebuild the instance from this resource without re-fetching.
+            '_morpc': self._reconstruction_metadata(),
         })
+
+    def _reconstruction_metadata(self) -> dict:
+        """Constructor arguments needed by :meth:`load` to rebuild this instance."""
+        return {
+            'survey': self.endpoint.survey,
+            'year': self.endpoint.year,
+            'scope': self.scope.name,
+            'sumlevel': None if self.sumlevel is None else self.sumlevel.name,
+            'group': None if self.group is None else self.group.code,
+            'variables': self.variables,
+        }
 
     def save(self, output_path):
         """Write data, schema, and resource files to *output_path*.
@@ -1192,6 +1274,78 @@ class CensusAPI:
             raise RuntimeError("Resource validation failed after save.")
 
         self.logger.info("Save complete and resource validated.")
+
+    @classmethod
+    def load(cls, resource_path) -> "CensusAPI":
+        """Reconstruct a :class:`CensusAPI` from the output of :meth:`save`.
+
+        Reads the frictionless resource descriptor and its long-format CSV, then
+        rebuilds the instance — including ``long`` (read from disk) and ``data``
+        (derived from ``long`` via :meth:`_long_to_data`) — **without** contacting
+        the Census API for the survey data. (Reconstructing the ``Endpoint`` and
+        ``Group`` may still make lightweight metadata lookups, as during normal
+        construction; the large data fetch is what is skipped.)
+
+        Parameters
+        ----------
+        resource_path : str or path-like
+            Path to a ``{name}.resource.yaml`` written by :meth:`save`.
+
+        Returns
+        -------
+        CensusAPI
+            An instance equivalent to the one that produced the saved files.
+
+        Raises
+        ------
+        FileNotFoundError
+            If the resource file or its referenced long CSV is missing.
+        RuntimeError
+            If the resource predates load() support (no ``_morpc`` block) and
+            therefore lacks the metadata needed to rebuild the instance.
+
+        Examples
+        --------
+        >>> api.save("out/")                                       # doctest: +SKIP
+        >>> api2 = CensusAPI.load("out/" + api.name + ".resource.yaml")  # doctest: +SKIP
+        """
+        import frictionless
+
+        resource_path = Path(resource_path)
+        if not resource_path.exists():
+            raise FileNotFoundError(f"Resource file not found: {resource_path}")
+
+        descriptor = frictionless.Resource.from_descriptor(str(resource_path)).to_descriptor()
+        meta = descriptor.get('_morpc')
+        if meta is None:
+            raise RuntimeError(
+                f"{resource_path} has no '_morpc' metadata block; it was saved by a "
+                "version predating CensusAPI.load() support and cannot be reconstructed. "
+                "Re-save it with the current version to enable loading."
+            )
+
+        long_path = resource_path.parent / descriptor['path']
+        if not long_path.exists():
+            raise FileNotFoundError(f"Long-format data file not found: {long_path}")
+        long = pd.read_csv(long_path)
+
+        endpoint = Endpoint(meta['survey'], meta['year'])
+        obj = cls(
+            endpoint,
+            meta['scope'],
+            group=meta.get('group'),
+            sumlevel=meta.get('sumlevel'),
+            variables=meta.get('variables'),
+            _skip_fetch=True,
+        )
+        # Restore the original request from the saved descriptor rather than
+        # rebuilding it (which would resolve scope geoids over the network).
+        source = (descriptor.get('sources') or [{}])[0]
+        obj.request = {'url': source.get('path'), 'params': source.get('_params', {})}
+        obj.long = long
+        obj.data = obj._long_to_data()
+        obj.logger.info(f"Loaded {obj.name} from {resource_path} (no fetch).")
+        return obj
 
 
 # ---------------------------------------------------------------------------

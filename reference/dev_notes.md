@@ -1,3 +1,28 @@
+## Add CensusAPI.load() — reconstruct an instance from save() output (#114)
+
+2026-06-16. Round-trips `save()`: `CensusAPI.load(resource_path)` rebuilds a
+`CensusAPI` from the long CSV + resource descriptor without re-fetching survey
+data.
+
+- `create_resource()` now embeds a `_morpc` block (survey, year, scope,
+  sumlevel, group, variables) so the constructor args are recoverable. Stored
+  as a frictionless top-level custom property; verified it survives
+  to_yaml/from_descriptor.
+- New `_long_to_data()` reverses `melt()`: each value-type column is mapped
+  back to its Census variable code by re-appending the type suffix (inverse of
+  `VARIABLE_TYPES`), then pivoted wide on `GEO_ID`/`NAME`. Legacy decennial
+  codes (`^[A-Z]+\d{3}[A-Z]?\d{3}$`) carry no suffix and are emitted verbatim
+  rather than gaining an `N`. Non-data columns melt() drops (state/county
+  codes) are not recoverable and are absent from the reconstructed frame.
+- `__init__` gained a private `_skip_fetch` flag that returns after attribute
+  normalization, skipping both `_build_request()` (resolves scope geoids over
+  the network) and the data fetch. `load()` restores `request` from the saved
+  descriptor's `sources` instead of rebuilding it.
+- `.data` is derived from the saved long table, not persisted separately.
+- Tests: `TestLongToData` (inverse logic, incl. legacy vs modern total) and
+  `TestCensusAPILoad` (save→load round trip, no-fetch, re-savable, error
+  paths). 331 tests pass.
+
 ## Full dec_dim_names curation — within-group collisions 533 → 128 (main)
 
 Second pass of dec dim name curation targeting 36 more dims across 11 categories.

@@ -9,6 +9,13 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.5.0] — 2026-06-16
+
+### Added
+
+- **`CensusAPI.load(resource_path)`** — reconstructs a `CensusAPI` instance from the output of `CensusAPI.save()` (the long-format CSV + frictionless resource descriptor) **without re-fetching survey data**. The `.data` property is derived from the saved long table via the new `_long_to_data()` helper, which reverses `melt()`.
+- `CensusAPI.save()` now embeds a `_morpc` block (survey, year, scope, sumlevel, group, variables) in the resource descriptor so `load()` can faithfully rebuild the instance. Resources saved by earlier versions lack this block and raise a clear error on load.
+
 ## [0.2.0] — 2026-05-20
 
 ### Added

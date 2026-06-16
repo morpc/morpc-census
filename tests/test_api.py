@@ -5,6 +5,7 @@ Network-dependent functions are tested with mocked dependencies.
 """
 
 import pytest
+import numpy as np
 import pandas as pd
 from unittest.mock import patch
 
@@ -2261,3 +2262,166 @@ class TestDimensionTableExport:
         with patch('frictionless.Resource.validate', return_value=fake):
             with pytest.raises(RuntimeError, match='validation failed'):
                 dt.save(tmp_path, 'test-export')
+
+
+# ---------------------------------------------------------------------------
+# TestLongToData — reversing melt() back into the wide raw-fetch frame
+# ---------------------------------------------------------------------------
+
+class TestLongToData:
+    @staticmethod
+    def _bare(long):
+        api = CensusAPI.__new__(CensusAPI)
+        api.long = long
+        return api
+
+    def test_restores_geo_id_and_name_columns(self):
+        long = pd.DataFrame({
+            'geoidfq': ['0500000US39049'],
+            'name': ['Franklin'],
+            'variable': ['B01001_001'],
+            'estimate': [100.0],
+        })
+        data = self._bare(long)._long_to_data()
+        assert list(data.columns)[:2] == ['GEO_ID', 'NAME']
+        assert data.loc[0, 'GEO_ID'] == '0500000US39049'
+        assert data.loc[0, 'NAME'] == 'Franklin'
+
+    def test_omits_name_when_absent(self):
+        long = pd.DataFrame({'geoidfq': ['0400000US39'], 'variable': ['B01001_001'], 'estimate': [1.0]})
+        data = self._bare(long)._long_to_data()
+        assert 'NAME' not in data.columns
+        assert 'GEO_ID' in data.columns
+
+    def test_value_types_reappend_suffix(self):
+        long = pd.DataFrame({
+            'geoidfq': ['0500000US39049'],
+            'variable': ['B01001_002'],
+            'estimate': [50.0], 'moe': [3.0],
+        })
+        data = self._bare(long)._long_to_data()
+        assert data.loc[0, 'B01001_002E'] == 50.0
+        assert data.loc[0, 'B01001_002M'] == 3.0
+
+    def test_legacy_decennial_total_kept_verbatim(self):
+        long = pd.DataFrame({
+            'geoidfq': ['0400000US39'], 'variable': ['P012011'], 'total': [500.0],
+        })
+        data = self._bare(long)._long_to_data()
+        assert 'P012011' in data.columns      # no 'N' suffix
+        assert 'P012011N' not in data.columns
+
+    def test_modern_total_gets_n_suffix(self):
+        long = pd.DataFrame({
+            'geoidfq': ['0400000US39'], 'variable': ['PCT012_001'], 'total': [700.0],
+        })
+        data = self._bare(long)._long_to_data()
+        assert 'PCT012_001N' in data.columns
+
+    def test_missing_value_becomes_nan(self):
+        long = pd.DataFrame({
+            'geoidfq': ['0500000US39049', '0500000US39041'],
+            'variable': ['B01001_001', 'B01001_001'],
+            'estimate': [221160.0, 100.0],
+            'moe': [np.nan, 5.0],
+        })
+        data = self._bare(long)._long_to_data().set_index('GEO_ID')
+        assert np.isnan(data.loc['0500000US39049', 'B01001_001M'])
+        assert data.loc['0500000US39041', 'B01001_001M'] == 5.0
+
+    def test_raises_without_value_columns(self):
+        long = pd.DataFrame({'geoidfq': ['x'], 'variable': ['B01001_001']})
+        with pytest.raises(ValueError, match='no value columns'):
+            self._bare(long)._long_to_data()
+
+
+# ---------------------------------------------------------------------------
+# TestCensusAPILoad — round-tripping save() -> load()
+# ---------------------------------------------------------------------------
+
+class TestCensusAPILoad:
+    _fake_endpoints = {'acs/acs5': [2023]}
+    _fake_groups = {'B01001': {'description': 'Sex by age', 'universe': 'TOTAL_POP'}}
+
+    @pytest.fixture(autouse=True)
+    def mock_network(self):
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=self._fake_endpoints), \
+             patch.object(Endpoint, 'groups', property(lambda self: TestCensusAPILoad._fake_groups)):
+            yield
+
+    @staticmethod
+    def _make_long():
+        return pd.DataFrame({
+            'geoidfq': ['0500000US39049', '0500000US39049', '0500000US39041'],
+            'name': ['Franklin County, Ohio', 'Franklin County, Ohio', 'Delaware County, Ohio'],
+            'reference_period': [2023, 2023, 2023],
+            'survey': ['acs/acs5'] * 3,
+            'concept': ['Sex by age'] * 3,
+            'universe': ['Total population'] * 3,
+            'variable_label': ['Total:', 'Total:!!Male:', 'Total:'],
+            'variable': ['B01001_001', 'B01001_002', 'B01001_001'],
+            'estimate': [221160.0, 110668.0, 50000.0],
+            'moe': [np.nan, 33.0, 12.0],
+        })
+
+    def _saved_api(self, tmp_path):
+        api = CensusAPI(
+            Endpoint('acs/acs5', 2023), 'franklin',
+            group='B01001', sumlevel='county', _skip_fetch=True,
+        )
+        # _skip_fetch bypasses network request-building; supply a request as a
+        # live instance would have, so save() can write the resource sources.
+        api.request = {
+            'url': 'https://api.census.gov/data/2023/acs/acs5?',
+            'params': {'get': 'group(B01001)', 'for': 'county:049,041', 'in': 'state:39'},
+        }
+        api.long = self._make_long()
+        api.save(tmp_path)
+        return api
+
+    def test_roundtrip_long_matches(self, tmp_path):
+        api = self._saved_api(tmp_path)
+        loaded = CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+        pd.testing.assert_frame_equal(
+            loaded.long.reset_index(drop=True), api.long.reset_index(drop=True)
+        )
+
+    def test_roundtrip_data_matches_derived(self, tmp_path):
+        api = self._saved_api(tmp_path)
+        loaded = CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+        pd.testing.assert_frame_equal(loaded.data, api._long_to_data())
+
+    def test_loaded_no_network_fetch(self, tmp_path):
+        api = self._saved_api(tmp_path)
+        with patch.object(CensusAPI, '_fetch', side_effect=AssertionError('fetch called')):
+            loaded = CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+        assert hasattr(loaded, 'data') and hasattr(loaded, 'long')
+
+    def test_loaded_reconstructs_constructor_attrs(self, tmp_path):
+        api = self._saved_api(tmp_path)
+        loaded = CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+        assert loaded.name == api.name
+        assert loaded.endpoint == api.endpoint
+        assert loaded.group.code == 'B01001'
+        assert loaded.sumlevel.name == 'county'
+        assert loaded.scope.name == 'franklin'
+
+    def test_loaded_is_resavable(self, tmp_path):
+        api = self._saved_api(tmp_path)
+        loaded = CensusAPI.load(tmp_path / f'{api.name}.resource.yaml')
+        out2 = tmp_path / 'again'
+        loaded.save(out2)
+        assert (out2 / f'{loaded.name}.resource.yaml').exists()
+
+    def test_missing_resource_file_raises(self, tmp_path):
+        with pytest.raises(FileNotFoundError):
+            CensusAPI.load(tmp_path / 'does-not-exist.resource.yaml')
+
+    def test_resource_without_morpc_raises(self, tmp_path):
+        import frictionless
+        (tmp_path / 'x.long.csv').write_text('geoidfq,variable,estimate\n0400000US39,B01001_001,1\n')
+        desc = {'name': 'x', 'path': 'x.long.csv',
+                'sources': [{'title': 'US Census Bureau API', 'path': 'http://x'}]}
+        frictionless.Resource.from_descriptor(desc).to_yaml(str(tmp_path / 'x.resource.yaml'))
+        with pytest.raises(RuntimeError, match='_morpc'):
+            CensusAPI.load(tmp_path / 'x.resource.yaml')

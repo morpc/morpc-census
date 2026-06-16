@@ -24,6 +24,8 @@ Census API (wide CSV)
 
 `CensusAPI.save(path)` writes three files: `{name}.long.csv`, `{name}.schema.yaml`, `{name}.resource.yaml` (frictionless descriptors).
 
+`CensusAPI.load(resource_path)` is the inverse: it reads those files back into a `CensusAPI` instance **without** re-fetching survey data. The resource descriptor embeds a `_morpc` block (constructor args: survey, year, scope, sumlevel, group, variables) so the instance can be rebuilt faithfully; `long` is read from the CSV, `request` is restored from the descriptor's `sources`, and `data` is reconstructed from `long` via `_long_to_data()` (the inverse of `melt()`). Resources saved before `_morpc` existed cannot be loaded.
+
 ## Key implementation details
 
 - **No network on import.** `Endpoint.vintages`, `Endpoint.groups`, `Group.variables` are all `@cached_property`; `get_all_avail_endpoints()` and `_get_api_key()` are `@functools.cache`.
