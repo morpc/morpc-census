@@ -9,6 +9,8 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-06-16
+
 ### Changed
 
 - **`CensusAPI.load()` now recovers its constructor arguments from the dataset name and long data** instead of a stored `_morpc` block. `save()` no longer writes the private `_morpc` descriptor — the resource carries only standard frictionless fields. `survey`/`year`/`variables`/`group` come from the long data; `sumlevel` from the `geoidfq` summary level (with the name token as fallback); `scope` from the canonical dataset name. `load()` no longer raises on resources lacking a `_morpc` block; it raises `ValueError` only when the name/data are inconsistent with a known scope.
