@@ -573,11 +573,20 @@ def geoinfo_for_hierarchical_geos(scope: str | Scope, sumlevel: str | SumLevel) 
 
         try:
             # One pseudo query finds only the geographies of this type that intersect the scope.
-            pseudos = pseudos_from_scope_sumlevel(SumLevel(geo), sc)
+            child = SumLevel(geo)
+            pseudos = pseudos_from_scope_sumlevel(child, sc)
             found = geoinfo_from_params({'ucgid': f"pseudo({','.join(pseudos)})"}, output='table')
-            geoids = sorted({getattr(GeoIDFQ.parse(fq), geo) for fq in found['GEO_ID']})
-            for i in parent_table.index:
-                parent_table.at[i, geo] = geoids
+            found = [GeoIDFQ.parse(fq) for fq in found['GEO_ID']]
+            # GeoIDFQ names components differently from the API (e.g. "cousub" for "county subdivision").
+            part = child.parts[-1]
+            # Give each parent row only the children it contains, e.g. a county's own county subdivisions.
+            # Places do not nest in counties, so they are matched on state alone.
+            shared = [x for x in in_scope if SumLevel(x).parts[-1] in child.parts]
+            for i, row in parent_table.iterrows():
+                parent_table.at[i, geo] = sorted({
+                    getattr(f, part) for f in found
+                    if all(getattr(f, SumLevel(x).parts[-1]) == row[x] for x in shared)
+                })
         except (ValueError, KeyError):
             for i, row in parent_table.iterrows():
                 in_param_str = [

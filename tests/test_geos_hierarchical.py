@@ -76,3 +76,38 @@ def test_fallback_without_pseudo_also_queries_single_places():
     assert all("," not in p for p in places)
     assert len(places) == len(set(places))
     assert sorted(result["GEO_ID"]) == ["1550000US3902582041", "1550000US3918000041", "1550000US3918000049"]
+
+
+# County subdivision place/remainder parts (070) require state, county, and county subdivision. The county is in
+# the scope, so each county must be paired only with its own county subdivisions, which the API names
+# "county subdivision" but GeoIDFQ calls "cousub".
+
+COUSUBS = {"041": ["02582", "04920"], "049": ["18000"]}
+
+
+def _fake_cousub_geoinfo(calls):
+    def fake(param_dict, *args, **kwargs):
+        calls.append(param_dict)
+        if "ucgid" in param_dict:
+            geoids = [f"0600000US39{county}{cousub}" for county, cousubs in COUSUBS.items() for cousub in cousubs]
+            return pd.DataFrame({"GEO_ID": geoids, "NAME": geoids, "ucgid": geoids})
+        parts = dict(p.split(":") for p in param_dict["in"])
+        geoid = f"0700000US39{parts['county']}{parts['county subdivision']}99999"
+        return pd.DataFrame({"GEO_ID": [geoid], "NAME": [geoid]})
+    return fake
+
+
+def test_county_subdivision_parts_pair_each_county_with_its_own_subdivisions():
+    calls = []
+    with patch.object(SumLevel, "get_query_req", return_value={"requires": ["state", "county", "county subdivision"], "wildcard": None}), \
+         patch("morpc_census.geos.geoids_from_scope", return_value=SCOPE_TABLE), \
+         patch("morpc_census.geos.geoinfo_from_params", side_effect=_fake_cousub_geoinfo(calls)), \
+         patch("morpc_census.geos.pseudos_from_scope_sumlevel", return_value=["x"]):
+        result = geoinfo_for_hierarchical_geos(SCOPE, SumLevel("070"))
+    requests = sorted(tuple(sorted(c["in"])) for c in calls if "for" in c)
+    assert requests == [
+        ("county subdivision:02582", "county:041", "state:39"),
+        ("county subdivision:04920", "county:041", "state:39"),
+        ("county subdivision:18000", "county:049", "state:39"),
+    ]
+    assert len(result) == 3

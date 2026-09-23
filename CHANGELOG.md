@@ -9,6 +9,13 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.6.4] — 2026-09-23
+
+### Fixed
+
+- **`CensusAPI` for county subdivision place/remainder parts (`070`)** in a county scope. The 0.6.3 pseudo lookup used the API name (`county subdivision`) as the `GeoIDFQ` attribute (`cousub`) and gave every scope county every county subdivision; each county is now paired with its own. `070` is published by `dec/dhc` (2020) and `dec/sf1` (2010/2000), not `dec/pl`.
+- **Long `ucgid` lists** from the hierarchical geography lookup are requested in chunks of 100 geographies. A single request for the 498 `070` parts in region15 was dropped by the Census API.
+
 ## [0.6.3] — 2026-09-23
 
 ### Fixed
