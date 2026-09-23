@@ -9,6 +9,12 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.6.3] — 2026-09-23
+
+### Fixed
+
+- **`CensusAPI` for sumlevels that don't nest in the scope** (e.g. place-county parts, `155`, in `region15`) no longer fails with HTTP 400 (previously surfaced as `UnboundLocalError: json`). `geoinfo_for_hierarchical_geos()` now requests one geography per query, finds the places that intersect the scope with a single pseudo query instead of every place in the state, removes duplicate parents, and keeps only results inside the scope. The place list comes from current geography, so parts of places that no longer exist (e.g. some 2000/2010 CDPs) are not returned.
+
 ## [0.6.2] — 2026-09-23
 
 ### Fixed

@@ -1077,3 +1077,18 @@ Tests: `TestDimensionTableDescriptionTable` replaced by `TestDimensionTableParse
 **Root cause**: The implementation transposed `wide()`, dropped the total column, called `reset_index()`, then tried to identify metadata columns via `non_value_cols = [c for c in pct.columns if c not in self.variable_type]`. After `reset_index()` on a transposed DataFrame, the columns were MultiIndex tuples like `('Total', 'Male')` and `('Total', 'Female')`. These tuples are not in `variable_type` (`['estimate', 'moe']`), so they were included in `non_value_cols` and became index levels. The subsequent `.T` then put them into column headers.
 
 **Fix**: Replaced the transpose-and-reconstruct approach with a direct operation on the `wide()` output — find the total row by integer position, divide each column individually by its total value, drop the total row, and return. Output has the same structure as `wide()` (dimension values as row index, geographies as column MultiIndex) but with percentage values and no total row.
+
+## 2026-09-23 — Fix geoinfo_for_hierarchical_geos() for place-county parts (branch fix/hierarchical-place-parts)
+
+**Bug**: `CensusAPI(Endpoint('dec/pl', 2020), 'region15', sumlevel=SumLevel('155'), ...)` failed with `UnboundLocalError: json` (an HTTP 400 hidden by `morpc.req.get_json_safely`, fixed in morpc 0.7.3).
+
+**Root cause**: 155 requires `state` and `place`, and `place` does not nest under county, so pseudos are unavailable and the hierarchical fallback runs. It had three problems:
+1. It exploded a resolved geography only while more requirements remained, so the last one (`place`) stayed a list and the final request sent all 1,265 Ohio places comma-joined in one `in=` clause. The API allows a single place → 400.
+2. For each of the 15 scope counties it fetched every place in the state (`for=place:*&in=state:39`), since that hierarchy cannot filter by county: 15 duplicate lists, and after fixing (1) about 19,000 requests.
+3. Nothing limited results to the scope, so parts of scope places lying in other counties would be returned.
+
+**Fix**: For each missing requirement, try one pseudo query from the scope (e.g. `050$1600000`, 191 places for region15) before falling back to the per-row for/in lookup. Always explode, drop duplicate parent combinations, and filter results on the scope's fields that are part of the sumlevel's GEOIDFQ but not required by the API (e.g. `county`). Region15 155 now takes ~191 requests per call (~100 s).
+
+**Limitation**: the place list comes from the 2024 geoinfo, so places that no longer exist (e.g. Hidden Lakes CDP, 2020) are not returned.
+
+Tests: `tests/test_geos_hierarchical.py` — 3 new tests (scope filtering, one request per place, fallback path). 340 passing. Verified live for 2000/2010/2020 dec/pl: Columbus parts sum to the place total (905,748 in 2020); every other part/place mismatch but Hidden Lakes is an out-of-region county part.

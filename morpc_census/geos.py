@@ -548,7 +548,12 @@ def pseudos_from_scope_sumlevel(
 
 
 def geoinfo_for_hierarchical_geos(scope: str | Scope, sumlevel: str | SumLevel) -> DataFrame:
-    """Build a geoinfo table for sumlevel/scope combinations that cannot be expressed as ucgid pseudos."""
+    """Build a geoinfo table for sumlevel/scope combinations that cannot be expressed as ucgid pseudos.
+
+    The Census API requires some geographies (e.g. ``place`` for place-county parts) that do not nest in the
+    scope. Each is resolved to the values that intersect the scope, the sumlevel is queried once per
+    combination, and only results inside the scope are kept (e.g. the county parts in the scope's counties).
+    """
     import pandas as pd
     sl = sumlevel if isinstance(sumlevel, SumLevel) else SumLevel(sumlevel)
     sc = scope if isinstance(scope, Scope) else SCOPES[scope]
@@ -558,25 +563,37 @@ def geoinfo_for_hierarchical_geos(scope: str | Scope, sumlevel: str | SumLevel) 
     in_scope = [x.split(":")[0] for x in scope_params if x.split(":")[0] in query_req['requires']]
     not_in_scope = [x for x in query_req['requires'] if x not in in_scope]
 
-    parent_table = geoids_from_scope(sc, output='table').drop(columns='GEO_ID')
+    scope_table = geoids_from_scope(sc, output='table')
+    parent_table = scope_table.drop(columns='GEO_ID')
 
     for geo in not_in_scope:
         logger.info(f"Getting {geo} from {in_scope}")
         parent_table[geo] = None
         parent_table[geo] = parent_table[geo].astype('object')
 
-        for i, row in parent_table.iterrows():
-            in_param_str = [
-                f"{x}:{','.join(row[x]) if isinstance(row[x], list) else row[x]}"
-                for x in in_scope
-            ]
-            geoids = geoinfo_from_params({"in": in_param_str, "for": f"{geo}:*"}, output='table')[geo].to_list()
-            logger.debug(f"at row:{i}, column:{geo} adding geoids {geoids}")
-            parent_table.at[i, geo] = geoids
+        try:
+            # One pseudo query finds only the geographies of this type that intersect the scope.
+            pseudos = pseudos_from_scope_sumlevel(SumLevel(geo), sc)
+            found = geoinfo_from_params({'ucgid': f"pseudo({','.join(pseudos)})"}, output='table')
+            geoids = sorted({getattr(GeoIDFQ.parse(fq), geo) for fq in found['GEO_ID']})
+            for i in parent_table.index:
+                parent_table.at[i, geo] = geoids
+        except (ValueError, KeyError):
+            for i, row in parent_table.iterrows():
+                in_param_str = [
+                    f"{x}:{','.join(row[x]) if isinstance(row[x], list) else row[x]}"
+                    for x in in_scope
+                ]
+                geoids = geoinfo_from_params({"in": in_param_str, "for": f"{geo}:*"}, output='table')[geo].to_list()
+                logger.debug(f"at row:{i}, column:{geo} adding geoids {geoids}")
+                parent_table.at[i, geo] = geoids
 
         in_scope += [geo]
-        if len(in_scope) < len(query_req['requires']):
-            parent_table = parent_table.explode(geo).reset_index().drop(columns='index')
+        # One row per value, so every request names a single geography. The API rejects a list for most of them.
+        parent_table = parent_table.explode(geo).dropna(subset=[geo]).reset_index().drop(columns='index')
+
+    # The same parent combination can come from several scope rows (e.g. a place in two scope counties).
+    parent_table = parent_table[in_scope].drop_duplicates()
 
     geoinfos = []
     for i, row in parent_table.iterrows():
@@ -586,8 +603,16 @@ def geoinfo_for_hierarchical_geos(scope: str | Scope, sumlevel: str | SumLevel) 
         ]
         geoinfo = geoinfo_from_params({"in": in_param_str, "for": f"{sl.name}:*"}, output='table')
         geoinfos.append(geoinfo)
+    geoinfo = pd.concat(geoinfos)
 
-    return pd.concat(geoinfos)
+    # Keep only results inside the scope, e.g. drop the parts of a scope place that lie in other counties.
+    scope_fields = [f for f in scope_table.columns if f in sl.parts and f not in query_req['requires']]
+    if scope_fields:
+        scope_keys = set(scope_table[scope_fields].itertuples(index=False, name=None))
+        in_scope_rows = geoinfo['GEO_ID'].map(lambda fq: tuple(getattr(GeoIDFQ.parse(fq), f) for f in scope_fields) in scope_keys)
+        geoinfo = geoinfo[in_scope_rows]
+
+    return geoinfo
 
 
 def geoinfo_from_scope_sumlevel(
