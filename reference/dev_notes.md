@@ -1092,3 +1092,17 @@ Tests: `TestDimensionTableDescriptionTable` replaced by `TestDimensionTableParse
 **Limitation**: the place list comes from the 2024 geoinfo, so places that no longer exist (e.g. Hidden Lakes CDP, 2020) are not returned.
 
 Tests: `tests/test_geos_hierarchical.py` — 3 new tests (scope filtering, one request per place, fallback path). 340 passing. Verified live for 2000/2010/2020 dec/pl: Columbus parts sum to the place total (905,748 in 2020); every other part/place mismatch but Hidden Lakes is an out-of-region county part.
+
+## 2026-09-23 — Fix hierarchical lookup for county subdivision parts (070) and chunk long ucgid lists (branch fix/hierarchical-cousub-parts)
+
+**Bug 1**: The 0.6.3 pseudo lookup in `geoinfo_for_hierarchical_geos()` read `getattr(GeoIDFQ, geo)` with the API name, which fails for `county subdivision` (GeoIDFQ calls it `cousub`), and assigned the same child list to every parent row. That is right for places (they do not nest in counties) but pairs every scope county with every county subdivision for 070.
+
+**Fix**: Use `SumLevel(geo).parts[-1]` for the attribute, and give each parent row only the children that match it on the fields they share (`county` for county subdivisions; only `state` for places).
+
+**Bug 2**: `CensusAPI._fetch_variables()` sent the hierarchical ucgid list in one request. For region15 070 that is 498 GEOIDs (~12 KB), and the Census API drops the connection.
+
+**Fix**: Request plain ucgid lists in chunks of 100; pseudo() predicates are unchanged.
+
+**Note**: `dec/pl` does not publish 070 in any year; `dec/dhc` (2020) and `dec/sf1` (2010/2000) do. Their county subdivision totals match `dec/pl` except where parts of places that no longer exist are missing from the current-geography lookup (e.g. Hidden Lakes CDP).
+
+Tests: 1 new in `tests/test_geos_hierarchical.py`, 2 new in `tests/test_api.py`. 343 passing. Live: region15 070 returns 496 / 481 / 421 parts for 2020 / 2010 / 2000, covering all 237 MORPC-lookup 070 geographies each year (~145 s per call).

@@ -942,15 +942,27 @@ class CensusAPI:
             f"Fetching {len(variables)} variable(s) in {len(batches)} batch(es)."
         )
 
+        # A plain ucgid list (from the hierarchical geography lookup) can be too long for one URL, so
+        # request it in chunks of geographies. A pseudo() predicate is short and is sent as-is.
+        UCGID_CHUNK_SIZE = 100
+        ucgid = params.get('ucgid', '')
+        if ucgid and not ucgid.startswith('pseudo('):
+            geoids = ucgid.split(',')
+            geo_chunks = [{'ucgid': ','.join(geoids[j:j + UCGID_CHUNK_SIZE])}
+                          for j in range(0, len(geoids), UCGID_CHUNK_SIZE)]
+        else:
+            geo_chunks = [{}]
+
         frames = []
         for i, batch in enumerate(batches, 1):
             self.logger.info(f"Batch {i}/{len(batches)}: {len(batch)} variable(s).")
             batch_params = {**params, 'get': ','.join(['GEO_ID', 'NAME'] + batch)}
-            records = get_json_safely(url, params=batch_params)
-            columns = records.pop(0)
-            frames.append(
-                pd.DataFrame.from_records(records, columns=columns).set_index(['GEO_ID', 'NAME'])
-            )
+            chunk_frames = []
+            for geo_chunk in geo_chunks:
+                records = get_json_safely(url, params={**batch_params, **geo_chunk})
+                columns = records.pop(0)
+                chunk_frames.append(pd.DataFrame.from_records(records, columns=columns))
+            frames.append(pd.concat(chunk_frames).set_index(['GEO_ID', 'NAME']))
 
         result = frames[0] if len(frames) == 1 else frames[0].join(frames[1:])
         return result.reset_index()

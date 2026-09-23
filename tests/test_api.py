@@ -1084,6 +1084,30 @@ class TestFetchVariablesBatching:
             result = api._fetch_variables(api.request['url'], {})
         assert len(result) == 1
 
+    def test_long_ucgid_list_requested_in_chunks(self):
+        # The hierarchical geography lookup returns a plain ucgid list (e.g. 498 place/remainder parts),
+        # which is too long for one Census API URL.
+        api = self._make_api(1)
+        geoids = [f'0700000US39049{i:05d}99999' for i in range(250)]
+
+        def respond(url, params):
+            chunk = params['ucgid'].split(',')
+            return [['GEO_ID', 'NAME'] + api.variables] + [[g, g] + ['1'] for g in chunk]
+
+        with patch('morpc.req.get_json_safely', side_effect=respond) as mock:
+            result = api._fetch_variables(api.request['url'], {'ucgid': ','.join(geoids)})
+        assert mock.call_count == 3
+        assert all(len(c.kwargs['params']['ucgid'].split(',')) <= 100 for c in mock.call_args_list)
+        assert sorted(result['GEO_ID']) == geoids
+
+    def test_pseudo_ucgid_is_not_chunked(self):
+        api = self._make_api(1)
+        ucgid = 'pseudo(0500000US39049$1400000)'
+        with patch('morpc.req.get_json_safely', return_value=self._response(api.variables)) as mock:
+            api._fetch_variables(api.request['url'], {'ucgid': ucgid})
+        mock.assert_called_once()
+        assert mock.call_args.kwargs['params']['ucgid'] == ucgid
+
 
 class TestFetchDispatch:
     """Tests for _fetch choosing between the group() and variable-list paths."""
