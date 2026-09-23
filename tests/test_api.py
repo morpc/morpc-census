@@ -1085,6 +1085,34 @@ class TestFetchVariablesBatching:
         assert len(result) == 1
 
 
+class TestFetchDispatch:
+    """Tests for _fetch choosing between the group() and variable-list paths."""
+
+    _fake_endpoints = {'acs/acs5': [2023]}
+
+    def _dispatch(self, **kwargs):
+        """Construct a CensusAPI and return the name of the fetch path _fetch takes."""
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=self._fake_endpoints), \
+             patch.object(Group, 'variables', new={'B01001_001E': {}, 'B01001_002E': {}}), \
+             patch('morpc_census.api._get_api_key', return_value=None), \
+             patch.object(CensusAPI, '_fetch_group', return_value='group'), \
+             patch.object(CensusAPI, '_fetch_variables', return_value='variables'):
+            api = CensusAPI(Endpoint('acs/acs5', 2023), 'franklin', _skip_fetch=True, **kwargs)
+            api.request = {'url': 'u', 'params': {'get': 'x'}}
+            return api._fetch()
+
+    def test_group_only_uses_group_path(self):
+        assert self._dispatch(group='B01001') == 'group'
+
+    def test_variables_only_uses_variables_path(self):
+        assert self._dispatch(variables=['B01001_001E']) == 'variables'
+
+    def test_group_with_variables_uses_variables_path(self):
+        # The group() path relies on the API adding GEO_ID/NAME; a plain variable
+        # list does not, so it must go through _fetch_variables, which requests them.
+        assert self._dispatch(group='B01001', variables=['B01001_001E']) == 'variables'
+
+
 class TestCensusAPIGroupOptional:
     """Test CensusAPI behavior when group is None."""
 
