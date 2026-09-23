@@ -9,6 +9,10 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- **`CensusAPI` with both `group` and `variables`** no longer raises `KeyError: ['GEO_ID']` in `melt()`. The request now goes through the variable-list fetch path, which requests `GEO_ID`/`NAME` explicitly.
+
 ## [0.6.0] — 2026-06-16
 
 ### Changed

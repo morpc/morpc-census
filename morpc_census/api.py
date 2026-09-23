@@ -899,7 +899,9 @@ class CensusAPI:
         if key:
             params['key'] = key
         url = self.request['url']
-        if self.group is not None:
+        # group() returns GEO_ID/NAME itself; an explicit variable list needs
+        # _fetch_variables to request them, even when a group is also given.
+        if self.group is not None and self.variables is None:
             return self._fetch_group(url, params)
         return self._fetch_variables(url, params)
 

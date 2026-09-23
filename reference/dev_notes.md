@@ -1,3 +1,20 @@
+## Fix KeyError 'GEO_ID' when CensusAPI gets both group and variables (fix/group-with-variables-fetch)
+
+2026-09-23. `CensusAPI(ep, scope, group='P1', variables=['P1_001N'])` raised
+`KeyError: ... not present in the DataFrame: ['GEO_ID']` in `melt()`, for both
+ACS and decennial endpoints.
+
+**Root cause**: `_build_request()` sets `get=<variables>` whenever variables are
+given, but `_fetch()` dispatched to `_fetch_group()` whenever a group was given.
+Only the `group(...)` query form makes the API return `GEO_ID`/`NAME`
+implicitly; `_fetch_variables()` is the path that adds them to `get`. The
+combination sent a bare variable list through the group path, so the response
+had no `GEO_ID`.
+
+**Fix**: `_fetch()` uses `_fetch_group()` only when `variables is None`.
+`self.group` is unchanged, so group validation and group-derived
+concept/universe still apply. 3 new tests in `TestFetchDispatch`.
+
 ## Recover CensusAPI.load() metadata from name + long data (drop _morpc block)
 
 2026-06-16. `load()` no longer depends on the `_morpc` descriptor that #114 added
