@@ -9,9 +9,19 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.6.5] — 2026-09-24
+
 ### Security
 
 - **The Census API key is no longer written to logs.** `geoinfo_from_params()` logged its request parameters at INFO after adding `key`, so the key appeared in notebook outputs (hundreds of times per call through the hierarchical geography lookup). It now logs before adding the key. Keys passed on to `morpc.req` are redacted there from morpc 0.7.5 (morpc/morpc-py#207).
+
+### Fixed
+
+- **A Census API response of 204 No Content is treated as no rows** instead of failing the whole `CensusAPI` fetch. The Census API returns 204 when a request is valid but it has no data for the requested geographies; for example, ACS 5-year 2017 lists place/remainder parts (`070`) but publishes none. A warning is logged and the result has no rows for that request. Other HTTP errors still raise.
+
+### Changed
+
+- Requires morpc 0.7.5 or later, for its `HTTPError` response and API key redaction.
 
 ## [0.6.4] — 2026-09-23
 

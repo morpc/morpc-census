@@ -1106,3 +1106,11 @@ Tests: `tests/test_geos_hierarchical.py` — 3 new tests (scope filtering, one r
 **Note**: `dec/pl` does not publish 070 in any year; `dec/dhc` (2020) and `dec/sf1` (2010/2000) do. Their county subdivision totals match `dec/pl` except where parts of places that no longer exist are missing from the current-geography lookup (e.g. Hidden Lakes CDP).
 
 Tests: 1 new in `tests/test_geos_hierarchical.py`, 2 new in `tests/test_api.py`. 343 passing. Live: region15 070 returns 496 / 481 / 421 parts for 2020 / 2010 / 2000, covering all 237 MORPC-lookup 070 geographies each year (~145 s per call).
+
+## 2026-09-24 — Treat 204 No Content as no rows; stop logging the API key (0.6.5)
+
+**204**: ACS 5-year 2017 lists `place/remainder (or part)` (070) in its geography.json but returns 204 No Content for every 070 request, in both ucgid and for/in forms. Since morpc 0.7.3 that raised `HTTPError` and stopped the whole fetch (and the pop-collect notebook run). `_fetch_variables` now catches `HTTPError` whose `response.status_code` is 204 (morpc ≥ 0.7.4 attaches the response), logs a warning, and treats that request as zero rows. If every request is empty, `CensusAPI.long` is an empty frame.
+
+**API key**: `geoinfo_from_params()` logged its params at INFO after adding `key` (#7, fixed in #8). morpc 0.7.5 redacts `key`/`token`/`api_key` in all `morpc.req` logs and errors (morpc/morpc-py#207); morpc-census now requires it.
+
+Tests: 3 in `tests/test_api.py` (204 chunk skipped, all-204 returns empty frame, other errors raise) and 1 in `tests/test_geos_hierarchical.py` (key not logged). 347 passing.
