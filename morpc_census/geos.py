@@ -486,9 +486,10 @@ def geoinfo_from_params(param_dict: dict, year: int = 2024, output: Literal['lis
         if 'in' in param_dict:
             params.update({'in': param_dict['in']})
 
+    # Log before adding the API key, so the key never reaches logs or notebook outputs.
+    logger.info(f"Getting GEOIDS from {url} and params: {params}.")
     if k := _get_api_key():
         params['key'] = k
-    logger.info(f"Getting GEOIDS from {url} and params: {params}.")
     json = morpc.req.get_json_safely(url, params=params)
 
     if output == 'list':

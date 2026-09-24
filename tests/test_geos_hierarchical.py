@@ -111,3 +111,16 @@ def test_county_subdivision_parts_pair_each_county_with_its_own_subdivisions():
         ("county subdivision:18000", "county:049", "state:39"),
     ]
     assert len(result) == 3
+
+
+def test_geoinfo_from_params_does_not_log_the_api_key(caplog):
+    # The key is sent with the request but must never reach the logs, which end up in committed
+    # notebook outputs. See #7.
+    from morpc_census.geos import geoinfo_from_params
+    secret = "s3cr3t-api-key"
+    caplog.set_level("DEBUG")
+    with patch("morpc_census.geos._get_api_key", return_value=secret), \
+         patch("morpc.req.get_json_safely", return_value=[["GEO_ID", "NAME"], ["1600000US3918000", "Columbus"]]) as mock:
+        geoinfo_from_params({"for": "place:18000", "in": "state:39"})
+    assert mock.call_args.kwargs["params"]["key"] == secret
+    assert secret not in caplog.text
