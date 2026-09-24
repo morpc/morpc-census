@@ -9,6 +9,10 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Security
+
+- **The Census API key is no longer written to logs.** `geoinfo_from_params()` logged its request parameters at INFO after adding `key`, so the key appeared in notebook outputs (hundreds of times per call through the hierarchical geography lookup). It now logs before adding the key. Keys passed on to `morpc.req` are redacted there from morpc 0.7.5 (morpc/morpc-py#207).
+
 ## [0.6.4] — 2026-09-23
 
 ### Fixed
