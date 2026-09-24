@@ -934,6 +934,7 @@ class CensusAPI:
         and all batch results are joined on GEO_ID into a single DataFrame.
         """
         from morpc.req import get_json_safely
+        from requests import HTTPError
 
         BATCH_SIZE = 48
         variables = self.variables
@@ -959,7 +960,15 @@ class CensusAPI:
             batch_params = {**params, 'get': ','.join(['GEO_ID', 'NAME'] + batch)}
             chunk_frames = []
             for geo_chunk in geo_chunks:
-                records = get_json_safely(url, params={**batch_params, **geo_chunk})
+                try:
+                    records = get_json_safely(url, params={**batch_params, **geo_chunk})
+                except HTTPError as e:
+                    # 204 No Content: the request is valid but Census has no data for these geographies
+                    # (e.g. ACS 5-year 2017 lists place/remainder parts but publishes none).
+                    if e.response is None or e.response.status_code != 204:
+                        raise
+                    self.logger.warning(f"Census API returned no data for {self.name}; treating the request as no rows.")
+                    records = [['GEO_ID', 'NAME'] + batch]
                 columns = records.pop(0)
                 chunk_frames.append(pd.DataFrame.from_records(records, columns=columns))
             frames.append(pd.concat(chunk_frames).set_index(['GEO_ID', 'NAME']))

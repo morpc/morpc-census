@@ -1108,6 +1108,45 @@ class TestFetchVariablesBatching:
         mock.assert_called_once()
         assert mock.call_args.kwargs['params']['ucgid'] == ucgid
 
+    @staticmethod
+    def _no_content():
+        from requests import HTTPError, Response
+        response = Response()
+        response.status_code = 204
+        return HTTPError("Request failed with status 204", response=response)
+
+    def test_no_content_chunk_is_treated_as_no_rows(self):
+        # The Census API answers 204 when it has no data for the requested geographies,
+        # e.g. ACS 5-year 2017 place/remainder parts.
+        api = self._make_api(1)
+        geoids = [f'0700000US39049{i:05d}99999' for i in range(150)]
+
+        def respond(url, params):
+            chunk = params['ucgid'].split(',')
+            if chunk[0] == geoids[100]:
+                raise self._no_content()
+            return [['GEO_ID', 'NAME'] + api.variables] + [[g, g] + ['1'] for g in chunk]
+
+        with patch('morpc.req.get_json_safely', side_effect=respond):
+            result = api._fetch_variables(api.request['url'], {'ucgid': ','.join(geoids)})
+        assert sorted(result['GEO_ID']) == geoids[:100]
+
+    def test_no_content_for_every_chunk_returns_empty_frame(self):
+        api = self._make_api(1)
+        with patch('morpc.req.get_json_safely', side_effect=self._no_content()):
+            result = api._fetch_variables(api.request['url'], {'ucgid': '0700000US390491800099999'})
+        assert result.empty
+        assert list(result.columns) == ['GEO_ID', 'NAME'] + api.variables
+
+    def test_other_http_errors_still_raise(self):
+        from requests import HTTPError, Response
+        api = self._make_api(1)
+        response = Response()
+        response.status_code = 400
+        with patch('morpc.req.get_json_safely', side_effect=HTTPError("bad", response=response)):
+            with pytest.raises(HTTPError):
+                api._fetch_variables(api.request['url'], {'ucgid': '0700000US390491800099999'})
+
 
 class TestFetchDispatch:
     """Tests for _fetch choosing between the group() and variable-list paths."""
