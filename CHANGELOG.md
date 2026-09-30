@@ -9,6 +9,10 @@ This project uses [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- **`CensusAPI` with `group=` now requests long geography lists in chunks of 100.** `_fetch_group()` sent the full ucgid list from the hierarchical geography lookup in one URL, so a request such as region15 at sumlevel `070` (~15k characters) failed with `ConnectionError: RemoteDisconnected`. `_fetch_variables()` already chunked; both now share the same helper. `pseudo()` predicates are unchanged.
+
 ## [0.6.5] — 2026-09-24
 
 ### Security

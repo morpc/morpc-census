@@ -1148,6 +1148,52 @@ class TestFetchVariablesBatching:
                 api._fetch_variables(api.request['url'], {'ucgid': '0700000US390491800099999'})
 
 
+class TestFetchGroupChunking:
+    """Tests for _fetch_group splitting long ucgid lists across requests."""
+
+    _fake_endpoints = {'acs/acs5': [2023]}
+
+    def _make_api(self):
+        """Build a CensusAPI with _fetch stubbed so we can call _fetch_group directly."""
+        stub = pd.DataFrame({'GEO_ID': ['0500000US39049'], 'NAME': ['Franklin County']})
+        with patch('morpc_census.api.get_all_avail_endpoints', return_value=self._fake_endpoints), \
+             patch('morpc_census.geos.geoinfo_from_scope_sumlevel', return_value={'for': 'county:049'}), \
+             patch.object(CensusAPI, '_fetch', return_value=stub):
+            return CensusAPI(Endpoint('acs/acs5', 2023), 'franklin', group='B01001', return_long=False)
+
+    @staticmethod
+    def _respond(url):
+        """Simulate the group() text response: one row per geography in the URL's ucgid."""
+        chunk = url.split('ucgid=')[1].split('&')[0].split(',')
+        rows = ['["GEO_ID","NAME","B01001_001E",'] + [f'["{g}","{g}","1"],' for g in chunk]
+        return '[' + '\n'.join(rows) + ']'
+
+    def test_long_ucgid_list_requested_in_chunks(self):
+        # A region-wide 070 lookup yields hundreds of geographies; one URL that long is
+        # dropped by the Census API with RemoteDisconnected.
+        api = self._make_api()
+        geoids = [f'0700000US39049{i:05d}99999' for i in range(250)]
+        params = {'get': 'group(B01001)', 'ucgid': ','.join(geoids)}
+        with patch('morpc.req.get_text_safely', side_effect=self._respond) as mock:
+            result = api._fetch_group('https://api.census.gov/data/2023/acs/acs5?', params)
+        assert mock.call_count == 3
+        for call in mock.call_args_list:
+            assert len(call.args[0].split('ucgid=')[1].split('&')[0].split(',')) <= 100
+            assert 'get=group(B01001)' in call.args[0]
+        assert sorted(result['GEO_ID']) == geoids
+        assert list(result.index) == list(range(250))
+
+    def test_pseudo_ucgid_is_not_chunked(self):
+        api = self._make_api()
+        params = {'get': 'group(B01001)', 'ucgid': 'pseudo(0500000US39049$1400000)'}
+        text = '[["GEO_ID","NAME","B01001_001E"],\n["1400000US39049000100","Tract 1","1"]]'
+        with patch('morpc.req.get_text_safely', return_value=text) as mock:
+            result = api._fetch_group('u?', params)
+        mock.assert_called_once()
+        assert 'ucgid=pseudo(0500000US39049$1400000)' in mock.call_args.args[0]
+        assert len(result) == 1
+
+
 class TestFetchDispatch:
     """Tests for _fetch choosing between the group() and variable-list paths."""
 

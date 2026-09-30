@@ -667,6 +667,20 @@ def find_replace_variable_map(labels: list[str], variables: list[str], label_map
     return new_labels, new_variables
 
 
+def _ucgid_chunks(params: dict, chunk_size: int = 100) -> list[dict]:
+    """Split a plain ucgid list into chunks of geographies, returned as param overrides.
+
+    A plain ucgid list (from the hierarchical geography lookup) can be too long for one URL;
+    the Census API drops the connection past roughly 8k characters. A pseudo() predicate is
+    short and is sent as-is, as is a request with no ucgid.
+    """
+    ucgid = params.get('ucgid', '')
+    if not ucgid or ucgid.startswith('pseudo('):
+        return [{}]
+    geoids = ucgid.split(',')
+    return [{'ucgid': ','.join(geoids[j:j + chunk_size])} for j in range(0, len(geoids), chunk_size)]
+
+
 # ---------------------------------------------------------------------------
 # CensusAPI
 # ---------------------------------------------------------------------------
@@ -914,17 +928,20 @@ class CensusAPI:
         from morpc.req import get_text_safely
 
         self.logger.info(f"Fetching group({self.group.code}) — all variables, no limit.")
-        params_string = "&".join(f"{k}={v}" for k, v in params.items())
-        text = get_text_safely(f"{url}{params_string}")
-        try:
-            df = pd.read_csv(
-                StringIO(text.replace('[', '').replace(']', '').rstrip(',')),
-                sep=',', quotechar='"',
-            )
-            return df.drop(columns=[c for c in df.columns if c.startswith('Unnamed')])
-        except Exception as e:
-            self.logger.error(f"Failed to parse group response: {e}")
-            raise RuntimeError("Failed to parse Census API group response.") from e
+        frames = []
+        for geo_chunk in _ucgid_chunks(params):
+            params_string = "&".join(f"{k}={v}" for k, v in {**params, **geo_chunk}.items())
+            text = get_text_safely(f"{url}{params_string}")
+            try:
+                df = pd.read_csv(
+                    StringIO(text.replace('[', '').replace(']', '').rstrip(',')),
+                    sep=',', quotechar='"',
+                )
+            except Exception as e:
+                self.logger.error(f"Failed to parse group response: {e}")
+                raise RuntimeError("Failed to parse Census API group response.") from e
+            frames.append(df.drop(columns=[c for c in df.columns if c.startswith('Unnamed')]))
+        return pd.concat(frames, ignore_index=True)
 
     def _fetch_variables(self, url: str, params: dict) -> pd.DataFrame:
         """Fetch a specific variable list, batching into chunks of 49.
@@ -943,16 +960,7 @@ class CensusAPI:
             f"Fetching {len(variables)} variable(s) in {len(batches)} batch(es)."
         )
 
-        # A plain ucgid list (from the hierarchical geography lookup) can be too long for one URL, so
-        # request it in chunks of geographies. A pseudo() predicate is short and is sent as-is.
-        UCGID_CHUNK_SIZE = 100
-        ucgid = params.get('ucgid', '')
-        if ucgid and not ucgid.startswith('pseudo('):
-            geoids = ucgid.split(',')
-            geo_chunks = [{'ucgid': ','.join(geoids[j:j + UCGID_CHUNK_SIZE])}
-                          for j in range(0, len(geoids), UCGID_CHUNK_SIZE)]
-        else:
-            geo_chunks = [{}]
+        geo_chunks = _ucgid_chunks(params)
 
         frames = []
         for i, batch in enumerate(batches, 1):
