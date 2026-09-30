@@ -667,6 +667,20 @@ def find_replace_variable_map(labels: list[str], variables: list[str], label_map
     return new_labels, new_variables
 
 
+def _ucgid_chunks(params: dict, chunk_size: int = 100) -> list[dict]:
+    """Split a plain ucgid list into chunks of geographies, returned as param overrides.
+
+    A plain ucgid list (from the hierarchical geography lookup) can be too long for one URL;
+    the Census API drops the connection past roughly 8k characters. A pseudo() predicate is
+    short and is sent as-is, as is a request with no ucgid.
+    """
+    ucgid = params.get('ucgid', '')
+    if not ucgid or ucgid.startswith('pseudo('):
+        return [{}]
+    geoids = ucgid.split(',')
+    return [{'ucgid': ','.join(geoids[j:j + chunk_size])} for j in range(0, len(geoids), chunk_size)]
+
+
 # ---------------------------------------------------------------------------
 # CensusAPI
 # ---------------------------------------------------------------------------
@@ -912,19 +926,33 @@ class CensusAPI:
         but the response is a flat text stream rather than JSON.
         """
         from morpc.req import get_text_safely
+        from requests import HTTPError
 
         self.logger.info(f"Fetching group({self.group.code}) — all variables, no limit.")
-        params_string = "&".join(f"{k}={v}" for k, v in params.items())
-        text = get_text_safely(f"{url}{params_string}")
-        try:
-            df = pd.read_csv(
-                StringIO(text.replace('[', '').replace(']', '').rstrip(',')),
-                sep=',', quotechar='"',
-            )
-            return df.drop(columns=[c for c in df.columns if c.startswith('Unnamed')])
-        except Exception as e:
-            self.logger.error(f"Failed to parse group response: {e}")
-            raise RuntimeError("Failed to parse Census API group response.") from e
+        frames = []
+        for geo_chunk in _ucgid_chunks(params):
+            params_string = "&".join(f"{k}={v}" for k, v in {**params, **geo_chunk}.items())
+            try:
+                text = get_text_safely(f"{url}{params_string}")
+            except HTTPError as e:
+                # 204 No Content: the request is valid but Census has no data for these geographies
+                # (e.g. dec/pl publishes no county subdivision parts, 070).
+                if e.response is None or e.response.status_code != 204:
+                    raise
+                self.logger.warning(f"Census API returned no data for {self.name}; treating the request as no rows.")
+                continue
+            try:
+                df = pd.read_csv(
+                    StringIO(text.replace('[', '').replace(']', '').rstrip(',')),
+                    sep=',', quotechar='"',
+                )
+            except Exception as e:
+                self.logger.error(f"Failed to parse group response: {e}")
+                raise RuntimeError("Failed to parse Census API group response.") from e
+            frames.append(df.drop(columns=[c for c in df.columns if c.startswith('Unnamed')]))
+        if not frames:
+            return pd.DataFrame(columns=['GEO_ID', 'NAME'] + list(self.vars))
+        return pd.concat(frames, ignore_index=True)
 
     def _fetch_variables(self, url: str, params: dict) -> pd.DataFrame:
         """Fetch a specific variable list, batching into chunks of 49.
@@ -943,16 +971,7 @@ class CensusAPI:
             f"Fetching {len(variables)} variable(s) in {len(batches)} batch(es)."
         )
 
-        # A plain ucgid list (from the hierarchical geography lookup) can be too long for one URL, so
-        # request it in chunks of geographies. A pseudo() predicate is short and is sent as-is.
-        UCGID_CHUNK_SIZE = 100
-        ucgid = params.get('ucgid', '')
-        if ucgid and not ucgid.startswith('pseudo('):
-            geoids = ucgid.split(',')
-            geo_chunks = [{'ucgid': ','.join(geoids[j:j + UCGID_CHUNK_SIZE])}
-                          for j in range(0, len(geoids), UCGID_CHUNK_SIZE)]
-        else:
-            geo_chunks = [{}]
+        geo_chunks = _ucgid_chunks(params)
 
         frames = []
         for i, batch in enumerate(batches, 1):

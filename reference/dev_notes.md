@@ -1114,3 +1114,13 @@ Tests: 1 new in `tests/test_geos_hierarchical.py`, 2 new in `tests/test_api.py`.
 **API key**: `geoinfo_from_params()` logged its params at INFO after adding `key` (#7, fixed in #8). morpc 0.7.5 redacts `key`/`token`/`api_key` in all `morpc.req` logs and errors (morpc/morpc-py#207); morpc-census now requires it.
 
 Tests: 3 in `tests/test_api.py` (204 chunk skipped, all-204 returns empty frame, other errors raise) and 1 in `tests/test_geos_hierarchical.py` (key not logged). 347 passing.
+
+## 2026-09-30 — Chunk long ucgid lists in the group() fetch path (branch fix/group-fetch-ucgid-chunking)
+
+**Bug**: The 2026-09-23 fix chunked plain ucgid lists only in `CensusAPI._fetch_variables()`. `_fetch_group()` (used when only `group=` is given) still sent the whole list in one URL. For region15 at 070 that is ~15k characters; the Census API drops the connection with `RemoteDisconnected` above roughly 8k (5.8k succeeded, 11.5k failed in a live test).
+
+**Fix**: Moved the chunking into a module helper `_ucgid_chunks()` in `api.py`, used by both fetch paths. `_fetch_group()` fetches and parses each chunk and concatenates the frames.
+
+**204**: `_fetch_group()` did not treat 204 No Content as no rows (only `_fetch_variables()` did), so `group=` requests with no data (e.g. `dec/pl` at 070) raised `HTTPError`, and with chunking one empty chunk would stop the whole fetch. It now skips 204 chunks with a warning, like `_fetch_variables()`; if every chunk is empty it returns an empty frame with `GEO_ID`, `NAME` and the group's variables, so `CensusAPI.long` is empty. Other HTTP errors still raise.
+
+Tests: 5 new in `tests/test_api.py` (`TestFetchGroupChunking`: long list split into ≤100 per request, pseudo not chunked, 204 chunk skipped, all-204 returns empty frame, other errors raise). 352 passing. Live: 2020 `dec/pl` P1 for Franklin at 070 now returns an empty `long` instead of raising. Live: a 627-GEOID `group(P1)` request against 2020 `dec/dhc` (the URL that previously disconnected) returns data in 7 requests.
