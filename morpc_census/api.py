@@ -926,12 +926,21 @@ class CensusAPI:
         but the response is a flat text stream rather than JSON.
         """
         from morpc.req import get_text_safely
+        from requests import HTTPError
 
         self.logger.info(f"Fetching group({self.group.code}) — all variables, no limit.")
         frames = []
         for geo_chunk in _ucgid_chunks(params):
             params_string = "&".join(f"{k}={v}" for k, v in {**params, **geo_chunk}.items())
-            text = get_text_safely(f"{url}{params_string}")
+            try:
+                text = get_text_safely(f"{url}{params_string}")
+            except HTTPError as e:
+                # 204 No Content: the request is valid but Census has no data for these geographies
+                # (e.g. dec/pl publishes no county subdivision parts, 070).
+                if e.response is None or e.response.status_code != 204:
+                    raise
+                self.logger.warning(f"Census API returned no data for {self.name}; treating the request as no rows.")
+                continue
             try:
                 df = pd.read_csv(
                     StringIO(text.replace('[', '').replace(']', '').rstrip(',')),
@@ -941,6 +950,8 @@ class CensusAPI:
                 self.logger.error(f"Failed to parse group response: {e}")
                 raise RuntimeError("Failed to parse Census API group response.") from e
             frames.append(df.drop(columns=[c for c in df.columns if c.startswith('Unnamed')]))
+        if not frames:
+            return pd.DataFrame(columns=['GEO_ID', 'NAME'] + list(self.vars))
         return pd.concat(frames, ignore_index=True)
 
     def _fetch_variables(self, url: str, params: dict) -> pd.DataFrame:

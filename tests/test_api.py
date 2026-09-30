@@ -1193,6 +1193,43 @@ class TestFetchGroupChunking:
         assert 'ucgid=pseudo(0500000US39049$1400000)' in mock.call_args.args[0]
         assert len(result) == 1
 
+    @staticmethod
+    def _http_error(status):
+        from requests import HTTPError, Response
+        response = Response()
+        response.status_code = status
+        return HTTPError(f"Request failed with status {status}", response=response)
+
+    def test_no_content_chunk_is_treated_as_no_rows(self):
+        # The Census API answers 204 when it has no data for the requested geographies,
+        # e.g. dec/pl for county subdivision parts (070).
+        api = self._make_api()
+        geoids = [f'0700000US39049{i:05d}99999' for i in range(150)]
+
+        def respond(url):
+            if url.split('ucgid=')[1].startswith(geoids[100]):
+                raise self._http_error(204)
+            return self._respond(url)
+
+        with patch('morpc.req.get_text_safely', side_effect=respond):
+            result = api._fetch_group('u?', {'get': 'group(B01001)', 'ucgid': ','.join(geoids)})
+        assert sorted(result['GEO_ID']) == geoids[:100]
+
+    def test_no_content_for_every_chunk_returns_empty_frame(self):
+        api = self._make_api()
+        with patch.object(Group, 'variables', new={'B01001_001E': {}, 'B01001_002E': {}}), \
+             patch('morpc.req.get_text_safely', side_effect=self._http_error(204)):
+            result = api._fetch_group('u?', {'get': 'group(B01001)', 'ucgid': '0700000US390491800099999'})
+        assert result.empty
+        assert list(result.columns) == ['GEO_ID', 'NAME', 'B01001_001E', 'B01001_002E']
+
+    def test_other_http_errors_still_raise(self):
+        from requests import HTTPError
+        api = self._make_api()
+        with patch('morpc.req.get_text_safely', side_effect=self._http_error(400)):
+            with pytest.raises(HTTPError):
+                api._fetch_group('u?', {'get': 'group(B01001)', 'ucgid': '0700000US390491800099999'})
+
 
 class TestFetchDispatch:
     """Tests for _fetch choosing between the group() and variable-list paths."""
